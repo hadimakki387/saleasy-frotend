@@ -1,5 +1,3 @@
-
-
 import React, { MouseEvent } from 'react';
 import { useState } from 'react';
 import { Button, Menu, MenuItem, Typography, Box } from '@mui/material';
@@ -23,8 +21,8 @@ const CategoryButton: React.FC = () => {
   return (
     <>
       <Button
-        id="basic-button"
-        aria-controls={open ? "basic-menu" : undefined}
+        id="category-button" // Changed ID to be more descriptive
+        aria-controls={open ? "category-menu" : undefined} // Changed ID for Menu
         aria-haspopup="true"
         aria-expanded={open ? "true" : undefined}
         onClick={handleClick}
@@ -48,12 +46,12 @@ const CategoryButton: React.FC = () => {
         <KeyboardArrowRightOutlinedIcon />
       </Button>
       <Menu
-        id="basic-menu"
+        id="category-menu" // Changed ID to match aria-controls
         anchorEl={anchorEl}
         open={open}
         onClose={handleClose}
         MenuListProps={{
-          "aria-labelledby": "basic-button",
+          "aria-labelledby": "category-button", // Match ID here
         }}
         sx={{
           ".MuiPaper-root": {

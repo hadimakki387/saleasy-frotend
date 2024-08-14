@@ -1,5 +1,3 @@
-
-
 import { FC } from "react";
 import { Accordion, AccordionSummary, List, ListItem, ListItemButton, ListItemText, Typography } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
@@ -14,8 +12,8 @@ const AccordionItem: FC<AccordionItemProps> = ({ mainLink, subLinks }) => {
     <Accordion elevation={0} sx={{ bgcolor: "initial" }}>
       <AccordionSummary
         expandIcon={<ExpandMoreIcon />}
-        aria-controls="panel1a-content"
-        id="panel1a-header"
+        aria-controls={`${mainLink}-content`}
+        id={`${mainLink}-header`}
       >
         <Typography>{mainLink}</Typography>
       </AccordionSummary>
