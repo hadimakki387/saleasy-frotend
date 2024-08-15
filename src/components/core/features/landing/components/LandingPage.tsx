@@ -6,25 +6,23 @@ import { setTest } from "../redux/redux";
 import { useGetPokemonQuery } from "../redux/rtk";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import Header1 from "../../../../layout/Header/Header1";
+import Header2 from "../../../../layout/Header/Header2";
+import Header3 from "../../../../layout/Header/Header3";
+import Footer from "../../../../layout/Footer/footer";
 
 type Props = {};
 
-function LandingPage({}: Props) {
-  const dispatch = useDispatch();
-  const { test } = useAppSelector((state) => state.landingPage);
-  const { data } = useGetPokemonQuery();
-  console.log(data);
+function LandingPage({ }: Props) {
+
   return (
-    <div>
-      <h1>Landing Page</h1>
-      <p>{test}</p>
-      <button
-        onClick={() => {
-          dispatch(setTest("changed"));
-        }}
-      >
-        change test
-      </button>
+    <div className="flex flex-col min-h-screen">
+
+      <main className="flex-grow">
+
+      </main>
+
+
     </div>
   );
 }
