@@ -4,7 +4,7 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogTitle from "@mui/material/DialogTitle";
 import * as React from "react";
-import DaButton from "./DaButton";
+import DaButton from "./SeDaButton";
 import { CircularProgress } from "@mui/material";
 
 interface DialogProps {

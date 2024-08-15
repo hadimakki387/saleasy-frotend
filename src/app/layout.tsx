@@ -1,13 +1,13 @@
 "use client"
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "./globals.css";
-import StoreWrapper from "@/components/core/StoreWrapper";
-import Header1 from "@/components/layout/Header/Header1";
+
 import Footer from "@/components/layout/Footer/footer";
+import Header1 from "@/components/layout/Header/Header1";
 import Header2 from "@/components/layout/Header/Header2";
 import Header3 from "@/components/layout/Header/Header3";
 import ThemeProvider from "@/providers/ThemeProvider";
+import { Inter } from "next/font/google";
+import "./globals.css";
+import StoreWrapper from "@/providers/StoreWrapper";
 
 const inter = Inter({ subsets: ["latin"] });
 

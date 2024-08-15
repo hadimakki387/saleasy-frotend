@@ -3,8 +3,8 @@ import { DropdownValue } from "@/services/types";
 import { Autocomplete, Chip, SxProps } from "@mui/material";
 import { FormikProps } from "formik";
 import React from "react";
-import DaCheckbox from "./DaCheckbox";
-import TextFieldComponent from "./TextFieldComponent";
+import DaCheckbox from "./SeCheckbox";
+import TextFieldComponent from "./SeTextField";
 
 export type CIAutocompleteProps = {
   sx?: SxProps;
@@ -40,7 +40,7 @@ export type CIAutocompleteProps = {
   labelColor?: string;
   disabled?: boolean;
   // eslint-disable-next-line no-unused-vars
-  onInputChange?:(e:string)=>void
+  onInputChange?: (e: string) => void;
 };
 
 function DaAutocomplete({
@@ -80,10 +80,9 @@ function DaAutocomplete({
       disableCloseOnSelect={disableCloseOnSelect}
       limitTags={limitTags}
       getOptionLabel={(option) => option?.label}
-      onInput={(e)=>{
-        if(onInputChange)onInputChange((e.target as HTMLInputElement).value)
+      onInput={(e) => {
+        if (onInputChange) onInputChange((e.target as HTMLInputElement).value);
       }}
-
       renderOption={(props, option, { selected }) => {
         return (
           <li
@@ -101,7 +100,7 @@ function DaAutocomplete({
               }
             }}
           >
-            {hasCheckboxes && option?.label!== "loading..." && (
+            {hasCheckboxes && option?.label !== "loading..." && (
               <DaCheckbox style={{ marginRight: 8 }} checked={selected} />
             )}
             {option.label}
@@ -127,9 +126,9 @@ function DaAutocomplete({
           noBorders={noBorders}
           disabled={disabled}
           sx={{
-            borderRadius:"var(--input-border-radius)",
-            backgroundColor:disabled?"var(--silver-bg)":undefined,
-            color:"var(--title-text)"
+            borderRadius: "var(--input-border-radius)",
+            backgroundColor: disabled ? "var(--silver-bg)" : undefined,
+            color: "var(--title-text)",
           }}
         />
       )}
@@ -162,7 +161,7 @@ function DaAutocomplete({
         "& .MuiSvgIcon-root": {
           color: labelColor ? labelColor : "var(--title-text)",
         },
-        
+
         ...sx,
       }}
       fullWidth

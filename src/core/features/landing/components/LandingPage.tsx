@@ -1,5 +1,5 @@
 "use client";
-import { useAppSelector } from "@/components/core/StoreWrapper";
+import { useAppSelector } from "@/core/StoreWrapper";
 import React from "react";
 import { useDispatch } from "react-redux";
 import { setTest } from "../redux/redux";

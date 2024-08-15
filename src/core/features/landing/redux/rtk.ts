@@ -1,4 +1,4 @@
-import { mainApi } from "@/components/core/rtk-query";
+import { mainApi } from "@/core/rtk-query";
 
 export const extendedApi = mainApi.injectEndpoints({
   endpoints: (build) => ({
