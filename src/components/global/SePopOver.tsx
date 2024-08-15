@@ -33,7 +33,6 @@ function DaPopOver({
   offset,
   closeOnClick = true,
   hasCloseButton = false,
-
 }: Props) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -46,7 +45,11 @@ function DaPopOver({
   const id = open ? "Popover-Menu" : undefined;
   return (
     <div className={containerClassName}>
-      <div aria-describedby={id} onClick={handleClick} className={`${className} hover:cursor-pointer`}>
+      <div
+        aria-describedby={id}
+        onClick={handleClick}
+        className={`${className} hover:cursor-pointer`}
+      >
         {children}
       </div>
       <Menu
@@ -69,24 +72,27 @@ function DaPopOver({
           ...popoverProps?.slotProps,
         }}
         style={{
-          marginTop:"0.5rem"
+          marginTop: "0.5rem",
         }}
       >
         <div className="flex flex-col py-1">
           {menuItems.map((item, inex) => {
             return (
-              <MenuItem key={inex} onClick={() => {
-                item.onClick && item.onClick();
-                closeOnClick && handleClose();
-              }}>
+              <MenuItem
+                key={inex}
+                onClick={() => {
+                  item.onClick && item.onClick();
+                  closeOnClick && handleClose();
+                }}
+              >
                 <div className="flex items-center ">
                   <div className="w-32">{item.name}</div>
-                  <div>{item.icon&& item.icon}</div>
+                  <div>{item.icon && item.icon}</div>
                 </div>
               </MenuItem>
             );
           })}
-           {hasCloseButton && (
+          {hasCloseButton && (
             <>
               <div className="border-b border-gray-200 my-1" />
               <div
