@@ -1,9 +1,9 @@
-import { createContext, useState, useMemo } from "react";
+import { createContext, useState, useMemo, useEffect } from "react";
 import { createTheme, Theme } from "@mui/material/styles";
 import { grey } from "@mui/material/colors";
 
 // Extend Material UI theme with custom properties
-declare module '@mui/material/styles' {
+declare module "@mui/material/styles" {
   interface Palette {
     myColor: {
       main: string;
@@ -37,24 +37,24 @@ declare module '@mui/material/styles' {
 
 // Define the type for the color mode context
 interface ColorModeContextType {
-  mode: 'light' | 'dark';
+  mode: "light" | "dark";
   toggleColorMode: () => void;
 }
 
 // Function to get design tokens based on the mode
-export const getDesignTokens = (mode: 'light' | 'dark') => ({
+export const getDesignTokens = (mode: "light" | "dark") => ({
   palette: {
     mode,
-    ...(mode === 'light'
+    ...(mode === "light"
       ? {
           myColor: {
-            main: '#FFFFFF', // Pure white for light mode
+            main: "#FFFFFF", // Pure white for light mode
           },
           bg: {
-            main: '#FFFFFF', // Pure white for background
+            main: "#FFFFFF", // Pure white for background
           },
           neutral: {
-            main: '#000000', // Black for contrast (text)
+            main: "#000000", // Black for contrast (text)
           },
           favColor: {
             main: grey[200], // Light grey for favorite color
@@ -62,13 +62,13 @@ export const getDesignTokens = (mode: 'light' | 'dark') => ({
         }
       : {
           myColor: {
-            main: '#FFFFFF', // Still white for dark mode to keep text readable
+            main: "#FFFFFF", // Still white for dark mode to keep text readable
           },
           bg: {
-            main: '#121212', // Dark grey background for dark mode
+            main: "#121212", // Dark grey background for dark mode
           },
           neutral: {
-            main: '#FFFFFF', // White for contrast (text)
+            main: "#FFFFFF", // White for contrast (text)
           },
           favColor: {
             main: grey[900], // Dark grey for favorite color
@@ -79,21 +79,23 @@ export const getDesignTokens = (mode: 'light' | 'dark') => ({
 
 // Create context for color mode
 export const ColorModeContext = createContext<ColorModeContextType>({
-  mode: 'light', // Default value
+  mode: "light", // Default value
   toggleColorMode: () => {},
 });
 
 // Custom hook to manage color mode and theme
 export const useMode = (): [Theme, ColorModeContextType] => {
-  const [mode, setMode] = useState<'light' | 'dark'>(
-    (localStorage.getItem("mode") as 'light' | 'dark') || 'light'
-  );
+  const [mode, setMode] = useState<"light" | "dark">("light");
+  useEffect(() => {
+    const localMode = localStorage.getItem("mode") as "light" | "dark";
+    setMode(localMode || "light");
+  }, []);
 
   const colorMode = useMemo<ColorModeContextType>(
     () => ({
       mode,
       toggleColorMode: () =>
-        setMode((prev) => (prev === 'light' ? 'dark' : 'light')),
+        setMode((prev) => (prev === "light" ? "dark" : "light")),
     }),
     [mode]
   );

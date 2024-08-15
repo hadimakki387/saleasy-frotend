@@ -1,8 +1,8 @@
 "use client";
 
+import reducers from "@/core/features";
+import { mainApi } from "@/core/rtk-query";
 import { configureStore } from "@reduxjs/toolkit";
-import reducers from "../components/core/features";
-import { mainApi } from "../components/core/rtk-query";
 import { setupListeners } from "@reduxjs/toolkit/dist/query";
 import {
   Provider,
@@ -16,7 +16,7 @@ const store = configureStore({
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: false,
-    }).concat(mainApi.middleware) as any,
+    }).concat(mainApi.middleware),
 });
 
 setupListeners(store.dispatch);
