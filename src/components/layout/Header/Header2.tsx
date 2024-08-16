@@ -1,4 +1,4 @@
-import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import { faCartShopping, faChevronDown, faSearch, faUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   Badge,
@@ -98,7 +98,7 @@ const Header2: React.FC = () => {
   return (
     <Container sx={{ my: 3, display: "flex", justifyContent: "space-between" }}>
       <Stack alignItems={"center"}>
-        icon
+        <FontAwesomeIcon icon={faCartShopping} fontSize={24} />
         <Typography variant="body2">E-commerce</Typography>
       </Stack>
 
@@ -138,7 +138,8 @@ const Header2: React.FC = () => {
                   textAlign: "center",
                 }}
               />
-              icon
+              <FontAwesomeIcon icon={faChevronDown} fontSize={12} />
+
             </ListItem>
           </List>
           <Menu
@@ -167,12 +168,12 @@ const Header2: React.FC = () => {
 
       <Stack direction={"row"} alignItems={"center"}>
         <IconButton aria-label="cart">
+          <FontAwesomeIcon icon={faCartShopping} />
           <StyledBadge badgeContent={4} color="primary">
-            icon
           </StyledBadge>
         </IconButton>
 
-        <IconButton>icon</IconButton>
+        <IconButton><FontAwesomeIcon icon={faUser} /></IconButton>
       </Stack>
     </Container>
   );

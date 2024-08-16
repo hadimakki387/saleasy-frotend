@@ -1,13 +1,12 @@
 "use client"
 
 import Footer from "@/components/layout/Footer/footer";
-import Header1 from "@/components/layout/Header/Header1";
-import Header2 from "@/components/layout/Header/Header2";
-import Header3 from "@/components/layout/Header/Header3";
+
 import ThemeProvider from "@/providers/ThemeProvider";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import StoreWrapper from "@/providers/StoreWrapper";
+import Header from "@/components/layout/Header/Header";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,12 +22,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={`flex flex-col min-h-screen ${inter.className}`}>
         <ThemeProvider>
           <StoreWrapper>
-            <Header1 />
-            <Header2 />
-            <Header3 />
+            <Header />
             {children}
             <Footer />
           </StoreWrapper>

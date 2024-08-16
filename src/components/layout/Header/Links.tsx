@@ -1,3 +1,5 @@
+import { faCaretDown, faChevronDown } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Box, Paper, Typography } from "@mui/material";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -15,7 +17,7 @@ const Links: React.FC<LinksProps> = ({ title }) => {
       <Typography variant="body1" className="text-base">
         {title}
       </Typography>
-      icon
+      <FontAwesomeIcon icon={faChevronDown} fontSize={12} />
       <Box className="absolute left-1/2 top-full min-w-[170px] transform -translate-x-1/2 hidden group-hover:block z-20">
         <Paper className="mt-2">
           <nav aria-label="secondary mailbox folders">
@@ -35,7 +37,7 @@ const Links: React.FC<LinksProps> = ({ title }) => {
                     primary="Products"
                     className="flex-grow text-sm font-light"
                   />
-                  icon
+                  <FontAwesomeIcon icon={faChevronDown} fontSize={12} />
                 </ListItemButton>
                 <Box className="absolute top-0 left-full hidden min-w-[150px] ml-2 group-hover:block z-10">
                   <Paper className="bg-white shadow-lg">

@@ -13,6 +13,9 @@ import {
   ListItemText,
   Button,
 } from "@mui/material";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faFacebook, faInstagram, faXTwitter } from "@fortawesome/free-brands-svg-icons";
+import { faChevronDown, faMoon, faSun } from "@fortawesome/free-solid-svg-icons";
 
 const options = ["AR", "EN"];
 
@@ -62,7 +65,10 @@ const Header1 = () => {
               }}
               color="inherit"
             >
-              {colorMode.mode === "light" ? "Light Mode" : "Dark Mode"}
+              <FontAwesomeIcon
+                icon={colorMode.mode === "light" ? faSun : faMoon}
+                className={colorMode.mode === "light" ? "text-yellow-500" : "text-gray-500"}
+              />
             </IconButton>
           </div>
 
@@ -84,7 +90,7 @@ const Header1 = () => {
                 secondary={options[selectedIndex]}
                 primaryTypographyProps={{ className: "text-white text-xs" }}
               />
-              icon
+              <FontAwesomeIcon icon={faChevronDown} fontSize={8} />
             </ListItem>
           </List>
 
@@ -110,9 +116,11 @@ const Header1 = () => {
             ))}
           </Menu>
 
-          <div>icon</div>
-          <div>icon</div>
-          <div>icon</div>
+          <div className="flex space-x-4">
+            <FontAwesomeIcon icon={faXTwitter} className="text-blue-600" />
+            <FontAwesomeIcon icon={faFacebook} className="text-blue-600" />
+            <FontAwesomeIcon icon={faInstagram} className="text-pink-600" />
+          </div>
         </Stack>
       </Container>
     </Box>

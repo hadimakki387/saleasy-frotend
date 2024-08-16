@@ -19,6 +19,9 @@ import {
   ListItem,
   ListItemButton,
 } from "@mui/material";
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBars, faTimes, faBicycle, faLaptop, faBook, faGamepad, faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import Links from "./Links"; // Adjust based on your file structure
 
 const Header3: React.FC = () => {
@@ -41,13 +44,9 @@ const Header3: React.FC = () => {
     right: false,
   });
 
-  const toggleDrawer =
-    (anchor: "top" | "left" | "bottom" | "right", open: boolean) =>
+  const toggleDrawer = (anchor: "top" | "left" | "bottom" | "right", open: boolean) =>
     (event: React.KeyboardEvent | React.MouseEvent) => {
-      if (
-        event.type === "keydown" &&
-        (event as React.KeyboardEvent).key === "Tab"
-      ) {
+      if (event.type === "keydown" && (event as React.KeyboardEvent).key === "Tab") {
         return;
       }
       setState({ ...state, [anchor]: open });
@@ -60,7 +59,7 @@ const Header3: React.FC = () => {
         alignItems: "center",
         justifyContent: "center", // Center-align the content
         mt: 5,
-        position: "relative",
+        position: 'relative'
       }}
     >
       {useMediaQuery("(min-width:1200px)") && (
@@ -68,11 +67,11 @@ const Header3: React.FC = () => {
           direction={"row"}
           alignItems={"center"}
           spacing={4}
-          sx={{ position: "absolute", left: 0 }} // Position before centered content
+          sx={{ position: 'absolute', left: 0 }} // Position before centered content
         >
-          <Links title={"Home"} />
-          <Links title={"Mega Menu"} />
-          <Links title={"Full Screen Menu"} />
+          <Links title={"Home "} />
+          <Links title={"Mega Menu "} />
+          <Links title={"Full Screen Menu "} />
         </Stack>
       )}
 
@@ -80,7 +79,7 @@ const Header3: React.FC = () => {
         direction={"row"}
         alignItems={"center"}
         spacing={4}
-        sx={{ flexGrow: 1, justifyContent: "center" }} // Center the content in the middle
+        sx={{ flexGrow: 1, justifyContent: 'center' }} // Center the content in the middle
       >
         <Button
           id="basic-button"
@@ -114,19 +113,27 @@ const Header3: React.FC = () => {
           }}
         >
           <MenuItem onClick={handleClose}>
-            <ListItemIcon>icon</ListItemIcon>
+            <ListItemIcon>
+              <FontAwesomeIcon icon={faBicycle} fontSize="small" />
+            </ListItemIcon>
             <ListItemText>Bikes</ListItemText>
           </MenuItem>
           <MenuItem onClick={handleClose}>
-            <ListItemIcon>icon</ListItemIcon>
+            <ListItemIcon>
+              <FontAwesomeIcon icon={faLaptop} fontSize="small" />
+            </ListItemIcon>
             <ListItemText>Electronics</ListItemText>
           </MenuItem>
           <MenuItem onClick={handleClose}>
-            <ListItemIcon>icon</ListItemIcon>
+            <ListItemIcon>
+              <FontAwesomeIcon icon={faBook} fontSize="small" />
+            </ListItemIcon>
             <ListItemText>Books</ListItemText>
           </MenuItem>
           <MenuItem onClick={handleClose}>
-            <ListItemIcon>icon</ListItemIcon>
+            <ListItemIcon>
+              <FontAwesomeIcon icon={faGamepad} fontSize="small" />
+            </ListItemIcon>
             <ListItemText>Games</ListItemText>
           </MenuItem>
         </Menu>
@@ -137,20 +144,17 @@ const Header3: React.FC = () => {
           direction={"row"}
           alignItems={"center"}
           spacing={4}
-          sx={{ position: "absolute", right: 0 }} // Position after centered content
+          sx={{ position: 'absolute', right: 0 }} // Position after centered content
         >
-          <Links title={"Pages"} />
-          <Links title={"User Account"} />
-          <Links title={"Vendor Account"} />
+          <Links title={"Pages "} />
+          <Links title={"User Account "} />
+          <Links title={"Vendor Account "} />
         </Stack>
       )}
 
       {useMediaQuery("(max-width:1200px)") && (
-        <IconButton
-          onClick={toggleDrawer("top", true)}
-          sx={{ position: "absolute", right: 0 }}
-        >
-          icon
+        <IconButton onClick={toggleDrawer("top", true)} sx={{ position: 'absolute', right: 0 }}>
+          <FontAwesomeIcon icon={faBars} />
         </IconButton>
       )}
 
@@ -176,32 +180,20 @@ const Header3: React.FC = () => {
             }}
             onClick={toggleDrawer("top", false)}
           >
-            icon
+            <FontAwesomeIcon icon={faTimes} />
           </IconButton>
 
           {[
             { mainLink: "Home", subLinks: ["Link 1", "Link 2", "Link 3"] },
             { mainLink: "Mega Menu", subLinks: ["Link 1", "Link 2", "Link 3"] },
-            {
-              mainLink: "Full Screen Menu",
-              subLinks: ["Link 1", "Link 2", "Link 3"],
-            },
+            { mainLink: "Full Screen Menu", subLinks: ["Link 1", "Link 2", "Link 3"] },
             { mainLink: "Pages", subLinks: ["Link 1", "Link 2", "Link 3"] },
-            {
-              mainLink: "User Account",
-              subLinks: ["Link 1", "Link 2", "Link 3"],
-            },
-            {
-              mainLink: "Vendor Account",
-              subLinks: ["Link 1", "Link 2", "Link 3"],
-            },
+            { mainLink: "User Account", subLinks: ["Link 1", "Link 2", "Link 3"] },
+            { mainLink: "Vendor Account", subLinks: ["Link 1", "Link 2", "Link 3"] },
           ].map((item) => (
-            <Accordion
-              key={item.mainLink}
-              elevation={0}
-              sx={{ bgcolor: "initial" }}
-            >
+            <Accordion key={item.mainLink} elevation={0} sx={{ bgcolor: "initial" }}>
               <AccordionSummary
+                expandIcon={<FontAwesomeIcon icon={faChevronDown} />}
                 aria-controls="panel1a-content"
                 id="panel1a-header"
               >

@@ -9,10 +9,12 @@ import * as Yup from "yup";
 
 type Props = {};
 
-function LandingPage({}: Props) {
+function LandingPage({ }: Props) {
   return (
     <div className="flex flex-col min-h-screen">
-      <main className="flex-grow"></main>
+      <main className="flex-grow">
+
+      </main>
     </div>
   );
 }
