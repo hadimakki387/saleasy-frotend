@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 :root {
-  --primary:  rgb(43, 52, 69)
+  --primary:  rgb(43, 52, 69);
   --primary-bg: rgb(234, 242, 255);
   --secondary-bg: #ffffff;
   --button-color:rgb(210, 63, 87);
