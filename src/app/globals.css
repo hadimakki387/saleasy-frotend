@@ -4,7 +4,8 @@
 
 :root {
   --primary:  rgb(43, 52, 69);
-  --primary-bg: rgb(234, 242, 255);
+  --secondary: #ffffff;
+  --primary-bg: rgb(230, 230, 230);
   --secondary-bg: #ffffff;
   --button-color:rgb(210, 63, 87);
   --top-bottom-bg:#2B3445;

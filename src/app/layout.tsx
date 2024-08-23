@@ -26,7 +26,10 @@ export default function RootLayout({
         <ThemeProvider>
           <StoreWrapper>
             <Header />
-            {children}
+            <main className=" p-4 px-4 bg-[var(--primary-bg)]">
+              {children}
+            </main>
+
             <Footer />
           </StoreWrapper>
         </ThemeProvider>
