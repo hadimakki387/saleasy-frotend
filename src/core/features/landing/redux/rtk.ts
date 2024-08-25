@@ -1,19 +1,22 @@
 import { mainApi } from "@/core/rtk-query";
+import { Product } from "../components/LandingPage";
 
+interface getProductsParams {
+  id: string;
+}
 export const extendedApi = mainApi.injectEndpoints({
   endpoints: (build) => ({
-    getPokemon: build.query<any, void>({
-      query: () => "https://pokeapi.co/api/v2/pokemon/ditto",
+    getProducts: build.query<Product[], getProductsParams>({
+      query: ({ id }) => "/test/products",
     }),
-    //just an example of mutations
-    postPokemon: build.mutation({
-      query: (data) => ({
-        url: "https://jsonplaceholder.typicode.com/posts",
+    addProduct: build.mutation<Product, Product>({
+      query: (body) => ({
+        url: "/test/products",
         method: "POST",
-        body: data,
+        body,
       }),
     }),
   }),
 });
 
-export const { useGetPokemonQuery, usePostPokemonMutation } = extendedApi;
+export const { useGetProductsQuery, useAddProductMutation } = extendedApi;

@@ -1,3 +1,4 @@
+"use client";
 import { useContext, useState } from "react";
 import { ColorModeContext } from "../../../theme/theme";
 import {
@@ -14,8 +15,16 @@ import {
   Button,
 } from "@mui/material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFacebook, faInstagram, faXTwitter } from "@fortawesome/free-brands-svg-icons";
-import { faChevronDown, faMoon, faSun } from "@fortawesome/free-solid-svg-icons";
+import {
+  faFacebook,
+  faInstagram,
+  faXTwitter,
+} from "@fortawesome/free-brands-svg-icons";
+import {
+  faChevronDown,
+  faMoon,
+  faSun,
+} from "@fortawesome/free-solid-svg-icons";
 
 const options = ["AR", "EN"];
 
@@ -42,8 +51,8 @@ const Header1 = () => {
   };
 
   return (
-    <Box className="bg-[#2B3445] py-1 rounded-b-lg">
-      <Container>
+    <div className="bg-primary px-24 py-2 rounded-b-lg">
+      <div>
         <Stack direction="row" alignItems="center">
           <Typography className="mr-2 px-2 py-1 bg-[#D23F57] rounded-md text-white text-xs font-bold">
             HOT
@@ -53,46 +62,6 @@ const Header1 = () => {
           </Typography>
 
           <Box className="flex-grow" />
-
-          <div>
-            <IconButton
-              onClick={() => {
-                localStorage.setItem(
-                  "mode",
-                  colorMode.mode === "dark" ? "light" : "dark"
-                );
-                colorMode.toggleColorMode();
-              }}
-              color="inherit"
-            >
-              <FontAwesomeIcon
-                icon={colorMode.mode === "light" ? faSun : faMoon}
-                className={colorMode.mode === "light" ? "text-yellow-500" : "text-gray-500"}
-              />
-            </IconButton>
-          </div>
-
-          <List
-            component="nav"
-            aria-label="Device settings"
-            className="p-0 m-0"
-          >
-            <ListItem
-              id="lock-button"
-              aria-haspopup="listbox"
-              aria-controls="lock-menu"
-              aria-label="when device is locked"
-              aria-expanded={open ? "true" : undefined}
-              onClick={handleClickListItem}
-              className="cursor-pointer px-1"
-            >
-              <ListItemText
-                secondary={options[selectedIndex]}
-                primaryTypographyProps={{ className: "text-white text-xs" }}
-              />
-              <FontAwesomeIcon icon={faChevronDown} fontSize={8} />
-            </ListItem>
-          </List>
 
           <Menu
             id="lock-menu"
@@ -122,8 +91,8 @@ const Header1 = () => {
             <FontAwesomeIcon icon={faInstagram} className="text-pink-600" />
           </div>
         </Stack>
-      </Container>
-    </Box>
+      </div>
+    </div>
   );
 };
 

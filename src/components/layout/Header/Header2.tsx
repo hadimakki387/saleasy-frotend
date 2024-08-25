@@ -1,4 +1,12 @@
-import { faCartShopping, faChevronDown, faSearch, faUser } from "@fortawesome/free-solid-svg-icons";
+"use client";
+import Profile from "@/components/SVGs/profile";
+import ShoppingBagIcon from "@/components/SVGs/shopping-bag-icon";
+import {
+  faCartShopping,
+  faChevronDown,
+  faSearch,
+  faUser,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   Badge,
@@ -93,13 +101,11 @@ const Header2: React.FC = () => {
     setAnchorEl(null);
   };
 
-  const theme = useTheme();
-
   return (
-    <Container sx={{ my: 3, display: "flex", justifyContent: "space-between" }}>
+    <div className="px-24 flex items-center justify-between my-4">
       <Stack alignItems={"center"}>
-        <FontAwesomeIcon icon={faCartShopping} fontSize={24} />
         <Typography variant="body2">E-commerce</Typography>
+        <FontAwesomeIcon icon={faCartShopping} fontSize={24} />
       </Stack>
 
       <Search className="relative flex items-center border rounded-full hover:border-gray-900 ml-0 mr-2">
@@ -114,9 +120,9 @@ const Header2: React.FC = () => {
         <div>
           <List
             component="nav"
+            className="bg-white"
             aria-label="Device settings"
             sx={{
-              bgcolor: theme.palette.myColor.main,
               borderBottomRightRadius: "22px",
               borderTopRightRadius: "22px",
               p: "0",
@@ -139,7 +145,6 @@ const Header2: React.FC = () => {
                 }}
               />
               <FontAwesomeIcon icon={faChevronDown} fontSize={12} />
-
             </ListItem>
           </List>
           <Menu
@@ -168,14 +173,15 @@ const Header2: React.FC = () => {
 
       <Stack direction={"row"} alignItems={"center"}>
         <IconButton aria-label="cart">
-          <FontAwesomeIcon icon={faCartShopping} />
-          <StyledBadge badgeContent={4} color="primary">
-          </StyledBadge>
+          <ShoppingBagIcon size={24} />
+          <StyledBadge badgeContent={4} color="primary"></StyledBadge>
         </IconButton>
 
-        <IconButton><FontAwesomeIcon icon={faUser} /></IconButton>
+        <IconButton>
+          <Profile size={30} />
+        </IconButton>
       </Stack>
-    </Container>
+    </div>
   );
 };
 

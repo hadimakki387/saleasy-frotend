@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import Footer from "@/components/layout/Footer/footer";
 
@@ -23,16 +23,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`flex flex-col min-h-screen ${inter.className}`}>
-        <ThemeProvider>
-          <StoreWrapper>
-            <Header />
-            <main className=" p-4 px-4 bg-[var(--primary-bg)]">
-              {children}
-            </main>
+        <StoreWrapper>
+          <Header />
+          <main className=" p-4 px-4 bg-[var(--primary-bg)]">{children}</main>
 
-            <Footer />
-          </StoreWrapper>
-        </ThemeProvider>
+          <Footer />
+        </StoreWrapper>
       </body>
     </html>
   );

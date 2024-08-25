@@ -1,177 +1,122 @@
-import React, { useState, useEffect } from 'react';
-import Card from '@/components/global/SeCard';
-import Hero from '@/components/global/carousel/SwiperMain';
-import ProductSection from '@/components/global/SeUsedComponents/ProductSection';
-import DealsOfTheDay from '@/components/global/SeUsedComponents/DealsOfTheDay';
-import Banner from '@/components/global/SeHeroSection';
-import ItemSection from '@/components/global/SeUsedComponents/ItemSection';
-import IconSection from '@/components/global/carousel/IconSection';
-import SaleBanner from '@/components/global/SeUsedComponents/SaleBanner';
-import PromoBanner from '@/components/global/SeUsedComponents/PromoBanner';
-import BrandIcons from '@/components/global/SeUsedComponents/BrandIcons';
-import { faAmazon, faApple, faGoogle, faMicrosoft, faFacebook } from '@fortawesome/free-brands-svg-icons'; // Add other icons as needed
+"use client";
+import React, { useEffect, useState } from "react";
+import Hero from "./Hero";
 
+import Banner from "@/components/global/SeHeroSection";
 
-interface Product {
+import SeButton from "@/components/global/SeButton";
+import SeCard from "@/components/global/SeCard";
+import {
+  faAmazon,
+  faApple,
+  faFacebook,
+  faGoogle,
+  faMicrosoft,
+} from "@fortawesome/free-brands-svg-icons"; // Add other icons as needed
+import Image from "next/image";
+import ProductSection from "./ProductSection";
+import { useAddProductMutation, useGetProductsQuery } from "../redux/rtk";
+import { useDispatch } from "react-redux";
+import { useAppSelector } from "@/providers/StoreWrapper";
+import { setTest } from "../redux/redux";
+
+export interface Product {
   id: number;
   name: string;
   imageSrc: string;
 }
 
 const LandingPage: React.FC = () => {
-  const [products, setProducts] = useState<Product[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
+  // example usage of redux state management
+  const dispatch = useDispatch();
+  const { test } = useAppSelector((state) => state.landingPage);
+  const changeState = () => {
+    dispatch(setTest("change"));
+  };
   useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const res = await fetch('/api/test/products');
-        if (!res.ok) {
-          throw new Error('Failed to fetch products');
-        }
-        const data = await res.json();
-        setProducts(data.products);
-      } catch (err) {
-        setError((err as Error).message);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchProducts();
+    setTimeout(() => {
+      changeState();
+    }, 3000);
   }, []);
+  // example usage of redux state management
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error}</div>;
+  //example usage of rtk query
+  const {
+    data: products,
+    isLoading,
+    error,
+  } = useGetProductsQuery(
+    { id: "1" },
+    {
+      //another options
+    }
+  );
+
+  //example usage of rtk mustations
+  const [
+    addProducts,
+    {
+      isLoading: addingProduct,
+      data: addedProduct,
+      isError: errorAddingProducts,
+    },
+  ] = useAddProductMutation();
+  //example usage of rtk query
+
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error.toString()}</div>;
 
   const brandIcons = [
-    { icon: faAmazon, alt: 'Amazon' },
-    { icon: faApple, alt: 'Apple' },
-    { icon: faGoogle, alt: 'Google' },
-    { icon: faMicrosoft, alt: 'Microsoft' },
-    { icon: faFacebook, alt: 'Facebook' },
+    { icon: faAmazon, alt: "Amazon" },
+    { icon: faApple, alt: "Apple" },
+    { icon: faGoogle, alt: "Google" },
+    { icon: faMicrosoft, alt: "Microsoft" },
+    { icon: faFacebook, alt: "Facebook" },
   ];
 
   return (
-    <div className="flex flex-col min-h-screen bg-[var(--primary-bg)] overflow-x-hidden">
-      <main className="flex-grow">
+    <div className="  bg-primary-bg overflow-x-hidden">
+      <main className="flex flex-col gap-8">
         <Hero />
-        <div className="flex space-x-4 overflow-x-auto mt-8 py-4">
-          {products.map((product) => (
-            <Card
-              key={product.id}
-              imageSrc={product.imageSrc}
-              title={product.name}
-            />
+        <div className="flex items-center justify-between gap-4 space-x-4 mt-8 py-4">
+          {products?.map((product: any, index: any) => (
+            <SeCard key={index}>
+              <Image
+                height={300}
+                width={200}
+                src={product.imageSrc}
+                alt={product.name}
+                className=" object-cover transform transition-transform duration-300 ease-in-out group-hover:scale-110"
+              />
+
+              <SeButton
+                fullWidth
+                variant="contained"
+                color="primary"
+                label={product.name}
+                // onClick={() =>
+                //   addProducts({ id: 1, name: "test", imageSrc: "test" })
+                // }
+              />
+            </SeCard>
           ))}
         </div>
-        <DealsOfTheDay />
+
         <ProductSection
           visibleCards={5} // Show 5 cards
           containerWidthPercentage={100} // 100% width
         />
-        <div className="flex space-x-4 w-full">
-          <div className="flex-1 min-w-0">
+        <div className="flex items-center gap-4 w-full ">
+          <div className="w-full">
             <Banner />
           </div>
-          <div className="flex-1 min-w-0">
+          <div className="w-full">
             <Banner />
           </div>
-          <div className="flex-1 min-w-0">
-            <Banner />
-          </div>
-          <div className="flex-1 min-w-0">
+          <div className="w-full">
             <Banner />
           </div>
         </div>
-
-        <div className="flex w-full px-4 sm:px-6 items-stretch">
-          {/* ItemSection with fixed width */}
-          <div className="flex-shrink-0 w-[24%] h-full"> {/* Reduced width slightly */}
-            <ItemSection />
-          </div>
-
-          {/* Space between ItemSection and ProductSection */}
-          <div className="flex-shrink-0 w-[1%]"> {/* Add this for spacing */}
-            &nbsp;
-          </div>
-
-          {/* ProductSection taking the remaining space */}
-          <div className="flex-grow h-full">
-            <ProductSection
-              visibleCards={4}
-              containerWidthPercentage={80} // Full width of its container
-            />
-          </div>
-        </div>
-        <div className="flex py-2 pb-8"> <SaleBanner
-          title="Weekend Sale"
-          subtitle="Fine Smart Speaker"
-          price="$185.00"
-          imageUrl="https://bazaar.ui-lib.com/assets/images/banners/banner-22.jpg"
-        />
-          <SaleBanner
-            title="feshel"
-            subtitle="Fine Smart Speaker"
-            price="$15.00"
-            imageUrl="https://bazaar.ui-lib.com/assets/images/banners/banner-22.jpg"
-          />
-        </div>
-        <div className="flex w-full px-4 sm:px-6 items-stretch">
-          {/* ItemSection with fixed width */}
-          <div className="flex-shrink-0 w-[24%] h-full"> {/* Reduced width slightly */}
-            <ItemSection />
-          </div>
-
-          {/* Space between ItemSection and ProductSection */}
-          <div className="flex-shrink-0 w-[1%]"> {/* Add this for spacing */}
-            &nbsp;
-          </div>
-
-          {/* ProductSection taking the remaining space */}
-          <div className="flex-grow h-full">
-            <ProductSection
-              visibleCards={4}
-              containerWidthPercentage={80} // Full width of its container
-            />
-          </div>
-        </div>
-        <div className="py-4">
-          <PromoBanner
-            title="GIFT"
-            subtitle="50% OFF PERFECT STYLES"
-            buttonText="Discover Now"
-            buttonLink="/discover"
-
-          />
-        </div>
-        <div className="flex w-full px-4 sm:px-6 items-stretch">
-          {/* ItemSection with fixed width */}
-          <div className="flex-shrink-0 w-[24%] h-full"> {/* Reduced width slightly */}
-            <ItemSection />
-          </div>
-
-          {/* Space between ItemSection and ProductSection */}
-          <div className="flex-shrink-0 w-[1%]"> {/* Add this for spacing */}
-            &nbsp;
-          </div>
-
-          {/* ProductSection taking the remaining space */}
-          <div className="flex-grow h-full">
-            <ProductSection
-              visibleCards={4}
-              containerWidthPercentage={80} // Full width of its container
-            />
-          </div>
-        </div>
-        <div className="py-4">
-          <BrandIcons icons={brandIcons} />
-        </div>
-
-
-
-
       </main>
     </div>
   );
