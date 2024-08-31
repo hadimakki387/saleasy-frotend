@@ -25,7 +25,7 @@ const sxOptions = (
   outlined: {
     color: `var(--${!disabled ? color : "deactivated-text"}) !important`,
     backgroundColor: "transparent !important",
-    border: `1px solid  var(--${
+    border: `2px solid  var(--${
       !disabled ? color : "deactivated-text"
     }) !important`,
   },
@@ -34,7 +34,7 @@ const sxOptions = (
     backgroundColor: `var(--${
       !disabled ? color : "deactivated-text"
     }) !important`,
-    border: `1px solid  var(--${
+    border: `2px solid  var(--${
       !disabled ? color : "deactivated-text"
     }) !important`,
   },

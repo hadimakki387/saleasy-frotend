@@ -6,7 +6,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="px-40 ">
+    <div className="max-sm:px-2 px-4 2xl:px-40 py-4">
       {" "}
       <ThemeProvider>{children}</ThemeProvider>
     </div>

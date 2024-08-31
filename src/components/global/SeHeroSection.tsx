@@ -15,8 +15,14 @@ const Banner: React.FC<BannerProps> = ({
 }) => {
   return (
     <div className="item-nkw  w-full">
-      <div className="relative overflow-hidden">
-        <img src={imageUrl} alt="Banner Image" className="w-full" />
+      <div
+        className="relative overflow-hidden h-[13rem]"
+        style={{
+          backgroundImage: `url('${imageUrl}')`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+      >
         <div className="absolute top-0 left-8 z-10 h-full flex flex-col justify-center">
           <p className="text-xs font-light tracking-wider">{title}</p>
           <h4 className="text-lg font-semibold my-4 leading-none">

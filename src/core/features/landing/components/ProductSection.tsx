@@ -4,6 +4,7 @@ import ProductCard from "./SeProductCard";
 import { EmblaOptionsType } from "embla-carousel";
 import SeCarousel from "@/components/global/carousel/SeCarousel";
 import DealsOfTheDay from "./DealsOfTheDay";
+import { products } from "@/fake-db/products-2";
 
 type Product = {
   id: number;
@@ -24,28 +25,8 @@ const ProductSection: React.FC<ProductSectionProps> = ({
   containerWidthPercentage = 100,
   className = "",
 }) => {
-  const [products, setProducts] = useState<Product[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string>("");
-
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const res = await fetch("/api/test/products2");
-        if (!res.ok) {
-          throw new Error("Failed to fetch products");
-        }
-        const data = await res.json();
-        setProducts(data.products);
-      } catch (err) {
-        setError((err as Error).message);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchProducts();
-  }, []);
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;

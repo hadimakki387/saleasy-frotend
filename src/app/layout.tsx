@@ -6,7 +6,7 @@ import ThemeProvider from "@/providers/ThemeProvider";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import StoreWrapper from "@/providers/StoreWrapper";
-import Header from "@/components/layout/Header/Header";
+import Header from "@/components/layout/Header";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,10 +22,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`flex flex-col min-h-screen ${inter.className}`}>
+      <body
+        className={`flex flex-col min-h-screen bg-primary-bg ${inter.className}`}
+      >
         <StoreWrapper>
           <Header />
-          <main className=" p-4 px-4 bg-[var(--primary-bg)]">{children}</main>
+          <main className="">{children}</main>
 
           <Footer />
         </StoreWrapper>

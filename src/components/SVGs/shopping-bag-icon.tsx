@@ -6,7 +6,7 @@ interface Props {
   className?: string;
 }
 
-function ShoppingBagIcon({ fill = "#4C5966", size = 16, className }: Props) {
+function ShoppingBagIcon({ fill = "#4C5966", size = 24, className }: Props) {
   return (
     <svg
       xmlnsXlink="http://www.w3.org/1999/xlink"

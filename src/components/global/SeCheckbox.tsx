@@ -10,10 +10,10 @@ interface Props extends CheckboxProps {
   isSwitch?: boolean;
   className?: string;
   labelClass?: string;
-  size?: "medium" | "small"
+  size?: "medium" | "small";
 }
 
-function DaCheckbox({
+function SeCheckbox({
   label,
   name,
   checked,
@@ -54,7 +54,7 @@ function DaCheckbox({
             "&.Mui-checked": {
               color: "var(--primary)",
             },
-            "&.Mui-disabled":{
+            "&.Mui-disabled": {
               color: "var(--hint) !important",
             },
             ...sx,
@@ -69,7 +69,8 @@ function DaCheckbox({
             if (checkRef.current) {
               checkRef.current.click();
             }
-          }}>
+          }}
+        >
           {label}
         </p>
       )}
@@ -77,4 +78,4 @@ function DaCheckbox({
   );
 }
 
-export default DaCheckbox;
+export default SeCheckbox;

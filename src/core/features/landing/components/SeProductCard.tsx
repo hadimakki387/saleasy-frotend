@@ -5,6 +5,8 @@ import SeProductInfo from "./SeProductInfo";
 import SeButton from "@/components/global/SeButton";
 import SeCard from "@/components/global/SeCard";
 import { Rating } from "@mui/material";
+import Image from "next/image";
+import { useParams, useRouter } from "next/navigation";
 
 interface ProductCardProps {
   imageSrc: string;
@@ -37,10 +39,13 @@ const ProductCard: React.FC<ProductCardProps> = ({
   const handleCloseProductInfo = () => {
     setShowProductInfo(false);
   };
+  const router = useRouter();
+  const param = useParams();
+  const { store, item } = param;
 
   return (
     <>
-      <SeCard className="relative bg-white rounded-lg shadow-md p-4 flex flex-col items-center w-full min-w-[300px] h-[400px] justify-between border-2 border-transparent hover:border-[var(--primary)] transition-all group">
+      <SeCard className="relative bg-white rounded-lg shadow-md p-4 flex flex-col items-center w-full min-w-[300px] h-[400px] justify-between border-2 border-transparent hover:border-[var(--primary)] transition-all group max-sm:min-w-[200px] max-sm:h-[280px]">
         <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity flex space-x-4">
           <FontAwesomeIcon
             icon={faEye}
@@ -55,10 +60,12 @@ const ProductCard: React.FC<ProductCardProps> = ({
             onClick={handleLikeClick}
           />
         </div>
-        <img
-          src={"/pants.png"}
+        <Image
+          height={200}
+          width={200}
+          src={imageSrc}
           alt={title}
-          className="w-full h-48 object-cover rounded-md mb-4"
+          className="w-full h-48 object-cover rounded-md mb-4 max-sm:h-32"
         />
         <h2 className="text-[var(--title-text)] text-sm font-semibold mb-2 text-center truncate">
           {title}
@@ -76,6 +83,9 @@ const ProductCard: React.FC<ProductCardProps> = ({
           label={"Add To Cart"}
           variant="outlined"
           color="primary"
+          onClick={() => {
+            router.push(`/store/${store}/item/${item}`);
+          }}
         />
       </SeCard>
 

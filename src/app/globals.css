@@ -3,15 +3,16 @@
 @tailwind utilities;
 
 :root {
+  --item-card-bg: #fafafa;
   --primary: rgb(43, 52, 69);
   --secondary: #ffffff;
-  --primary-bg: rgb(230, 230, 230);
+  --primary-bg: #f6f6f6;
   --secondary-bg: #ffffff;
-  --button-color: rgb(210, 63, 87);
+  --button-color: #d23f57;
   --top-bottom-bg: #2b3445;
   --input-border-radius: 4px;
   --shadow: 1px 1px 8px rgba(0, 0, 0, 0.15);
-  --error: #ff4d49;
+  --error: #d23f57;
   --button-padding: 5px 10px;
   --button-border-radius: 2px;
   --main-bg: #f7f7f9;

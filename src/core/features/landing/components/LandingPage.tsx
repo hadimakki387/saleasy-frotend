@@ -1,11 +1,13 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import Hero from "./Hero";
 
 import Banner from "@/components/global/SeHeroSection";
 
+import SeCarousel from "@/components/global/carousel/SeCarousel";
 import SeButton from "@/components/global/SeButton";
 import SeCard from "@/components/global/SeCard";
+import { useAppSelector } from "@/providers/StoreWrapper";
 import {
   faAmazon,
   faApple,
@@ -14,11 +16,13 @@ import {
   faMicrosoft,
 } from "@fortawesome/free-brands-svg-icons"; // Add other icons as needed
 import Image from "next/image";
-import ProductSection from "./ProductSection";
-import { useAddProductMutation, useGetProductsQuery } from "../redux/rtk";
 import { useDispatch } from "react-redux";
-import { useAppSelector } from "@/providers/StoreWrapper";
 import { setTest } from "../redux/redux";
+import { useAddProductMutation, useGetProductsQuery } from "../redux/rtk";
+import ProductSection from "./ProductSection";
+import CategorySection from "./category-section";
+import { products1 } from "@/fake-db/products-1";
+import { useRouter } from "next/navigation";
 
 export interface Product {
   id: number;
@@ -63,8 +67,8 @@ const LandingPage: React.FC = () => {
   ] = useAddProductMutation();
   //example usage of rtk query
 
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error.toString()}</div>;
+  // if (isLoading) return <div>Loading...</div>;
+  // if (error) return <div>Error: {error.toString()}</div>;
 
   const brandIcons = [
     { icon: faAmazon, alt: "Amazon" },
@@ -73,40 +77,43 @@ const LandingPage: React.FC = () => {
     { icon: faMicrosoft, alt: "Microsoft" },
     { icon: faFacebook, alt: "Facebook" },
   ];
+  const router = useRouter();
 
   return (
-    <div className="  bg-primary-bg overflow-x-hidden">
+    <div className="   overflow-x-hidden">
       <main className="flex flex-col gap-8">
         <Hero />
-        <div className="flex items-center justify-between gap-4 space-x-4 mt-8 py-4">
-          {products?.map((product: any, index: any) => (
+        <SeCarousel options={{}}>
+          {products1?.map((product: any, index: any) => (
             <SeCard key={index}>
               <Image
                 height={300}
                 width={200}
                 src={product.imageSrc}
                 alt={product.name}
-                className=" object-cover transform transition-transform duration-300 ease-in-out group-hover:scale-110"
+                className=" object-cover transform transition-transform duration-300 ease-in-out group-hover:scale-110 min-w-56 max-sm:min-w-40"
               />
 
               <SeButton
                 fullWidth
-                variant="contained"
+                variant="outlined"
                 color="primary"
                 label={product.name}
-                // onClick={() =>
-                //   addProducts({ id: 1, name: "test", imageSrc: "test" })
-                // }
+                onClick={() =>
+                  router.push(
+                    `/store/${product.id}/search?category=${product.name}`
+                  )
+                }
               />
             </SeCard>
           ))}
-        </div>
+        </SeCarousel>
 
         <ProductSection
           visibleCards={5} // Show 5 cards
           containerWidthPercentage={100} // 100% width
         />
-        <div className="flex items-center gap-4 w-full ">
+        <div className="flex items-center gap-4 w-full sm:max-h-[15rem] max-sm:flex-col">
           <div className="w-full">
             <Banner />
           </div>
@@ -117,6 +124,22 @@ const LandingPage: React.FC = () => {
             <Banner />
           </div>
         </div>
+        <CategorySection />
+        <div className="flex items-center gap-4 w-full sm:max-h-[15rem] max-sm:flex-col">
+          <div className="w-full">
+            <Banner />
+          </div>
+          <div className="w-full">
+            <Banner />
+          </div>
+        </div>
+        <CategorySection />
+        <div className="flex items-center gap-4 w-full sm:max-h-[15rem] max-sm:flex-col">
+          <div className="w-full">
+            <Banner />
+          </div>
+        </div>
+        <CategorySection />
       </main>
     </div>
   );
