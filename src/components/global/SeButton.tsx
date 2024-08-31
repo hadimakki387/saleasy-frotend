@@ -66,8 +66,10 @@ function SeButton({
               ? "white !important"
               : "var(--primary) !important",
           color:
-            variant === "contained"
+            variant === "contained" && color === "primary"
               ? "var(--primary) !important"
+              : variant === "contained" && color === "error"
+              ? "var(--error) !important"
               : "white !important",
         },
         fontWeight: "bold",

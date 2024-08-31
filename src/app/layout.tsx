@@ -1,12 +1,12 @@
 "use client";
 
-import Footer from "@/components/layout/Footer/footer";
-
 import ThemeProvider from "@/providers/ThemeProvider";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import StoreWrapper from "@/providers/StoreWrapper";
 import Header from "@/components/layout/Header";
+import { usePathname } from "next/navigation";
+import Footer from "@/components/layout/footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,11 +20,10 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const path = usePathname();
   return (
     <html lang="en">
-      <body
-        className={`flex flex-col min-h-screen bg-primary-bg ${inter.className}`}
-      >
+      <body className={`${inter.className}`}>
         <StoreWrapper>
           <Header />
           <main className="">{children}</main>

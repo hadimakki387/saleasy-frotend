@@ -1,6 +1,7 @@
 import Autocomplete from "@mui/joy/Autocomplete";
 import FormControl from "@mui/joy/FormControl";
 import FormLabel from "@mui/joy/FormLabel";
+import { SxProps } from "@mui/material";
 import * as React from "react";
 
 interface Props {
@@ -19,6 +20,8 @@ interface Props {
   disabled?: boolean;
   loading?: boolean;
   value?: string;
+  sx?: SxProps;
+  formControlSx?: SxProps;
   // eslint-disable-next-line no-unused-vars
   handleSubmit?: (e: any) => any;
 }
@@ -36,8 +39,10 @@ export default function AutoCompleteSearch({
   formik, // Assign formik prop
   disabled,
   value,
+  sx,
+  loading = false,
+  formControlSx,
 }: Props) {
-
   const [menuItems, setMenuItems] = React.useState(data);
 
   React.useEffect(() => {
@@ -45,7 +50,13 @@ export default function AutoCompleteSearch({
   }, [data]);
 
   return (
-    <FormControl id="free-solo-2-demo" >
+    <FormControl
+      sx={{
+        "&:focus": {
+          outline: "none",
+        },
+      }}
+    >
       {label && <FormLabel>{label}</FormLabel>}
       <Autocomplete
         defaultValue={defaultValue}
@@ -57,10 +68,7 @@ export default function AutoCompleteSearch({
           if (setSelectedItem) setSelectedItem(selectedItem.id);
           formik?.setFieldValue(name, selectedItem.id);
         }}
-        freeSolo
-        disableClearable
-        loading={true}
-        noOptionsText="No options found"
+        loading={loading}
         loadingText="Loading..."
         options={menuItems.map((option) => option.title)}
         onInputChange={(event, value) => {
@@ -75,8 +83,14 @@ export default function AutoCompleteSearch({
           "&.Mui-disabled": {
             backgroundColor: "var(--silver-bg)",
           },
-
+          "&:focus": {
+            outline: "none",
+          },
+          "&::before": {
+            boxShadow: "none",
+          },
           width: "100%",
+          ...sx,
         }}
       />
       {name && formik?.errors[name] && (

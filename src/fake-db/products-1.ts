@@ -1,4 +1,9 @@
-export const products1 = [
+export interface Product1Interface {
+  id: number;
+  name: string;
+  imageSrc: string;
+}
+export const products1: Product1Interface[] = [
   { id: 1, name: "Toys", imageSrc: "/cat-1.jpg" },
   { id: 2, name: "Sports", imageSrc: "/cat-2.jpg" },
   { id: 3, name: "Gaming", imageSrc: "/cat-2.jpg" },

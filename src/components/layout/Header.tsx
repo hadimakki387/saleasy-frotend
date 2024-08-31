@@ -16,6 +16,10 @@ import { useState } from "react";
 import Profile from "../SVGs/profile";
 import ShoppingBagIcon from "../SVGs/shopping-bag-icon";
 import { useParams, useRouter } from "next/navigation";
+import AutoCompleteSearch from "../global/SeAutoCompleteSearch";
+import { faBars, faSearch } from "@fortawesome/free-solid-svg-icons";
+import { useDispatch } from "react-redux";
+import { setIsSearchDrawerOpen } from "../global-slice";
 
 type Props = {};
 const Search = styled("div")(({ theme }) => ({
@@ -80,9 +84,10 @@ function Header({}: Props) {
   const router = useRouter();
   const params = useParams();
   const { store, item } = params;
+  const dispatch = useDispatch();
   return (
-    <div className="flex flex-col w-full bg-white">
-      <div className="flex items-center justify-between bg-primary text-white xl:px-40 px-4 py-3">
+    <>
+      <div className="flex items-center justify-between bg-primary text-white max-sm:px-2 px-4 2xl:px-40 py-3">
         <div className="text-xs">Free Express Shipping</div>
         <div className="flex items-center gap-3 text-sm">
           <FontAwesomeIcon icon={faInstagram} />
@@ -90,19 +95,29 @@ function Header({}: Props) {
           <FontAwesomeIcon icon={faTwitter} />
         </div>
       </div>
-      <div className="xl:px-40 px-4 flex items-center justify-between py-4 sticky top-0">
-        <Image
-          src="/logo.png"
-          alt="logo"
-          width={100}
-          height={100}
-          className="cursor-pointer"
-          onClick={() => {
-            router.push(`/store/${store}`);
-          }}
-        />
+      <div className="max-sm:px-2 px-4 2xl:px-40 max-lg:grid max-lg:grid-cols-6 flex items-center justify-between py-4 bg-white sticky top-0 z-50">
+        <div className="flex items-center lg:hidden col-span-2 ">
+          <FontAwesomeIcon
+            icon={faBars}
+            onClick={() => {
+              dispatch(setIsSearchDrawerOpen(true));
+            }}
+          />
+        </div>
+        <div className="flex justify-center items-center col-span-2">
+          <Image
+            src="/logo.png"
+            alt="logo"
+            width={100}
+            height={100}
+            className="cursor-pointer  "
+            onClick={() => {
+              router.push(`/store/${store}`);
+            }}
+          />
+        </div>
 
-        <div className="max-sm:hidden">
+        <div className="max-lg:hidden col-span-2 flex justify-center items-center">
           <Search
             sx={{
               display: "flex",
@@ -114,12 +129,27 @@ function Header({}: Props) {
             }}
             className="bg-neutral-100 "
           >
-            <SearchIconWrapper>
+            {/* <SearchIconWrapper>
               <SearchIcon />
-            </SearchIconWrapper>
-            <StyledInputBase
-              placeholder="Search…"
-              inputProps={{ "aria-label": "search" }}
+            </SearchIconWrapper> */}
+            <AutoCompleteSearch
+              formControlSx={{
+                "&:focus": { border: "none !important" },
+              }}
+              placeholder="Search for products"
+              sx={{
+                backgroundColor: "transparent",
+                border: "none",
+                boxShadow: "none",
+                "&:focus": { boxShadow: "none", border: "none !important" },
+                height: "100%",
+              }}
+              data={[
+                {
+                  title: "item",
+                  value: "value",
+                },
+              ]}
             />
             <div>
               <List
@@ -177,12 +207,15 @@ function Header({}: Props) {
             </div>
           </Search>
         </div>
-        <div className="flex items-center gap-2">
+        <div className=" gap-2 col-span-2 flex justify-center items-center max-lg:justify-end">
+          <div className="lg:hidden">
+            <FontAwesomeIcon icon={faSearch} />
+          </div>
           <Profile />
           <ShoppingBagIcon />
         </div>
       </div>
-    </div>
+    </>
   );
 }
 
