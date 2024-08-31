@@ -1,13 +1,40 @@
-export interface Product1Interface {
-  id: number;
-  name: string;
-  imageSrc: string;
-}
-export const products1: Product1Interface[] = [
-  { id: 1, name: "Toys", imageSrc: "/cat-1.jpg" },
-  { id: 2, name: "Sports", imageSrc: "/cat-2.jpg" },
-  { id: 3, name: "Gaming", imageSrc: "/cat-2.jpg" },
-  { id: 4, name: "Furniture", imageSrc: "/cat-4.jpg" },
-  { id: 5, name: "Fashion", imageSrc: "/cat-5.jpg" },
-  { id: 6, name: "Cameras", imageSrc: "/cat-6.jpg" },
+import { ProductInterface } from "./products-2";
+
+export const products1: ProductInterface[] = [
+  { id: "1asf", title: "Toys", imageSrc: "/cat-1.jpg", price: 100, rating: 4 },
+  {
+    id: "2asdfa",
+    title: "Sports",
+    imageSrc: "/cat-2.jpg",
+    price: 100,
+    rating: 4,
+  },
+  {
+    id: "asdfa3",
+    title: "Gaming",
+    imageSrc: "/cat-2.jpg",
+    price: 100,
+    rating: 4,
+  },
+  {
+    id: "asdf4",
+    title: "Furniture",
+    imageSrc: "/cat-4.jpg",
+    price: 100,
+    rating: 4,
+  },
+  {
+    id: "asdfa5",
+    title: "Fashion",
+    imageSrc: "/cat-5.jpg",
+    price: 100,
+    rating: 4,
+  },
+  {
+    id: "6asdfa",
+    title: "Cameras",
+    imageSrc: "/cat-6.jpg",
+    price: 100,
+    rating: 4,
+  },
 ];

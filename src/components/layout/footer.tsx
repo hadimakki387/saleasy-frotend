@@ -8,6 +8,7 @@ import {
   faYoutube,
 } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Image from "next/image";
 import React from "react";
 
 const Footer: React.FC = () => {
@@ -17,7 +18,9 @@ const Footer: React.FC = () => {
         <div className="flex flex-col space-y-4 lg:w-1/3">
           <div className="flex items-center space-x-4">
             <a href="/">
-              <img
+              <Image
+                width={100}
+                height={100}
                 className="h-12"
                 src="https://bazaar.ui-lib.com/assets/images/logo.svg"
                 alt="Logo"

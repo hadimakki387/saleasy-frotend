@@ -11,6 +11,9 @@ import {
 import Image from "next/image";
 import { useParams } from "next/navigation";
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { setCartItems } from "../redux/redux";
+import { useAppSelector } from "@/providers/StoreWrapper";
 
 type Props = {};
 
@@ -19,6 +22,9 @@ function ItemPage({}: Props) {
   const [image, setImage] = useState(SingleItemData.images[0]);
   const [selectedSize, setSelectedSize] = useState("M");
   const [selectedColor, setSelectedColor] = useState("Red");
+  const dispatch = useDispatch();
+  const { CartItems } = useAppSelector((state) => state.ItemSlice);
+
   return (
     <div className="space-y-16 py-8">
       <div className="flex items-start gap-4 justify-center max-lg:flex-col">
@@ -94,6 +100,13 @@ function ItemPage({}: Props) {
             rounded
             sx={{
               padding: "10px 20px",
+            }}
+            onClick={() => {
+              // if (CartItems.find((item) => item.id === SingleItemData.id))
+              //   return;
+              dispatch(
+                setCartItems([...CartItems, { ...SingleItemData, quantity: 1 }])
+              );
             }}
           />
         </div>

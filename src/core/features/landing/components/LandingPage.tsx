@@ -80,17 +80,17 @@ const LandingPage: React.FC = () => {
   const router = useRouter();
 
   return (
-    <div className="   overflow-x-hidden">
+    <div className="">
       <main className="flex flex-col gap-8">
         <Hero />
         <SeCarousel options={{}}>
-          {products1?.map((product: any, index: any) => (
+          {products1?.map((product, index: any) => (
             <SeCard key={index}>
               <Image
                 height={300}
                 width={200}
                 src={product.imageSrc}
-                alt={product.name}
+                alt={product.title}
                 className=" object-cover transform transition-transform duration-300 ease-in-out group-hover:scale-110 min-w-56 max-sm:min-w-40"
               />
 
@@ -98,10 +98,10 @@ const LandingPage: React.FC = () => {
                 fullWidth
                 variant="outlined"
                 color="primary"
-                label={product.name}
+                label={product.title}
                 onClick={() =>
                   router.push(
-                    `/store/${product.id}/search?category=${product.name}`
+                    `/store/${product.id}/search?category=${product.title}`
                   )
                 }
               />

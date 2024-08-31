@@ -63,6 +63,7 @@ export default function AutoCompleteSearch({
         name={name}
         placeholder={placeholder}
         type="search"
+        disableClearable={true}
         onChange={(event, value) => {
           const selectedItem = menuItems.find((item) => item.title === value);
           if (setSelectedItem) setSelectedItem(selectedItem.id);

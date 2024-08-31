@@ -31,7 +31,7 @@ interface DialogProps {
   loading?: boolean;
 }
 
-export default function DaDialog({
+export default function SeDialog({
   open = false,
   title,
   onClose,

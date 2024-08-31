@@ -1,9 +1,10 @@
 export const SingleItemData = {
-  id: "1",
+  id: "asdasfgdg1",
   title: "Item 1",
   description:
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed etiam facilisis, ligula nec ultricies. ",
   price: 100,
+  imageSrc: "/pants.png",
   images: ["/pants.png", "/t-shirt-1.png", "/t-shirt-2.png"],
   rating: 4,
   stock: 10,

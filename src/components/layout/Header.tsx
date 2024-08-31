@@ -15,11 +15,22 @@ import Image from "next/image";
 import { useState } from "react";
 import Profile from "../SVGs/profile";
 import ShoppingBagIcon from "../SVGs/shopping-bag-icon";
-import { useParams, useRouter } from "next/navigation";
+import {
+  useParams,
+  usePathname,
+  useRouter,
+  useSearchParams,
+} from "next/navigation";
 import AutoCompleteSearch from "../global/SeAutoCompleteSearch";
 import { faBars, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch } from "react-redux";
-import { setIsSearchDrawerOpen } from "../global-slice";
+import {
+  setIsCartDrawerOpen,
+  setIsSearchDialogOpen,
+  setIsSearchDrawerOpen,
+} from "../global-slice";
+import { useRouter as useNextRouter } from "next/router";
+import { useAppSelector } from "@/providers/StoreWrapper";
 
 type Props = {};
 const Search = styled("div")(({ theme }) => ({
@@ -85,6 +96,11 @@ function Header({}: Props) {
   const params = useParams();
   const { store, item } = params;
   const dispatch = useDispatch();
+  const searchParams = useSearchParams();
+  const newUrl = new URLSearchParams(searchParams.toString());
+  const path = usePathname();
+  const { CartItems } = useAppSelector((state) => state.ItemSlice);
+
   return (
     <>
       <div className="flex items-center justify-between bg-primary text-white max-sm:px-2 px-4 2xl:px-40 py-3">
@@ -95,16 +111,34 @@ function Header({}: Props) {
           <FontAwesomeIcon icon={faTwitter} />
         </div>
       </div>
-      <div className="max-sm:px-2 px-4 2xl:px-40 max-lg:grid max-lg:grid-cols-6 flex items-center justify-between py-4 bg-white sticky top-0 z-50">
-        <div className="flex items-center lg:hidden col-span-2 ">
-          <FontAwesomeIcon
-            icon={faBars}
-            onClick={() => {
-              dispatch(setIsSearchDrawerOpen(true));
-            }}
-          />
-        </div>
-        <div className="flex justify-center items-center col-span-2">
+      <div
+        className={`max-sm:px-2 px-4 2xl:px-40 max-lg:grid ${
+          path.split("/").filter((e) => e !== "/" && e !== "").length !== 2
+            ? "max-lg:grid-cols-6"
+            : "max-lg:grid-cols-4"
+        } flex items-center justify-between py-4 bg-white sticky top-0 z-50`}
+      >
+        {path.split("/").filter((e) => e !== "/" && e !== "").length !== 2 && (
+          <div className={`flex items-center lg:hidden col-span-2 `}>
+            <FontAwesomeIcon
+              icon={faBars}
+              onClick={() => {
+                dispatch(setIsSearchDrawerOpen(true));
+              }}
+              style={{
+                fontSize: "20px",
+                cursor: "pointer",
+              }}
+            />
+          </div>
+        )}
+        <div
+          className={`flex ${
+            path.split("/").filter((e) => e !== "/" && e !== "").length !== 2
+              ? "justify-center"
+              : "justify-start"
+          } items-center col-span-2`}
+        >
           <Image
             src="/logo.png"
             alt="logo"
@@ -147,9 +181,21 @@ function Header({}: Props) {
               data={[
                 {
                   title: "item",
-                  value: "value",
+                  id: "value",
+                },
+                {
+                  title: "item2",
+                  id: "value2",
+                },
+                {
+                  title: "item3",
+                  id: "value3",
                 },
               ]}
+              setSelectedItem={(e) => {
+                newUrl.set("q", e);
+                router.push(`/store/${store}/search?${newUrl.toString()}`);
+              }}
             />
             <div>
               <List
@@ -209,10 +255,28 @@ function Header({}: Props) {
         </div>
         <div className=" gap-2 col-span-2 flex justify-center items-center max-lg:justify-end">
           <div className="lg:hidden">
-            <FontAwesomeIcon icon={faSearch} />
+            <FontAwesomeIcon
+              icon={faSearch}
+              onClick={() => {
+                dispatch(setIsSearchDialogOpen(true));
+              }}
+            />
           </div>
           <Profile />
-          <ShoppingBagIcon />
+          <div
+            className="cursor-pointer"
+            onClick={() => {
+              dispatch(setIsCartDrawerOpen(true));
+            }}
+          >
+            <Badge
+              badgeContent={CartItems.length}
+              color="error"
+              className="max-sm:mr-1"
+            >
+              <ShoppingBagIcon />
+            </Badge>
+          </div>
         </div>
       </div>
     </>

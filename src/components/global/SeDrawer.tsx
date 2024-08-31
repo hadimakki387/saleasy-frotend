@@ -17,7 +17,7 @@ type Props = SwipeableDrawerProps & {
     label: string;
     onClick: () => void;
     variant?: "text" | "outlined" | "contained";
-    color?: "primary" | "secondary";
+    color?: "primary" | "secondary" | "error";
     className?: string;
   }[];
   wrapperClassName?: string;

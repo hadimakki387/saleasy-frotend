@@ -7,6 +7,7 @@ import StoreWrapper from "@/providers/StoreWrapper";
 import Header from "@/components/layout/Header";
 import { usePathname } from "next/navigation";
 import Footer from "@/components/layout/footer";
+import { Suspense } from "react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,7 +26,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${inter.className}`}>
         <StoreWrapper>
-          <Header />
+          <Suspense fallback={<div>Loading...</div>}>
+            <Header />
+          </Suspense>
           <main className="">{children}</main>
 
           <Footer />

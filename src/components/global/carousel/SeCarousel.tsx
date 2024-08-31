@@ -28,7 +28,7 @@ const DaCarousel: React.FC<PropType> = (props) => {
       </div>
 
       {hasButtons && (
-        <div className="embla__buttons">
+        <>
           {!prevBtnDisabled && (
             <PrevButton
               onClick={onPrevButtonClick}
@@ -41,7 +41,7 @@ const DaCarousel: React.FC<PropType> = (props) => {
               disabled={nextBtnDisabled}
             />
           )}
-        </div>
+        </>
       )}
     </div>
   );

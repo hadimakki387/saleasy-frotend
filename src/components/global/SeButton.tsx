@@ -11,6 +11,7 @@ export interface CIButtonProps extends ButtonProps {
   radius?: string;
   iconBefore?: ReactNode;
   disabled?: boolean;
+  fullRounded?: boolean;
 }
 
 const sxOptions = (
@@ -52,6 +53,7 @@ function SeButton({
   iconBefore,
   disabled = false,
   fullWidth = false,
+  fullRounded = false,
   ...rest
 }: CIButtonProps) {
   return (
@@ -62,7 +64,9 @@ function SeButton({
       sx={{
         "&:hover": {
           backgroundColor:
-            variant === "contained"
+            variant === "outlined"
+              ? sxOptions(color || "primary", disabled).outlined.color
+              : variant === "contained"
               ? "white !important"
               : "var(--primary) !important",
           color:
@@ -74,11 +78,12 @@ function SeButton({
         },
         fontWeight: "bold",
         minWidth: "100px",
-        borderRadius:
-          radius ??
-          (!rounded
-            ? "var(--button-border-radius) !important"
-            : "10px !important"),
+        borderRadius: fullRounded
+          ? "10000000px !important"
+          : radius ??
+            (!rounded
+              ? "var(--button-border-radius) !important"
+              : "10px !important"),
         padding: padding || "var(--button-padding) !important",
         whiteSpace: "nowrap",
         fontSize: "0.875rem",

@@ -5,11 +5,15 @@ import Slider from "@mui/material/Slider";
 import SeTextField from "@/components/global/SeTextField";
 import { Rating } from "@mui/material";
 import SeCheckbox from "@/components/global/SeCheckbox";
+import { useRouter, useSearchParams } from "next/navigation";
 
 type Props = {};
 
 function FilterSidebar({}: Props) {
   const [value, setValue] = useState<number[]>([20, 37]);
+  const params = useSearchParams();
+  const newUrl = new URLSearchParams(params.toString());
+  const router = useRouter();
   const handleChange = (event: Event, newValue: number | number[]) => {
     setValue(newValue as number[]);
   };
@@ -19,6 +23,14 @@ function FilterSidebar({}: Props) {
 
   return (
     <div className="bg-white rounded-md p-4 space-y-4 sticky top-24">
+      {params.get("q") && (
+        <div className="">
+          <p className="text-primary font-semibold">
+            Searching for {`"${params.get("q")}"`}
+          </p>
+          <p className="text-sub-title-text text-sm">10 results found</p>
+        </div>
+      )}
       <div className="space-y-3">
         <p className=" text-primary font-semibold">Categories</p>
         <div className="space-y-1">
@@ -26,8 +38,16 @@ function FilterSidebar({}: Props) {
             <div
               key={category}
               className={` text-sm cursor-pointer text-sub-title-text
-                ${category === "Clothing" ? " font-semibold " : " font-normal"}
+                ${
+                  params.get("category") === category
+                    ? " font-semibold underline"
+                    : " font-normal"
+                }
               `}
+              onClick={() => {
+                newUrl.set("category", category);
+                router.push(`?${newUrl.toString()}`);
+              }}
             >
               {category}
             </div>

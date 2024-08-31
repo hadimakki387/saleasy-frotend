@@ -67,7 +67,7 @@ export const PrevButton: React.FC<PropType> = (props) => {
       type="button"
       {...restProps}
     >
-      <div className="h-8 w-8 flex items-center justify-center bg-primary shadow-md shadow-neutral-400 rounded-sm">
+      <div className="h-8 w-8 flex items-center justify-center bg-primary  rounded-sm">
         <svg className="embla__button__svg" viewBox="0 0 532 532">
           <path
             fill="white"
@@ -90,7 +90,7 @@ export const NextButton: React.FC<PropType> = (props) => {
       type="button"
       {...restProps}
     >
-      <div className="h-8 w-8 flex items-center justify-center bg-primary shadow-md shadow-neutral-400 rounded-sm">
+      <div className="h-8 w-8 flex items-center justify-center bg-primary  rounded-sm">
         <svg className="embla__button__svg" viewBox="0 0 532 532">
           <path
             fill="white"
