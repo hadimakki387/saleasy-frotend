@@ -3,14 +3,77 @@
 @tailwind utilities;
 
 :root {
-  --input-border-radius: 12px;
+  --item-card-bg: #fafafa;
+  --primary: rgb(43, 52, 69);
+  --secondary: #ffffff;
+  --primary-bg: #f6f6f6;
+  --secondary-bg: #ffffff;
+  --button-color: #d23f57;
+  --top-bottom-bg: #2b3445;
+  --input-border-radius: 4px;
   --shadow: 1px 1px 8px rgba(0, 0, 0, 0.15);
+  --error: #d23f57;
   --button-padding: 5px 10px;
-  --button-border-radius: 4px;
+  --button-border-radius: 2px;
+  --main-bg: #f7f7f9;
+  --icon-bg: #bdbdbd;
+  --input-border: #d1d5db;
+  --primary-transparent: rgba(2, 119, 189, 0.05);
+  --hint: rgba(76, 78, 100, 0.6);
+  --success: #72e128;
+  --yellow: #ffb304;
+  --primary-text-light: #4c4e64de;
+  --light-gray: rgba(76, 78, 100, 0.12);
+  --light-gray-text: rgba(76, 78, 100, 0.38);
+  --title-text: #4b5563;
+  --sub-title-text: #6b7280;
+  --deactivated-text: #9ca3af;
+  --colored-text: #ffffff;
+  --icon-color: #d1d5db;
+  --deactivated-button: #e5e7eb;
+  --sidebar: rgba(236, 236, 239, 1);
+  --sidebar-color: #003f6d;
+  --gray: #808080;
+  --icon-bg: #acd3fd;
+  --dark-text: #2f3e4e;
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
+}
+
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+::-webkit-scrollbar-button {
+  width: 0px;
+  height: 0px;
+}
+::-webkit-scrollbar-thumb {
+  background: #e1e1e1;
+  border: 0px none #ffffff;
+  border-radius: 50px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #ffffff;
+}
+::-webkit-scrollbar-thumb:active {
+  background: #ffffff;
+}
+::-webkit-scrollbar-track {
+  background: #666666;
+  border: 0px none #ffffff;
+  border-radius: 48px;
+}
+::-webkit-scrollbar-track:hover {
+  background: #666666;
+}
+::-webkit-scrollbar-track:active {
+  background: #6b6b6b;
+}
+::-webkit-scrollbar-corner {
+  background: transparent;
 }
