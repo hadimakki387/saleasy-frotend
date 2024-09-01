@@ -42,7 +42,7 @@ function ItemPage({}: Props) {
                 className={`cursor-pointer rounded-md border-2 h-20 w-20 transition-all duration-200 ${
                   image === img
                     ? " border-button-color bg-white"
-                    : " border-transparent"
+                    : " border-neutral-200"
                 } ${image === img ? "opacity-100" : "opacity-50"}`}
               />
             ))}

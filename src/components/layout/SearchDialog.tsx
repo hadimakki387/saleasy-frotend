@@ -4,7 +4,8 @@ import SeDialog from "../global/SeDialog";
 import SeTextField from "../global/SeTextField";
 import { products } from "@/fake-db/products-2";
 import Image from "next/image";
-import { useParams, useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
+import { useRouter } from "nextjs-toploader/app";
 import { useDispatch } from "react-redux";
 import { setIsSearchDialogOpen } from "../global-slice";
 

@@ -3,7 +3,8 @@ import SeButton from "@/components/global/SeButton";
 import { ProductInterface } from "@/fake-db/products-2";
 import { Rating } from "@mui/material";
 import Image from "next/image";
-import { useParams, useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
+import { useRouter } from "nextjs-toploader/app";
 import React from "react";
 
 type Props = {
@@ -15,7 +16,12 @@ function ItemCard({ product }: Props) {
   const params = useParams();
   const { store, item } = params;
   return (
-    <div className="col-span-1  bg-white">
+    <div
+      className="col-span-1  bg-white cursor-pointer"
+      onClick={() => {
+        router.push(`/store/${store}/item/${product.id}`);
+      }}
+    >
       <div className="flex justify-center bg-item-card-bg">
         <Image
           width={200}

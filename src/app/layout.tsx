@@ -1,13 +1,12 @@
 "use client";
 
-import ThemeProvider from "@/providers/ThemeProvider";
-import { Inter } from "next/font/google";
-import "./globals.css";
-import StoreWrapper from "@/providers/StoreWrapper";
-import Header from "@/components/layout/Header";
-import { usePathname } from "next/navigation";
 import Footer from "@/components/layout/footer";
+import Header from "@/components/layout/Header";
+import StoreWrapper from "@/providers/StoreWrapper";
+import { Inter } from "next/font/google";
+import { usePathname } from "next/navigation";
 import { Suspense } from "react";
+import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
 

@@ -22,7 +22,7 @@ import { useAddProductMutation, useGetProductsQuery } from "../redux/rtk";
 import ProductSection from "./ProductSection";
 import CategorySection from "./category-section";
 import { products1 } from "@/fake-db/products-1";
-import { useRouter } from "next/navigation";
+import { useRouter } from "nextjs-toploader/app";
 
 export interface Product {
   id: number;

@@ -1,10 +1,11 @@
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import AI from "../SVGs/AI";
 import Home from "../SVGs/Home";
 import Institution from "../SVGs/Institution";
 import Questions from "../SVGs/Questions";
+import { useRouter } from "nextjs-toploader/app";
 
 type Props = {};
 
@@ -43,7 +44,7 @@ function PhoneNavBar({}: Props) {
           size={25}
         />
       </div>
-      
+
       <div
         onClick={() => {
           router.push("/universities");
@@ -61,7 +62,9 @@ function PhoneNavBar({}: Props) {
       >
         <FontAwesomeIcon
           icon={faUser}
-          className={`text-2xl ${path === "/profile" ? "text-primary" : "text-titleText"}`}
+          className={`text-2xl ${
+            path === "/profile" ? "text-primary" : "text-titleText"
+          }`}
         />
       </div>
     </div>

@@ -15,8 +15,8 @@ function SearchPage({}: Props) {
   const dispatch = useDispatch();
   return (
     <div className="grid grid-cols-6 gap-4">
-      <div>
-        <CartDrawer />
+      <div className="max-lg:hidden col-span-1">
+        <FilterSidebar />
       </div>
       <div className="lg:hidden">
         <SeDrawer
@@ -32,7 +32,7 @@ function SearchPage({}: Props) {
           </Suspense>
         </SeDrawer>
       </div>
-      <div className="col-span-5 max-lg:col-span-6">
+      <div className="lg:col-span-5 max-lg:col-span-6">
         <Items />
       </div>
     </div>

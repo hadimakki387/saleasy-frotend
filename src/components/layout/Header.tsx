@@ -15,12 +15,7 @@ import Image from "next/image";
 import { useState } from "react";
 import Profile from "../SVGs/profile";
 import ShoppingBagIcon from "../SVGs/shopping-bag-icon";
-import {
-  useParams,
-  usePathname,
-  useRouter,
-  useSearchParams,
-} from "next/navigation";
+import { useParams, usePathname, useSearchParams } from "next/navigation";
 import AutoCompleteSearch from "../global/SeAutoCompleteSearch";
 import { faBars, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch } from "react-redux";
@@ -29,8 +24,8 @@ import {
   setIsSearchDialogOpen,
   setIsSearchDrawerOpen,
 } from "../global-slice";
-import { useRouter as useNextRouter } from "next/router";
 import { useAppSelector } from "@/providers/StoreWrapper";
+import { useRouter } from "nextjs-toploader/app";
 
 type Props = {};
 const Search = styled("div")(({ theme }) => ({

@@ -6,7 +6,8 @@ import SeButton from "@/components/global/SeButton";
 import SeCard from "@/components/global/SeCard";
 import { Rating } from "@mui/material";
 import Image from "next/image";
-import { useParams, useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
+import { useRouter } from "nextjs-toploader/app";
 
 interface ProductCardProps {
   imageSrc: string;
