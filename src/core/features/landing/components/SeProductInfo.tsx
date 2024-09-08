@@ -1,3 +1,4 @@
+import CustomImage from "@/components/global/CustomImage";
 import Image from "next/image";
 import React from "react";
 
@@ -31,9 +32,8 @@ const SeProductInfo: React.FC<SeProductInfoProps> = ({
           ✕
         </button>
         <div className="flex">
-          <Image
-            width={100}
-            height={100}
+          <CustomImage
+            size={100}
             src={imageSrc}
             alt={title}
             className="w-1/2 h-80 object-cover rounded-md mr-8"

@@ -10,7 +10,7 @@ type PropType = {
   hasButtons?: boolean;
 };
 
-const DaCarousel: React.FC<PropType> = (props) => {
+const SeCarousel: React.FC<PropType> = (props) => {
   const { options, children, hasButtons = true } = props;
   const [emblaRef, emblaApi] = useEmblaCarousel(options);
 
@@ -47,4 +47,4 @@ const DaCarousel: React.FC<PropType> = (props) => {
   );
 };
 
-export default DaCarousel;
+export default SeCarousel;

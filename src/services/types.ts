@@ -87,21 +87,28 @@ export interface UploadThingResponse {
   key: string;
 }
 
-export interface YearInterface{
+export interface YearInterface {
   id: string;
   title: string;
   year: string;
   _id: string;
 }
-export interface LanguageInterface{
+export interface LanguageInterface {
   id?: string;
   title: string;
   _id?: string;
   abr: string;
 }
-export interface SemesterInterface{
+export interface SemesterInterface {
   id?: string;
   title: string;
   _id?: string;
   value: number;
+}
+
+export interface MainInterface {
+  id: string;
+  createdAt: Date;
+  updatedAt: Date;
+  isDeactivated: boolean;
 }

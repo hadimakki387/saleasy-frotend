@@ -8,12 +8,14 @@ import { Rating } from "@mui/material";
 import Image from "next/image";
 import { useParams } from "next/navigation";
 import { useRouter } from "nextjs-toploader/app";
+import CustomImage from "@/components/global/CustomImage";
 
 interface ProductCardProps {
   imageSrc: string;
   title: string;
   price: number;
   rating: number;
+  id: string;
 }
 
 const StarIcon = () => <span className="text-yellow-400 mr-1">★</span>;
@@ -23,6 +25,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
   title,
   price,
   rating,
+  id,
 }) => {
   const [liked, setLiked] = useState(false);
   const [showProductInfo, setShowProductInfo] = useState(false);
@@ -46,7 +49,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
 
   return (
     <>
-      <SeCard className="relative bg-white rounded-lg shadow-md p-4 flex flex-col items-center w-full min-w-[300px] h-[400px] justify-between border-2 border-transparent hover:border-[var(--primary)] transition-all group max-sm:min-w-[200px] max-sm:h-[280px]">
+      <SeCard className="relative bg-white rounded-lg shadow-md p-4 flex flex-col items-center w-full min-w-[300px] max-w-[300px] h-[400px] justify-between border-2 border-transparent hover:border-[var(--primary)] transition-all group max-sm:min-w-[200px] max-sm:max-w-[200px] max-sm:h-[280px] ">
         <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity flex space-x-4">
           <FontAwesomeIcon
             icon={faEye}
@@ -61,9 +64,8 @@ const ProductCard: React.FC<ProductCardProps> = ({
             onClick={handleLikeClick}
           />
         </div>
-        <Image
-          height={200}
-          width={200}
+        <CustomImage
+          size={100}
           src={imageSrc}
           alt={title}
           className="w-full h-48 object-cover rounded-md mb-4 max-sm:h-32"
@@ -85,7 +87,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
           variant="outlined"
           color="primary"
           onClick={() => {
-            router.push(`/store/${store}/item/${item}`);
+            router.push(`/store/${store}/item/${id}`);
           }}
         />
       </SeCard>

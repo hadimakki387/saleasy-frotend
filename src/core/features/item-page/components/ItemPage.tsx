@@ -102,8 +102,8 @@ function ItemPage({}: Props) {
               padding: "10px 20px",
             }}
             onClick={() => {
-              // if (CartItems.find((item) => item.id === SingleItemData.id))
-              //   return;
+              if (CartItems.find((item) => item.id === SingleItemData.id))
+                return;
               dispatch(
                 setCartItems([...CartItems, { ...SingleItemData, quantity: 1 }])
               );
