@@ -1,3 +1,4 @@
+import { ILinkEntity } from "@/core/features/landing/interfaces/link-interface";
 import {
   faAppStore,
   faFacebook,
@@ -10,72 +11,34 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
 import React from "react";
+import CustomImage from "../global/CustomImage";
 
-const Footer: React.FC = () => {
+interface Props {
+  data: ILinkEntity;
+}
+const Footer = ({ data }: Props) => {
   return (
     <div className="bg-[rgb(34,41,53)] text-white p-8">
-      <div className="max-w-7xl mx-auto flex flex-col lg:flex-row lg:justify-between space-y-8 lg:space-y-0 lg:space-x-16">
-        <div className="flex flex-col space-y-4 lg:w-1/3">
-          <div className="flex items-center space-x-4">
-            <a href="/">
-              <Image
-                width={100}
-                height={100}
-                className="h-12"
-                src="https://bazaar.ui-lib.com/assets/images/logo.svg"
-                alt="Logo"
-              />
-            </a>
-            <p className="text-gray-400 text-sm">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Auctor
-              libero id et, in gravida. Sit diam duis mauris nulla cursus. Erat
-              et lectus vel ut sollicitudin elit at amet.
-            </p>
-          </div>
+      <div className="w-full flex items-start justify-center gap-12">
+        <div className="flex items-start space-x-4 flex-col gap-4">
+          <a href="/">
+            <CustomImage
+              size={100}
+              className="w-24"
+              src={data.link.header.logo}
+              alt="Logo"
+            />
+          </a>
+          <p className="text-gray-400 text-sm max-w-96">
+            {data.link.footer.descriptionText}
+          </p>
         </div>
-        <div className="flex flex-col lg:flex-row lg:space-x-16 lg:w-2/3 space-y-8 lg:space-y-0">
-          <div className="flex flex-col space-y-2">
-            <h6 className="font-bold text-white">About Us</h6>
-            <a className="text-gray-400 hover:text-white" href="/">
-              Careers
-            </a>
-            <a className="text-gray-400 hover:text-white" href="/">
-              Our Stores
-            </a>
-            <a className="text-gray-400 hover:text-white" href="/">
-              Our Cares
-            </a>
-            <a className="text-gray-400 hover:text-white" href="/">
-              Terms & Conditions
-            </a>
-            <a className="text-gray-400 hover:text-white" href="/">
-              Privacy Policy
-            </a>
-          </div>
-          <div className="flex flex-col space-y-2">
-            <h6 className="font-bold text-white">Customer Care</h6>
-            <a className="text-gray-400 hover:text-white" href="/">
-              Help Center
-            </a>
-            <a className="text-gray-400 hover:text-white" href="/">
-              Track Your Order
-            </a>
-            <a className="text-gray-400 hover:text-white" href="/">
-              Corporate & Bulk Purchasing
-            </a>
-            <a className="text-gray-400 hover:text-white" href="/">
-              Returns & Refunds
-            </a>
-          </div>
-          <div className="flex flex-col space-y-2">
-            <h6 className="font-bold text-white">Contact Us</h6>
-            <p className="text-gray-400">
-              Lamma tshufa ya Kassem tzakkar nhaart lli 3mlt l whatsapp najoo7
-              (Address)
-            </p>
-            <p className="text-gray-400">Email: Neje7@gmail.com</p>
-            <p className="text-gray-400">Phone: +961 78 919 829</p>
-          </div>
+
+        <div className="flex flex-col space-y-2">
+          <h6 className="font-bold text-white">Contact Us</h6>
+          <p className="text-gray-400">Saida</p>
+          <p className="text-gray-400">Email: hmakki387@gmail.com</p>
+          <p className="text-gray-400">Phone: +96178886897</p>
         </div>
       </div>
     </div>

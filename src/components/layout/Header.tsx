@@ -26,8 +26,13 @@ import {
 } from "../global-slice";
 import { useAppSelector } from "@/providers/StoreWrapper";
 import { useRouter } from "nextjs-toploader/app";
+import { ILinkEntity } from "@/core/features/landing/interfaces/link-interface";
+import CustomImage from "../global/CustomImage";
+import Link from "next/link";
 
-type Props = {};
+type Props = {
+  link: ILinkEntity;
+};
 const Search = styled("div")(({ theme }) => ({
   flexGrow: 0.4,
   position: "relative",
@@ -71,7 +76,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 const options = ["All Categories", "CAR", "Clothes", "Electronics"];
-function Header({}: Props) {
+function Header({ link }: Props) {
   const [anchorEl, setAnchorEl] = useState(null);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const open = Boolean(anchorEl);
@@ -99,11 +104,23 @@ function Header({}: Props) {
   return (
     <>
       <div className="flex items-center justify-between bg-primary text-white max-sm:px-2 px-4 2xl:px-40 py-3">
-        <div className="text-xs">Free Express Shipping</div>
+        <div className="text-xs">{link.link.header.shippingFee}</div>
         <div className="flex items-center gap-3 text-sm">
-          <FontAwesomeIcon icon={faInstagram} />
-          <FontAwesomeIcon icon={faFacebook} />
-          <FontAwesomeIcon icon={faTwitter} />
+          {link.link.header.links.instagram && (
+            <Link href={link.link.header.links.instagram} target="_blank">
+              <FontAwesomeIcon icon={faInstagram} />
+            </Link>
+          )}
+          {link.link.header.links.facebook && (
+            <Link href={link.link.header.links.instagram} target="_blank">
+              <FontAwesomeIcon icon={faFacebook} />
+            </Link>
+          )}
+          {link.link.header.links.twitter && (
+            <Link href={link.link.header.links.instagram} target="_blank">
+              <FontAwesomeIcon icon={faTwitter} />
+            </Link>
+          )}
         </div>
       </div>
       <div
@@ -134,11 +151,10 @@ function Header({}: Props) {
               : "justify-start"
           } items-center col-span-2`}
         >
-          <Image
-            src="/logo.png"
+          <CustomImage
+            src={link.link.header.logo}
             alt="logo"
-            width={100}
-            height={100}
+            size={100}
             className="cursor-pointer  "
             onClick={() => {
               router.push(`/store/${store}`);

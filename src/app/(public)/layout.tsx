@@ -1,6 +1,6 @@
 "use client";
 import ThemeProvider from "@/providers/ThemeProvider";
-import { useParams, usePathname } from "next/navigation";
+import { notFound, useParams, usePathname } from "next/navigation";
 import React, { Suspense } from "react";
 import NextTopLoader from "nextjs-toploader";
 import Header from "@/components/layout/Header";
@@ -15,9 +15,14 @@ export default function RootLayout({
 }>) {
   const path = usePathname();
   const { store } = useParams();
-  const { isLoading: storeLoading } = useGetStoreDataQuery({
+  const {
+    data: storeData,
+    isLoading: storeLoading,
+    error: storeError,
+  } = useGetStoreDataQuery({
     id: store as string,
   });
+  if (!storeData && storeError) throw notFound();
   return (
     <>
       {storeLoading ? (
@@ -25,44 +30,46 @@ export default function RootLayout({
           <MainLoader />
         </div>
       ) : (
-        <>
-          <Suspense fallback={<div>Loading...</div>}>
-            <Header />
-          </Suspense>
-          <main className="">
-            {" "}
-            <div
-              className={`max-sm:px-2 px-4 2xl:px-40 py-4 flex flex-col min-h-screen ${
-                path.split("/").includes("search")
-                  ? "bg-white"
-                  : path.split("/").includes("item")
-                  ? "bg-[#f6f9fc]"
-                  : "bg-primary-bg"
-              }`}
-            >
-              <ThemeProvider>
-                {" "}
-                <NextTopLoader
-                  color="var(--error)"
-                  initialPosition={0.08}
-                  crawlSpeed={200}
-                  height={3}
-                  crawl={true}
-                  showSpinner={true}
-                  easing="ease"
-                  speed={200}
-                  shadow="0 0 10px var(--error),0 0 5px var(--error)"
-                  template='<div class="bar" role="bar"><div class="peg"></div></div>'
-                  zIndex={1600}
-                  showAtBottom={false}
-                />
-                {children}
-              </ThemeProvider>
-            </div>
-          </main>
+        storeData && (
+          <>
+            <Suspense fallback={<div>Loading...</div>}>
+              <Header link={storeData} />
+            </Suspense>
+            <main className="">
+              {" "}
+              <div
+                className={`max-sm:px-2 px-4 2xl:px-40 py-4 flex flex-col min-h-screen ${
+                  path.split("/").includes("search")
+                    ? "bg-white"
+                    : path.split("/").includes("item")
+                    ? "bg-[#f6f9fc]"
+                    : "bg-primary-bg"
+                }`}
+              >
+                <ThemeProvider>
+                  {" "}
+                  <NextTopLoader
+                    color="var(--error)"
+                    initialPosition={0.08}
+                    crawlSpeed={200}
+                    height={3}
+                    crawl={true}
+                    showSpinner={true}
+                    easing="ease"
+                    speed={200}
+                    shadow="0 0 10px var(--error),0 0 5px var(--error)"
+                    template='<div class="bar" role="bar"><div class="peg"></div></div>'
+                    zIndex={1600}
+                    showAtBottom={false}
+                  />
+                  {children}
+                </ThemeProvider>
+              </div>
+            </main>
 
-          <Footer />
-        </>
+            <Footer data={storeData} />
+          </>
+        )
       )}{" "}
     </>
   );
