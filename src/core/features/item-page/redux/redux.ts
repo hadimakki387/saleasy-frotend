@@ -1,7 +1,8 @@
 import { ProductInterface } from "@/fake-db/products-2";
 import { createSlice } from "@reduxjs/toolkit";
+import { ItemInterface } from "../../landing/interfaces/items-interface";
 
-interface CartItemsInterface extends ProductInterface {
+interface CartItemsInterface extends ItemInterface {
   quantity: number;
 }
 const initialState: {

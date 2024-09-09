@@ -8,6 +8,7 @@ import { useDispatch } from "react-redux";
 import { setCartItems } from "../../item-page/redux/redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faX } from "@fortawesome/free-solid-svg-icons";
+import CustomImage from "@/components/global/CustomImage";
 
 type Props = {};
 
@@ -26,7 +27,6 @@ function CartDrawer({}: Props) {
       {CartItems.length ? (
         <div className="space-y-2">
           {CartItems.map((item, index) => {
-            console.log(item.quantity);
             return (
               <div key={index} className="flex items-center gap-4 ">
                 <div className="flex flex-col gap-1 items-center justify-between min-h-full">
@@ -62,9 +62,13 @@ function CartDrawer({}: Props) {
                   <div>{item.quantity}</div>
                   <div>
                     <SeButton
+                      disabled={item.quantity === 1}
                       onClick={() => {
                         const findItem = CartItems.map((cartItem) => {
-                          if (cartItem.id === item.id) {
+                          if (
+                            cartItem.id === item.id &&
+                            cartItem.quantity > 1
+                          ) {
                             return {
                               ...cartItem,
                               quantity: cartItem.quantity - 1,
@@ -90,16 +94,15 @@ function CartDrawer({}: Props) {
                     />
                   </div>
                 </div>
-                <Image
-                  src={item.imageSrc}
+                <CustomImage
+                  src={item.images[0]}
                   alt="pants"
-                  width={100}
-                  height={100}
-                  className="w-28 rounded-md bg-slate-100"
+                  size={100}
+                  className="w-28 h-28 rounded-md bg-slate-100"
                 />
                 <div className="w-full flex items-center justify-between">
                   <div className="flex flex-col items-start justify-start h-full">
-                    <p>{item.title}</p>
+                    <p>{item.name}</p>
                     <p className="text-xs text-sub-title-text">
                       ${item.price} x {item.quantity}
                     </p>

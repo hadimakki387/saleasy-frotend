@@ -9,36 +9,79 @@ import {
   ToggleButtonGroup,
 } from "@mui/material";
 import Image from "next/image";
-import { useParams } from "next/navigation";
-import React, { useState } from "react";
+import { notFound, useParams } from "next/navigation";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { setCartItems } from "../redux/redux";
 import { useAppSelector } from "@/providers/StoreWrapper";
+import { useGetItemDataQuery } from "../redux/rtk";
+import DaLoader from "@/components/global/SeLoader";
+import SeLoader from "@/components/global/SeLoader";
+import CustomImage from "@/components/global/CustomImage";
 
 type Props = {};
 
 function ItemPage({}: Props) {
-  const params = useParams();
-  const [image, setImage] = useState(SingleItemData.images[0]);
-  const [selectedSize, setSelectedSize] = useState("M");
-  const [selectedColor, setSelectedColor] = useState("Red");
+  const [image, setImage] = useState<string>("");
+  const [selectedOptions, setSelectedOptions] = useState<
+    { key: string; value: string }[]
+  >([]);
   const dispatch = useDispatch();
   const { CartItems } = useAppSelector((state) => state.ItemSlice);
+  const { item } = useParams();
+
+  const {
+    data: getItem,
+    error: getItemError,
+    isLoading: getItemLoading,
+  } = useGetItemDataQuery(item as string);
+
+  useEffect(() => {
+    if (getItem && !getItemLoading) {
+      setImage(getItem.images[0]);
+    }
+  }, [getItem, getItemLoading]);
+
+  const handleOptionChange = (key: string, value: string) => {
+    setSelectedOptions((prevOptions) => {
+      // Update the specific option by key, or add a new one if it doesn't exist
+      const updatedOptions = prevOptions.filter((opt) => opt.key !== key);
+      return [...updatedOptions, { key, value }];
+    });
+  };
+
+  if (getItemLoading)
+    return (
+      <div className="h-[80vh] flex items-center justify-center">
+        <SeLoader />
+      </div>
+    );
+
+  if (!getItem) throw notFound();
+  console.log(selectedOptions);
 
   return (
     <div className="space-y-16 py-8">
       <div className="flex items-start gap-4 justify-center max-lg:flex-col">
         <div className="flex justify-center flex-col items-center w-full">
-          <Image src={image} alt="item" width={400} height={400} />
+          <div className="h-[400px]">
+            <CustomImage
+              src={image}
+              alt="item"
+              size={400}
+              className="rounded-md border-2 border-neutral-200 max-w-[400px] w-full"
+            />
+          </div>
           <div className="flex gap-4">
-            {SingleItemData.images.map((img) => (
-              <Image
+            {getItem.images.map((img) => (
+              <CustomImage
                 key={img}
                 src={img}
-                width={100}
-                height={100}
+                size={100}
                 alt="item"
-                onClick={() => setImage(img)}
+                onClick={() => {
+                  setImage(img);
+                }}
                 className={`cursor-pointer rounded-md border-2 h-20 w-20 transition-all duration-200 ${
                   image === img
                     ? " border-button-color bg-white"
@@ -49,68 +92,63 @@ function ItemPage({}: Props) {
           </div>
         </div>
         <div className="w-full space-y-4 pt-12">
-          <h1 className="text-4xl font-bold text-primary">
-            {SingleItemData.title}
-          </h1>
+          <h1 className="text-4xl font-bold text-primary">{getItem.name}</h1>
           <p className="flex items-center gap-1">
             Rated:{" "}
             <Rating
               name="read-only"
-              value={SingleItemData.rating}
+              value={getItem.rating}
               readOnly
               size="small"
             />
           </p>
           <p className="text-button-color text-3xl font-bold">
-            {SingleItemData.price}$
+            {getItem.price}$
           </p>
 
           <div>
             <p className="text-primary">Description</p>
-            <p className="text-sm text-sub-title-text">
-              {SingleItemData.description}
-            </p>
+            <p className="text-sm text-sub-title-text">{getItem.description}</p>
           </div>
-          <div>
-            <p>Size</p>
-            <SeToggleButtonGroup
-              options={["S", "M", "L", "XL"]}
-              selectedOption={selectedSize}
-              setSelectedOption={(e) => {
-                setSelectedSize(e);
-              }}
-            />
-          </div>
-          <div>
-            <p>Color</p>
-            <SeToggleButtonGroup
-              options={["Red", "Green", "Blue", "Yellow"]}
-              selectedOption={selectedColor}
-              setSelectedOption={(e) => {
-                setSelectedColor(e);
-              }}
-            />
-          </div>
-          <p>Stock Available: {SingleItemData.stock}</p>
+
+          {/* Iterate over item options and pass them to SeToggleButtonGroup */}
+          {getItem.options.map((opt, index) => {
+            return (
+              <div key={index}>
+                <p>{opt.name}</p>
+                <SeToggleButtonGroup
+                  options={opt.options}
+                  selectedOption={
+                    selectedOptions.find((o) => o.key === opt.name)?.value || ""
+                  }
+                  setSelectedOption={(value: string) => {
+                    console.log(value);
+                    handleOptionChange(opt.name, value);
+                  }}
+                />
+              </div>
+            );
+          })}
+
+          <p>Stock Available: {getItem.stock}</p>
+
           <SeButton
             variant="contained"
             color="error"
             label={"Add to Cart"}
             size="large"
             rounded
-            sx={{
-              padding: "10px 20px",
-            }}
+            sx={{ padding: "10px 20px" }}
             onClick={() => {
-              if (CartItems.find((item) => item.id === SingleItemData.id))
-                return;
+              if (CartItems.find((item) => item.id === getItem.id)) return;
               dispatch(
-                setCartItems([...CartItems, { ...SingleItemData, quantity: 1 }])
+                setCartItems([...CartItems, { ...getItem, quantity: 1 }])
               );
             }}
           />
         </div>
       </div>
+
       <div>
         <h2 className="text-primary mb-4 text-xl font-semibold">
           Reviews ({SingleItemData.reviews.length})

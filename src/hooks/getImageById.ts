@@ -1,11 +1,19 @@
-import { useState, useEffect } from "react";
+// Cache object to store fetched images
+const imageCache: { [key: string]: string } = {};
 
 export const getImageById = async (
   id: string,
   callback: (base64data: string | null) => void
 ): Promise<void> => {
   try {
-    // Fetch the image from the API
+    // Check if the image is already in the cache
+    if (imageCache[id]) {
+      // If found, return the cached image
+      callback(imageCache[id]);
+      return;
+    }
+
+    // Fetch the image from the API if not in cache
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/media/get/${id}`
     );
@@ -22,6 +30,8 @@ export const getImageById = async (
     const reader = new FileReader();
     reader.onloadend = () => {
       const base64data = reader.result as string;
+      // Cache the image data after reading
+      imageCache[id] = base64data;
       callback(base64data); // Return the result via the callback
     };
     reader.onerror = (error) => {

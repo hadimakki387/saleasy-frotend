@@ -14,7 +14,7 @@ interface Props extends React.ComponentPropsWithoutRef<typeof Image> {
 // Create a cache object
 const imageCache: { [key: string]: string | StaticImport } = {};
 
-function CustomImage({ src, className, size, alt }: Props) {
+function CustomImage({ src, className, size, alt, onClick }: Props) {
   const [imageSrc, setImageSrc] = useState<string | StaticImport | null>(null);
   const [loading, setLoading] = useState(true);
   const prevSrc = useRef<string | StaticImport | null>(null); // To keep track of the previous src
@@ -62,6 +62,9 @@ function CustomImage({ src, className, size, alt }: Props) {
           src={imageSrc || ""}
           alt={alt}
           className={twMerge(className)}
+          onClick={(e) => {
+            if (onClick) onClick(e);
+          }}
         />
       ) : (
         <div

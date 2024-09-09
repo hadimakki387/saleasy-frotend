@@ -1,7 +1,7 @@
 import { CircularProgress, CircularProgressProps } from '@mui/material'
 import React from 'react'
 
-function DaLoader({...rest}:CircularProgressProps) {
+function SeLoader({...rest}:CircularProgressProps) {
   return (
     <div>
         <CircularProgress {...rest}/>
@@ -9,4 +9,4 @@ function DaLoader({...rest}:CircularProgressProps) {
   )
 }
 
-export default DaLoader
+export default SeLoader

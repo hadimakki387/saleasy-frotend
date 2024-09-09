@@ -8,4 +8,5 @@ export interface ItemInterface extends MainInterface {
   stock: 5;
   discount: number;
   rating: number;
+  options: { name: string; options: string[] }[];
 }
