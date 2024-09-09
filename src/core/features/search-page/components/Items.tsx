@@ -76,7 +76,7 @@ function Items({}: Props) {
           }}
         />
       </div>
-      <div className="grid grid-cols-2 xl:grid-cols-3 gap-8 ">
+      <div className="grid grid-cols-2 xl:grid-cols-3 gap-2 sm:gap-8 ">
         {searchData?.data.map((prod, index) => {
           return <ItemCard key={index} product={prod} />;
         })}
