@@ -4,10 +4,12 @@ const initialState: {
   isSearchDrawerOpen: boolean;
   isCartDrawerOpen: boolean;
   isSearchDialogOpen: boolean;
+  isLandingPageLoading: boolean;
 } = {
   isSearchDrawerOpen: false,
   isCartDrawerOpen: false,
   isSearchDialogOpen: false,
+  isLandingPageLoading: true,
 };
 
 const GlobalSlice = createSlice({
@@ -23,6 +25,9 @@ const GlobalSlice = createSlice({
     setIsSearchDialogOpen: (state, action) => {
       state.isSearchDialogOpen = action.payload;
     },
+    setIsLandingPageLoading: (state, action) => {
+      state.isLandingPageLoading = action.payload;
+    },
   },
 });
 
@@ -30,6 +35,7 @@ export const {
   setIsSearchDrawerOpen,
   setIsCartDrawerOpen,
   setIsSearchDialogOpen,
+  setIsLandingPageLoading,
 } = GlobalSlice.actions;
 
 export default GlobalSlice.reducer;

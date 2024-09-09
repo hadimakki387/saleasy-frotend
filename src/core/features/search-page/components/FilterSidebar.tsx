@@ -11,6 +11,7 @@ type Props = {};
 
 function FilterSidebar({}: Props) {
   const [value, setValue] = useState<number[]>([20, 37]);
+  const [discountValue, setDiscountValue] = useState<number[]>([20, 37]);
   const params = useSearchParams();
   const newUrl = new URLSearchParams(params.toString());
   const router = useRouter();
@@ -18,7 +19,15 @@ function FilterSidebar({}: Props) {
     setValue(newValue as number[]);
   };
   function valuetext(value: number) {
-    return `${value}°C`;
+    return `${value}`;
+  }
+
+  const handleDiscountChange = (event: Event, newValue: number | number[]) => {
+    setDiscountValue(newValue as number[]);
+  };
+
+  function discountValuetext(value: number) {
+    return `${value}`;
   }
 
   return (
@@ -86,6 +95,45 @@ function FilterSidebar({}: Props) {
             size="small"
             value={value[1]}
             onChange={(e) => setValue([value[0], parseInt(e.target.value)])}
+          />
+        </div>
+      </div>
+      <div className="">
+        <p className="text-primary font-semibold">Discount Range</p>
+        <Slider
+          getAriaLabel={() => "Discount range"}
+          value={discountValue}
+          sx={{
+            marginLeft: "0 !important",
+            // width: "calc(100% - 1rem)",
+          }}
+          color="error"
+          size="small"
+          onChange={handleDiscountChange}
+          valueLabelDisplay="auto"
+          getAriaValueText={discountValuetext}
+        />
+        <div className="flex items-center justify-between gap-1 ml-0">
+          <SeTextField
+            placeholder="Min"
+            type="number"
+            variant="outlined"
+            size="small"
+            value={discountValue[0]}
+            onChange={(e) =>
+              setDiscountValue([parseInt(e.target.value), value[1]])
+            }
+          />
+          -
+          <SeTextField
+            placeholder="Max"
+            type="number"
+            variant="outlined"
+            size="small"
+            value={discountValue[1]}
+            onChange={(e) =>
+              setDiscountValue([value[0], parseInt(e.target.value)])
+            }
           />
         </div>
       </div>

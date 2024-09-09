@@ -60,12 +60,14 @@ function ManuallySelectedItems() {
         </div>
       </div>
       <div className="flex items-center gap-4 w-full sm:max-h-[15rem] max-sm:flex-col">
-        <div className="w-full">
-          <Banner />
-        </div>
-        <div className="w-full">
-          <Banner />
-        </div>
+        {data.sections.map((ad, index) => {
+          console.log("ad", ad);
+          return (
+            <div className="w-full" key={index}>
+              <Banner fullBanner={data.sections.length > 1} data={ad} />
+            </div>
+          );
+        })}
       </div>
     </>
   );

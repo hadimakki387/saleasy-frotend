@@ -9,6 +9,10 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        body: ["Protest Guerrilla", "sans-serif"],
+        display: ["Protest Guerrilla", "sans-serif"],
+      },
       colors: {
         "item-card-bg": "var(--item-card-bg)",
         primary: "var(--primary)",

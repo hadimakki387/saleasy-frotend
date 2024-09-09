@@ -14,11 +14,13 @@ export interface CIButtonProps extends ButtonProps {
   fullRounded?: boolean;
   iconButton?: boolean;
   icon?: ReactNode;
+  noBorder?: boolean;
 }
 
 const sxOptions = (
   color: "primary" | "secondary" | "error",
-  disabled: boolean
+  disabled: boolean,
+  noBorder?: boolean = false
 ) => ({
   text: {
     color: `var(--${!disabled ? color : "deactivated-text"}) !important`,
@@ -27,18 +29,30 @@ const sxOptions = (
   },
   outlined: {
     color: `var(--${!disabled ? color : "deactivated-text"}) !important`,
-    backgroundColor: "transparent !important",
+    backgroundColor: "white !important",
     border: `2px solid  var(--${
-      !disabled ? color : "deactivated-text"
+      noBorder
+        ? "transparent !important"
+        : !disabled
+        ? color
+        : disabled && "deactivated-text"
     }) !important`,
   },
   contained: {
     color: "white !important",
     backgroundColor: `var(--${
-      !disabled ? color : "deactivated-text"
+      noBorder
+        ? "transparent !important"
+        : !disabled
+        ? color
+        : disabled && "deactivated-text"
     }) !important`,
     border: `2px solid  var(--${
-      !disabled ? color : "deactivated-text"
+      noBorder
+        ? "transparent !important"
+        : !disabled
+        ? color
+        : disabled && "deactivated-text"
     }) !important`,
   },
 });
@@ -57,6 +71,7 @@ function SeButton({
   fullWidth = false,
   fullRounded = false,
   iconButton = false,
+  noBorder = false,
   icon,
   ...rest
 }: CIButtonProps) {
@@ -71,7 +86,8 @@ function SeButton({
             "&:hover": {
               backgroundColor:
                 variant === "outlined"
-                  ? sxOptions(color || "primary", disabled).outlined.color
+                  ? sxOptions(color || "primary", disabled, noBorder).outlined
+                      .color
                   : variant === "contained"
                   ? "white !important"
                   : "var(--primary) !important",
@@ -80,7 +96,10 @@ function SeButton({
                   ? "var(--primary) !important"
                   : variant === "contained" && color === "error"
                   ? "var(--error) !important"
-                  : "white !important",
+                  : variant === "outlined" &&
+                    (color === "error" || color === "primary")
+                  ? "white !important"
+                  : "var(--primary) !important",
             },
             fontWeight: "bold",
             minWidth: "100px",
@@ -95,7 +114,9 @@ function SeButton({
             fontSize: "0.875rem",
             lineHeight: "1.25rem",
             textTransform: "none",
-            ...sxOptions(color || "primary", disabled)[variant || "text"],
+            ...sxOptions(color || "primary", disabled, noBorder)[
+              variant || "text"
+            ],
             ...sx,
           }}
           startIcon={rest.startIcon}

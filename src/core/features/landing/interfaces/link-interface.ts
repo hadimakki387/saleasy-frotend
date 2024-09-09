@@ -7,19 +7,20 @@ export enum sectionsTypes {
   category_related = "category_related",
 }
 
+export interface advertisementSection {
+  text1: string;
+  text2: string;
+  redText: string;
+  link: {
+    title: string;
+    target: string;
+  };
+}
 export interface SectionInterface {
   title: string;
   categoryId: string;
   type: sectionsTypes;
-  advertisementSection: {
-    text1: string;
-    text2: string;
-    redText: string;
-    link: {
-      title: string;
-      target: string;
-    };
-  }[];
+  advertisementSection: advertisementSection[];
 }
 
 export interface ILinkEntity extends MainInterface {

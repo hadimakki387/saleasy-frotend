@@ -1,6 +1,10 @@
 import { mainApi } from "@/core/rtk-query";
 import { Product } from "../components/LandingPage";
-import { ILinkEntity } from "../interfaces/link-interface";
+import {
+  advertisementSection,
+  ILinkEntity,
+  sectionsTypes,
+} from "../interfaces/link-interface";
 import { ICategories } from "../interfaces/category-interface";
 import { ItemInterface } from "../interfaces/items-interface";
 import { ISubCategory } from "../interfaces/sub-categories-interface";
@@ -31,7 +35,11 @@ export const extendedApi = mainApi.injectEndpoints({
       query: ({ id }) => `/store/deals-of-the-day/${id}`,
     }),
     getManuallySelectedItemsSection: build.query<
-      { items: ItemInterface[]; sectionName: string },
+      {
+        items: ItemInterface[];
+        sectionName: string;
+        sections: advertisementSection[];
+      },
       getProductsParams
     >({
       query: ({ id }) => `/store/manually-selected-items-section/${id}`,

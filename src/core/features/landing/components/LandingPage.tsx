@@ -23,6 +23,7 @@ import CategorySection from "./category-section";
 import CategoryItem from "./category-section/CategorySection";
 import DealsOfTheDay from "./DealsOfTheDay";
 import ManuallySelectedItems from "./ManuallySelectedItems";
+import { setIsLandingPageLoading } from "@/components/global-slice";
 
 export interface Product {
   id: number;
@@ -41,7 +42,8 @@ const LandingPage: React.FC = () => {
     error: storeError,
     isLoading: storeLoading,
   } = useGetStoreDataQuery({ id: store as string });
-  console.log(storeData);
+
+
 
   const changeState = () => {
     dispatch(setTest("change"));
@@ -86,15 +88,16 @@ const LandingPage: React.FC = () => {
                     containerWidthPercentage={100} // 100% width
                   />
                   <div className="flex items-center gap-4 w-full sm:max-h-[15rem] max-sm:flex-col">
-                    <div className="w-full">
-                      <Banner />
-                    </div>
-                    <div className="w-full">
-                      <Banner />
-                    </div>
-                    <div className="w-full">
-                      <Banner />
-                    </div>
+                    {item.advertisementSection.map((ad, index) => {
+                      return (
+                        <div className="w-full" key={index}>
+                          <Banner
+                            data={ad}
+                            fullBanner={item.advertisementSection.length > 1}
+                          />
+                        </div>
+                      );
+                    })}
                   </div>
                 </>
               );
@@ -106,9 +109,16 @@ const LandingPage: React.FC = () => {
                 <>
                   <CategorySection />
                   <div className="flex items-center gap-4 w-full sm:max-h-[15rem] max-sm:flex-col">
-                    <div className="w-full">
-                      <Banner />
-                    </div>
+                    {item.advertisementSection.map((ad, index) => {
+                      return (
+                        <div className="w-full" key={index}>
+                          <Banner
+                            data={ad}
+                            fullBanner={item.advertisementSection.length > 1}
+                          />
+                        </div>
+                      );
+                    })}
                   </div>
                 </>
               );
