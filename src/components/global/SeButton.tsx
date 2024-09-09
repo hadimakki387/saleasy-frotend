@@ -20,7 +20,7 @@ export interface CIButtonProps extends ButtonProps {
 const sxOptions = (
   color: "primary" | "secondary" | "error",
   disabled: boolean,
-  noBorder?: boolean = false
+  noBorder: boolean = false
 ) => ({
   text: {
     color: `var(--${!disabled ? color : "deactivated-text"}) !important`,

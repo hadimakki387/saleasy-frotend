@@ -27,7 +27,7 @@ function CategoryItem({ product }: Props) {
   return (
     <SeCard>
       <CustomImage
-        size={300}
+        size={100}
         src={imageSrc || ""}
         alt={product.name}
         className=" object-cover transform transition-transform duration-300 ease-in-out group-hover:scale-110 min-w-56 max-sm:min-w-40 max-w-56 h-56 max-sm:h-40"
