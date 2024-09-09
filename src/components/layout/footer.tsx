@@ -19,8 +19,8 @@ interface Props {
 const Footer = ({ data }: Props) => {
   return (
     <div className="bg-[rgb(34,41,53)] text-white p-8">
-      <div className="w-full flex items-start justify-center gap-12">
-        <div className="flex items-start space-x-4 flex-col gap-4">
+      <div className="w-full flex items-start justify-center gap-12 max-md:flex-col max-md:gap-8">
+        <div className="flex items-start flex-col gap-4">
           <a href="/">
             <CustomImage
               size={100}
@@ -29,7 +29,7 @@ const Footer = ({ data }: Props) => {
               alt="Logo"
             />
           </a>
-          <p className="text-gray-400 text-sm max-w-96">
+          <p className="text-gray-400 text-sm max-w-96 max-md:w-full">
             {data.link.footer.descriptionText}
           </p>
         </div>
