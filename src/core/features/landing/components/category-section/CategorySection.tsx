@@ -30,7 +30,7 @@ function CategoryItem({ product }: Props) {
         size={100}
         src={imageSrc || ""}
         alt={product.name}
-        className=" object-cover transform transition-transform duration-300 ease-in-out group-hover:scale-110 min-w-56 max-sm:min-w-40 max-w-56 h-56 max-sm:h-40"
+        className=" object-cover transform transition-transform duration-300 ease-in-out group-hover:scale-110 min-w-56 max-sm:min-w-h-32 max-w-56 h-56 max-sm:h-32 max-sm:max-w-32 max-sm:min-w-32"
       />
 
       <SeButton

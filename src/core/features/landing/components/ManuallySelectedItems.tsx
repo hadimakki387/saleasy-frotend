@@ -10,6 +10,7 @@ import { ArrowForward } from "@mui/icons-material";
 import SeCarousel from "@/components/global/carousel/SeCarousel";
 import { EmblaOptionsType } from "embla-carousel";
 import ProductCard from "./SeProductCard";
+import Link from "next/link";
 
 type Props = {};
 
@@ -29,10 +30,12 @@ function ManuallySelectedItems() {
   return (
     <>
       <div className={`relative `}>
-        <div className=" flex items-center justify-between mb-6">
-          <h3 className="text-xl font-bold">{data.sectionName}</h3>
-          <a
-            href="/"
+        <div className=" flex items-center justify-between mb-6 max-sm:flex max-sm:flex-col max-sm:gap-2 max-sm:items-start">
+          <h3 className="text-2xl font-bold text-primary">
+            {data.sectionName}
+          </h3>
+          <Link
+            href={`/store/${store}/search`}
             className="relative inline-flex items-center gap-2 pb-1 text-[var(--primary)] font-semibold hover:text-[#1F2937] transition-colors"
           >
             <span className="relative group">
@@ -40,7 +43,7 @@ function ManuallySelectedItems() {
               <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[var(--primary)] transition-all duration-300 group-hover:w-full group-hover:bg-[#1F2937]"></span>
             </span>
             <ArrowForward className="text-base" />
-          </a>
+          </Link>
         </div>
         <div className=" right-0" style={{ width: `100%` }}>
           <SeCarousel options={options}>
@@ -59,9 +62,8 @@ function ManuallySelectedItems() {
           </SeCarousel>
         </div>
       </div>
-      <div className="flex items-center gap-4 w-full sm:max-h-[15rem] max-sm:flex-col">
+      <div className="flex items-center gap-4 w-full sm:max-h-[15rem] max-sm:flex-col max-sm:hidden">
         {data.sections.map((ad, index) => {
-          console.log("ad", ad);
           return (
             <div className="w-full" key={index}>
               <Banner fullBanner={data.sections.length > 1} data={ad} />

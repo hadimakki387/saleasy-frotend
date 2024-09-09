@@ -7,31 +7,25 @@ import { EmblaOptionsType } from "embla-carousel";
 import ProductCard from "./SeProductCard";
 import { useGetStoreDealsOfTheDayQuery } from "../redux/rtk";
 import { useParams } from "next/navigation";
-
-type Product = {
-  id: number;
-  imageSrc: string;
-  title: string;
-  price: number;
-  rating: number;
-};
+import Link from "next/link";
 
 interface ProductSectionProps {
   visibleCards?: number;
   containerWidthPercentage?: number;
   className?: string;
+  title?: string;
 }
 
-const DealsOfTheDay: React.FC<ProductSectionProps> = ({
+const DealsOfTheDay = ({
   visibleCards = 5,
   containerWidthPercentage = 100,
   className = "",
-}) => {
+  title = "Deals Of The Day",
+}: ProductSectionProps) => {
   const { store } = useParams();
   const { data: dealsOfTheDay } = useGetStoreDealsOfTheDayQuery({
     id: store as string,
   });
-  console.log(dealsOfTheDay);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string>("");
 
@@ -49,18 +43,18 @@ const DealsOfTheDay: React.FC<ProductSectionProps> = ({
 
   return (
     <div className={`relative ${className}`}>
-      <div className=" flex items-center justify-between mb-6">
-        <h3 className="text-xl font-bold">Deals Of The Day</h3>
-        <a
-          href="/"
-          className="relative inline-flex items-center gap-2 pb-1 text-[var(--primary)] font-semibold hover:text-[#1F2937] transition-colors"
+      <div className=" flex items-center justify-between mb-6  max-sm:flex max-sm:flex-col max-sm:gap-2 max-sm:items-start">
+        <h3 className="text-2xl font-bold text-primary ">{title}</h3>
+        <Link
+          href={`/store/${store}/search`}
+          className="relative inline-flex items-center gap-2  text-[var(--primary)] font-semibold hover:text-[#1F2937] transition-colors"
         >
           <span className="relative group">
             More Products
             <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[var(--primary)] transition-all duration-300 group-hover:w-full group-hover:bg-[#1F2937]"></span>
           </span>
           <ArrowForward className="text-base" />
-        </a>
+        </Link>
       </div>
       <div
         className=" right-0"

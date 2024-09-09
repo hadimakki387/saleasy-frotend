@@ -18,6 +18,7 @@ import { useGetItemDataQuery } from "../redux/rtk";
 import DaLoader from "@/components/global/SeLoader";
 import SeLoader from "@/components/global/SeLoader";
 import CustomImage from "@/components/global/CustomImage";
+import DealsOfTheDay from "../../landing/components/DealsOfTheDay";
 
 type Props = {};
 
@@ -148,41 +149,7 @@ function ItemPage({}: Props) {
           />
         </div>
       </div>
-
-      <div>
-        <h2 className="text-primary mb-4 text-xl font-semibold">
-          Reviews ({SingleItemData.reviews.length})
-        </h2>
-        <div className="space-y-4">
-          {SingleItemData.reviews.map((review) => (
-            <div key={review.id} className="space-y-3">
-              <div className="flex items-center gap-4">
-                <div
-                  className="h-12 w-12 rounded-full"
-                  style={{
-                    backgroundImage: `url(/dummy-profile-image.jpg)`,
-                    backgroundSize: "cover",
-                    backgroundPosition: "center",
-                  }}
-                ></div>
-                <div className="flex  justify-center flex-col">
-                  <p>Loerm Ipsum</p>
-                  <div className="flex items-center gap-2">
-                    <Rating
-                      name="read-only"
-                      value={review.rating}
-                      readOnly
-                      size="small"
-                    />
-                    <p className="text-xs">4 days</p>
-                  </div>
-                </div>
-              </div>
-              <p className="text-sub-title-text text-sm">{review.comment}</p>
-            </div>
-          ))}
-        </div>
-      </div>
+      <DealsOfTheDay title="Items You May Like" />
     </div>
   );
 }

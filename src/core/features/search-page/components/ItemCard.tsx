@@ -6,9 +6,11 @@ import Image from "next/image";
 import { useParams } from "next/navigation";
 import { useRouter } from "nextjs-toploader/app";
 import React from "react";
+import { ItemInterface } from "../../landing/interfaces/items-interface";
+import CustomImage from "@/components/global/CustomImage";
 
 type Props = {
-  product: ProductInterface;
+  product: ItemInterface;
 };
 
 function ItemCard({ product }: Props) {
@@ -17,33 +19,35 @@ function ItemCard({ product }: Props) {
   const { store, item } = params;
   return (
     <div
-      className="col-span-1  bg-white cursor-pointer"
+      className="col-span-1  bg-white cursor-pointer "
       onClick={() => {
         router.push(`/store/${store}/item/${product.id}`);
       }}
     >
       <div className="flex justify-center bg-item-card-bg">
-        <Image
-          width={200}
-          height={200}
-          src={product.imageSrc}
+        <CustomImage
+          size={200}
+          src={product.images[0]}
           alt="item"
-          className="w-56"
+          className="w-56 h-56 max-sm:w-32 max-sm:h-32"
         />
       </div>
       <div className="p-4">
-        <h1 className=" font-bold text-primary">{product.title}</h1>
-        <Rating name="read-only" value={product.rating} readOnly size="small" />
-        <div className="flex items-center justify-between">
+        <h1 className=" font-bold text-primary max-sm:text-sm">
+          {product.name}
+        </h1>
+        <div className="flex items-center justify-between max-sm:gap-2 max-sm:flex-col max-sm:items-start">
           <p className="text-button-color  font-bold">{product.price}$</p>
-          <SeButton
-            label={"Add To Cart"}
-            variant="contained"
-            color="error"
-            onClick={() => {
-              router.push(`/store/${store}/item/${product.id}`);
-            }}
-          />
+          <div className="max-sm:hidden">
+            <SeButton
+              label={"Add To Cart"}
+              variant="contained"
+              color="error"
+              onClick={() => {
+                router.push(`/store/${store}/item/${product.id}`);
+              }}
+            />
+          </div>
         </div>
       </div>
     </div>

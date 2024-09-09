@@ -112,3 +112,30 @@ export interface MainInterface {
   updatedAt: Date;
   isDeactivated: boolean;
 }
+
+export interface PaginationInterface {
+  name?: string;
+  createdAt?: "ASC" | "DESC";
+  updatedAt?: "ASC" | "DESC";
+  limit?: number;
+  page?: number;
+}
+
+export interface MainPaginatedDto extends MainInterface {
+  meta: {
+    itemsPerPage: number;
+    totalItems: number;
+    currentPage: number;
+    totalPages: number;
+    sortBy: [string, string][];
+    search: string;
+    filter: any;
+  };
+  links: {
+    first: string;
+    previous: string;
+    current: string;
+    next: string;
+    last: string;
+  };
+}

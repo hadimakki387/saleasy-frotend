@@ -75,7 +75,6 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-const options = ["All Categories", "CAR", "Clothes", "Electronics"];
 function Header({ link }: Props) {
   const [anchorEl, setAnchorEl] = useState(null);
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -85,6 +84,11 @@ function Header({ link }: Props) {
   };
 
   const handleMenuItemClick = (event: any, index: any) => {
+    const getItem = link.categories.find((e, i) => i === index);
+    if (!getItem) return;
+    const param = new URLSearchParams();
+    param.set("category", getItem?.id);
+    router.push(`/store/${store}/search?${param.toString()}`);
     setSelectedIndex(index);
     setAnchorEl(null);
   };
@@ -235,7 +239,7 @@ function Header({ link }: Props) {
                       textAlign: "center",
                       "&:hover": { cursor: "pointer" },
                     }}
-                    secondary={options[selectedIndex]}
+                    secondary={link.categories[selectedIndex].name}
                   />
                   <ExpandMore sx={{ fontSize: "16px" }} />
                 </ListItem>
@@ -250,14 +254,17 @@ function Header({ link }: Props) {
                   role: "listbox",
                 }}
               >
-                {options.map((option, index) => (
+                {link.categories.map((option, index) => (
                   <MenuItem
                     sx={{ fontSize: "13px" }}
-                    key={option}
+                    key={option.name}
                     selected={index === selectedIndex}
-                    onClick={(event) => handleMenuItemClick(event, index)}
+                    onClick={(event) => {
+                      console.log(event);
+                      handleMenuItemClick(event, index);
+                    }}
                   >
-                    {option}
+                    {option.name}
                   </MenuItem>
                 ))}
               </Menu>

@@ -1,6 +1,7 @@
 "use client";
 import { Button, ButtonProps, IconButton } from "@mui/material";
 import React, { ReactNode } from "react";
+import { twMerge } from "tailwind-merge";
 
 export interface CIButtonProps extends ButtonProps {
   label?: any;
@@ -82,6 +83,7 @@ function SeButton({
           onClick={onClick}
           variant={"text"}
           fullWidth={fullWidth}
+          className={twMerge(rest.className)}
           sx={{
             "&:hover": {
               backgroundColor:

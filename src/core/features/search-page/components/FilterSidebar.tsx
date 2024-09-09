@@ -137,29 +137,6 @@ function FilterSidebar({}: Props) {
           />
         </div>
       </div>
-      <div className="flex flex-col gap-2">
-        <p className="mb-1 text-primary font-semibold">Ratings</p>
-        <div className="flex items-center gap-2">
-          <SeCheckbox size="small" />
-          <Rating name="read-only" value={5} readOnly size="small" />
-        </div>
-        <div className="flex items-center gap-2">
-          <SeCheckbox size="small" />
-          <Rating name="read-only" value={4} readOnly size="small" />
-        </div>
-        <div className="flex items-center gap-2">
-          <SeCheckbox size="small" />
-          <Rating name="read-only" value={3} readOnly size="small" />
-        </div>
-        <div className="flex items-center gap-2">
-          <SeCheckbox size="small" />
-          <Rating name="read-only" value={2} readOnly size="small" />
-        </div>
-        <div className="flex items-center gap-2">
-          <SeCheckbox size="small" />
-          <Rating name="read-only" value={1} readOnly size="small" />
-        </div>
-      </div>
     </div>
   );
 }

@@ -43,8 +43,6 @@ const LandingPage: React.FC = () => {
     isLoading: storeLoading,
   } = useGetStoreDataQuery({ id: store as string });
 
-
-
   const changeState = () => {
     dispatch(setTest("change"));
   };
@@ -87,7 +85,7 @@ const LandingPage: React.FC = () => {
                     visibleCards={5} // Show 5 cards
                     containerWidthPercentage={100} // 100% width
                   />
-                  <div className="flex items-center gap-4 w-full sm:max-h-[15rem] max-sm:flex-col">
+                  <div className="flex items-center gap-4 w-full sm:max-h-[15rem] max-sm:flex-col max-sm:hidden">
                     {item.advertisementSection.map((ad, index) => {
                       return (
                         <div className="w-full" key={index}>
@@ -108,7 +106,7 @@ const LandingPage: React.FC = () => {
               return (
                 <>
                   <CategorySection />
-                  <div className="flex items-center gap-4 w-full sm:max-h-[15rem] max-sm:flex-col">
+                  <div className="flex items-center gap-4 w-full sm:max-h-[15rem] max-sm:flex-col max-sm:hidden">
                     {item.advertisementSection.map((ad, index) => {
                       return (
                         <div className="w-full" key={index}>
