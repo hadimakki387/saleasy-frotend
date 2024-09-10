@@ -11,6 +11,7 @@ import SeCarousel from "@/components/global/carousel/SeCarousel";
 import { EmblaOptionsType } from "embla-carousel";
 import ProductCard from "./SeProductCard";
 import Link from "next/link";
+import LandingCarouselSkeleton from "./skeletons/LandingCarouselSkeleton";
 
 type Props = {};
 
@@ -26,7 +27,7 @@ function ManuallySelectedItems() {
     startIndex: 0,
   };
 
-  if (!data) return <div>loading</div>;
+  if (!data) return <LandingCarouselSkeleton />;
   return (
     <>
       <div className={`relative `}>

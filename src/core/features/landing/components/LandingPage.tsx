@@ -24,6 +24,7 @@ import CategoryItem from "./category-section/CategorySection";
 import DealsOfTheDay from "./DealsOfTheDay";
 import ManuallySelectedItems from "./ManuallySelectedItems";
 import { setIsLandingPageLoading } from "@/components/global-slice";
+import LandingCarouselSkeleton from "./skeletons/LandingCarouselSkeleton";
 
 export interface Product {
   id: number;

@@ -15,6 +15,7 @@ import { useParams } from "next/navigation";
 import { useRouter } from "nextjs-toploader/app";
 import { ArrowForward } from "@mui/icons-material";
 import Link from "next/link";
+import LandingCarouselSkeleton from "./skeletons/LandingCarouselSkeleton";
 
 type Props = {};
 
@@ -22,7 +23,7 @@ function CategorySection({}: Props) {
   const { store } = useParams();
   const { data } = useGetCategoryRelatedItemsQuery({ id: store as string });
   const router = useRouter();
-  if (!data) return <div>loading</div>;
+  if (!data) return <LandingCarouselSkeleton />;
   return (
     <div className="xl:grid xl:grid-cols-5 gap-4">
       <div className="col-span-1 h-full space-y-4 bg-white p-4 max-xl:hidden">

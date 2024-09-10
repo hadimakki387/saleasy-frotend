@@ -8,6 +8,7 @@ import ProductCard from "./SeProductCard";
 import { useGetStoreDealsOfTheDayQuery } from "../redux/rtk";
 import { useParams } from "next/navigation";
 import Link from "next/link";
+import LandingCarouselSkeleton from "./skeletons/LandingCarouselSkeleton";
 
 interface ProductSectionProps {
   visibleCards?: number;
@@ -39,7 +40,7 @@ const DealsOfTheDay = ({
     startIndex: 0,
   };
 
-  if (!dealsOfTheDay) return <div>loaduing</div>;
+  if (!dealsOfTheDay) return <LandingCarouselSkeleton />;
 
   return (
     <div className={`relative ${className}`}>
