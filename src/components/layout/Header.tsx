@@ -12,7 +12,7 @@ import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import MenuItem from "@mui/material/MenuItem";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Profile from "../SVGs/profile";
 import ShoppingBagIcon from "../SVGs/shopping-bag-icon";
 import { useParams, usePathname, useSearchParams } from "next/navigation";
@@ -31,6 +31,7 @@ import { useRouter } from "nextjs-toploader/app";
 import { ILinkEntity } from "@/core/features/landing/interfaces/link-interface";
 import CustomImage from "../global/CustomImage";
 import Link from "next/link";
+import { useSearchItemsQuery } from "@/core/features/search-page/redux/rtk";
 
 type Props = {
   link: ILinkEntity;
@@ -52,31 +53,6 @@ const Search = styled("div")(({ theme }) => ({
   },
 }));
 
-const SearchIconWrapper = styled("div")(({ theme }) => ({
-  padding: theme.spacing(0, 2),
-  height: "100%",
-  position: "absolute",
-  pointerEvents: "none",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  color: "#777",
-}));
-
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: "inherit",
-  "& .MuiInputBase-input": {
-    padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    transition: theme.transitions.create("width"),
-    width: "100%",
-    [theme.breakpoints.up("md")]: {
-      width: "20ch",
-    },
-  },
-}));
-
 function Header({ link }: Props) {
   const [anchorEl, setAnchorEl] = useState(null);
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -94,6 +70,18 @@ function Header({ link }: Props) {
     setSelectedIndex(index);
     setAnchorEl(null);
   };
+  const [search, setSearch] = useState("");
+
+  const [debouncedSearch, setDebouncedSearch] = useState("");
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedSearch(search);
+    }, 200);
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [search]);
 
   const handleClose = () => {
     setAnchorEl(null);
@@ -106,6 +94,8 @@ function Header({ link }: Props) {
   const newUrl = new URLSearchParams(searchParams.toString());
   const path = usePathname();
   const { CartItems } = useAppSelector((state) => state.ItemSlice);
+  const { data: searchItems, isLoading: loadingSearchItems } =
+    useSearchItemsQuery({ name: debouncedSearch, limit: 5 });
 
   return (
     <>
@@ -195,25 +185,38 @@ function Header({ link }: Props) {
                 "&:focus": { boxShadow: "none", border: "none !important" },
                 height: "100%",
               }}
-              data={[
-                {
-                  title: "item",
-                  id: "value",
-                },
-                {
-                  title: "item2",
-                  id: "value2",
-                },
-                {
-                  title: "item3",
-                  id: "value3",
-                },
-              ]}
-              setSelectedItem={(e) => {
-                newUrl.set("q", e);
+              loading={loadingSearchItems}
+              setSearch={(e) => {
+                console.log(e);
+                setSearch(e);
+              }}
+              data={
+                searchItems?.data.map((e) => ({
+                  title: e.name,
+                  id: e.id,
+                })) || undefined
+              }
+              handleSubmit={() => {
+                newUrl.set("q", search);
                 router.push(`/store/${store}/search?${newUrl.toString()}`);
               }}
-            />
+              setSelectedItem={(e) => {
+                newUrl.set(
+                  "q",
+                  searchItems?.data.find((i) => i.id === e)?.name as string
+                );
+                router.push(`/store/${store}/search?${newUrl.toString()}`);
+              }}
+            />{" "}
+            <div
+              className="flex items-center justify-center text-sub-title-text cursor-pointer"
+              onClick={() => {
+                newUrl.set("q", debouncedSearch);
+                router.push(`/store/${store}/search?${newUrl.toString()}`);
+              }}
+            >
+              <FontAwesomeIcon icon={faSearch} />
+            </div>
             <div>
               <List
                 component="nav"

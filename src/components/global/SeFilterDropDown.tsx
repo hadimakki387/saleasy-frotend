@@ -84,7 +84,16 @@ export default function SeFilterDropDown({
           : helperText
       }
       sx={{
+        "& .MuiTypography-root": {
+          fontSize: {
+            sm: "0.75rem !important",
+          },
+        },
+        "& .PrivateSwitchBase-root": {
+          display: "none !important",
+        },
         "& .MuiOutlinedInput-root": {
+          // paddingLeft: "1rem",
           backgroundColor: "transparent",
           boxShadow: hasShadow ? "var(--shadow)" : undefined,
           borderRadius: "var(--input-border-radius)",

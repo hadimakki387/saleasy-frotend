@@ -1,5 +1,6 @@
 import SeButton from "@/components/global/SeButton";
 import { getImageById } from "@/hooks/getImageById";
+import { useRouter } from "nextjs-toploader/app";
 import React, { useEffect, useState } from "react";
 
 type Props = {
@@ -26,6 +27,7 @@ function HeroCarousel({ data }: Props) {
       }
     });
   }, [data.backgroundImage]);
+  const router = useRouter();
 
   return (
     <div className="item-nkw  min-w-full">
@@ -52,6 +54,9 @@ function HeroCarousel({ data }: Props) {
             label="SHOP NOW"
             color="primary"
             variant="contained"
+            onClick={() => {
+              router.push(data.link.target);
+            }}
           />
         </div>
       </div>

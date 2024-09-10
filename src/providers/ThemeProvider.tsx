@@ -22,7 +22,7 @@ const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
         <div className="col-span-1 max-lg:hidden">
           <CartDrawer />
         </div>
-        <SearchDialog />
+        
         {children}
       </MuiThemeProvider>
     </ColorModeContext.Provider>

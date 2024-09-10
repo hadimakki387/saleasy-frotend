@@ -5,7 +5,7 @@ import { SxProps } from "@mui/material";
 import * as React from "react";
 
 interface Props {
-  data: Array<any>;
+  data: Array<any> | undefined;
   placeholder: string;
   label?: string;
   // eslint-disable-next-line no-unused-vars
@@ -42,6 +42,7 @@ export default function AutoCompleteSearch({
   sx,
   loading = false,
   formControlSx,
+  handleSubmit,
 }: Props) {
   const [menuItems, setMenuItems] = React.useState(data);
 
@@ -62,7 +63,11 @@ export default function AutoCompleteSearch({
         defaultValue={defaultValue}
         name={name}
         placeholder={placeholder}
-        type="search"
+        onKeyDown={(e) => {
+          if (e.key === "Enter") {
+            if (handleSubmit) handleSubmit(e);
+          }
+        }}
         disableClearable={true}
         onChange={(event, value) => {
           const selectedItem = menuItems.find((item) => item.title === value);

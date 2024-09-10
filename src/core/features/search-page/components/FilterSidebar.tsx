@@ -6,6 +6,7 @@ import SeTextField from "@/components/global/SeTextField";
 import { Rating } from "@mui/material";
 import SeCheckbox from "@/components/global/SeCheckbox";
 import { useRouter, useSearchParams } from "next/navigation";
+import { useAppSelector } from "@/providers/StoreWrapper";
 
 type Props = {};
 
@@ -15,6 +16,7 @@ function FilterSidebar({}: Props) {
   const params = useSearchParams();
   const newUrl = new URLSearchParams(params.toString());
   const router = useRouter();
+  const { searchResults } = useAppSelector((state) => state.SearchPageSlice);
   const handleChange = (event: Event, newValue: number | number[]) => {
     setValue(newValue as number[]);
   };
@@ -37,7 +39,9 @@ function FilterSidebar({}: Props) {
           <p className="text-primary font-semibold">
             Searching for {`"${params.get("q")}"`}
           </p>
-          <p className="text-sub-title-text text-sm">10 results found</p>
+          <p className="text-sub-title-text text-sm">
+            {searchResults} results found
+          </p>
         </div>
       )}
       <div className="space-y-3">

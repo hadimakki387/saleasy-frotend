@@ -8,6 +8,7 @@ import Footer from "@/components/layout/footer";
 import { useAppSelector } from "@/providers/StoreWrapper";
 import { useGetStoreDataQuery } from "@/core/features/landing/redux/rtk";
 import AuthenticationDialog from "@/core/features/landing/components/AuthenticationDialog";
+import SearchDialog from "@/components/layout/SearchDialog";
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -65,6 +66,7 @@ export default function RootLayout({
                   logo={storeData.logo}
                   storeName={storeData.name}
                 />
+                <SearchDialog />
                 {children}
               </div>
             </main>

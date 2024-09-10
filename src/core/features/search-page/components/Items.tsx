@@ -6,6 +6,8 @@ import { useSearchItemsQuery } from "../redux/rtk";
 import ItemCard from "./ItemCard";
 import SeFilterDropDown from "@/components/global/SeFilterDropDown";
 import ItemCardSkeleton from "./skeletons/ItemCardSkeleton";
+import { useDispatch } from "react-redux";
+import { setSearchResults } from "../redux/redux";
 
 type Props = {};
 
@@ -13,17 +15,21 @@ function Items({}: Props) {
   const params = useSearchParams();
   const [limit, setLimit] = useState<number>(5); // Start with an initial limit of 5
   const observerRef = useRef<HTMLDivElement | null>(null); // Reference for the observer
-  const [sortBy, setSortBy] = useState<string>("price");
+  const [sortBy, setSortBy] = useState<string>("createdAt");
   const [order, setOrder] = useState<string>("asc");
+  const getSearch = params.get("q");
+  const dispatch = useDispatch();
+  const router = useRouter();
 
   const sort = { [sortBy]: order.toUpperCase() };
   const {
     data: searchData,
     error: searchError,
     isLoading: searchLoading,
-  } = useSearchItemsQuery({ limit, ...sort });
-  const router = useRouter();
-
+  } = useSearchItemsQuery({ limit, name: getSearch as string, ...sort });
+  useEffect(() => {
+    dispatch(setSearchResults(searchData?.data.length || 0));
+  }, [searchData]);
   useEffect(() => {
     if (!searchLoading) {
       const observer = new IntersectionObserver(
@@ -60,7 +66,7 @@ function Items({}: Props) {
 
   return (
     <div>
-      <div className="flex justify-end items-center gap-4 mb-4">
+      <div className="flex justify-end items-center gap-4 mb-4 max-sm:flex-col max-sm:items-start">
         Sort By:{" "}
         <SeFilterDropDown
           order={order}
@@ -69,6 +75,10 @@ function Items({}: Props) {
             {
               label: "price",
               value: "price",
+            },
+            {
+              label: "Date Created",
+              value: "createdAt",
             },
           ]}
           onChange={(e) => {

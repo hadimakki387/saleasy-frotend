@@ -1,13 +1,21 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState: {} = {};
+const initialState: {
+  searchResults: number;
+} = {
+  searchResults: 0,
+};
 
 const SearchPageSlice = createSlice({
   name: "SearchPageSlice",
   initialState,
-  reducers: {},
+  reducers: {
+    setSearchResults: (state, action) => {
+      state.searchResults = action.payload;
+    },
+  },
 });
 
-export const {} = SearchPageSlice.actions;
+export const { setSearchResults } = SearchPageSlice.actions;
 
 export default SearchPageSlice.reducer;
