@@ -280,6 +280,7 @@ function Header({ link }: Props) {
               onClick={() => {
                 dispatch(setIsSearchDialogOpen(true));
               }}
+              className="text-primary"
             />
           </div>
           <div
@@ -289,7 +290,7 @@ function Header({ link }: Props) {
               dispatch(setIsLoginDialogOpen(true));
             }}
           >
-            <Profile />
+            <Profile fill="var(--primary)" />
           </div>
           <div
             className="cursor-pointer"
@@ -302,7 +303,7 @@ function Header({ link }: Props) {
               color="error"
               className="max-sm:mr-1"
             >
-              <ShoppingBagIcon />
+              <ShoppingBagIcon fill="var(--primary)" />
             </Badge>
           </div>
         </div>
