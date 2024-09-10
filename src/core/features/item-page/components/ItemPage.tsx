@@ -19,6 +19,7 @@ import DaLoader from "@/components/global/SeLoader";
 import SeLoader from "@/components/global/SeLoader";
 import CustomImage from "@/components/global/CustomImage";
 import DealsOfTheDay from "../../landing/components/DealsOfTheDay";
+import ItemPageSkeleton from "./skeletons/ItemPageSkeleton";
 
 type Props = {};
 
@@ -51,12 +52,7 @@ function ItemPage({}: Props) {
     });
   };
 
-  if (getItemLoading)
-    return (
-      <div className="h-[80vh] flex items-center justify-center">
-        <SeLoader />
-      </div>
-    );
+  if (getItemLoading) return <ItemPageSkeleton />;
 
   if (!getItem) throw notFound();
   console.log(selectedOptions);
