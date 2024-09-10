@@ -4,6 +4,7 @@ import Image from "next/image";
 import React, { useEffect, useState, useRef } from "react";
 import { twMerge } from "tailwind-merge";
 import DaLoader from "./SeLoader";
+import { Skeleton } from "@mui/material";
 
 interface Props extends React.ComponentPropsWithoutRef<typeof Image> {
   size?: number;
@@ -66,11 +67,23 @@ function CustomImage({ src, className, size, alt, onClick }: Props) {
             if (onClick) onClick(e);
           }}
         />
+      ) : className ? (
+        <div
+          className={twMerge(
+            " flex items-center justify-center h-full w-full",
+            className
+          )}
+        >
+          <Skeleton variant="rectangular" width={"100%"} height={"100%"} />
+        </div>
       ) : (
         <div
-          className={twMerge(className, " flex items-center justify-center")}
+          style={{
+            height: size,
+            width: size,
+          }}
         >
-          <DaLoader color="error" />
+          <Skeleton variant="rectangular" width={"100%"} height={"100%"} />
         </div>
       )}
     </>

@@ -55,18 +55,17 @@ function ItemPage({}: Props) {
   if (getItemLoading) return <ItemPageSkeleton />;
 
   if (!getItem) throw notFound();
-  console.log(selectedOptions);
 
   return (
     <div className="space-y-16 py-8">
       <div className="flex items-start gap-4 justify-center max-lg:flex-col">
         <div className="flex justify-center flex-col items-center w-full">
-          <div className="h-[400px]">
+          <div className="w-full flex justify-center mb-4">
             <CustomImage
               src={image}
               alt="item"
               size={400}
-              className="rounded-md border-2 border-neutral-200 max-w-[400px] w-full"
+              className="rounded-md border-2 border-neutral-200 max-w-[400px] w-full h-[400px] max-sm:h-auto max-sm:mb-4 "
             />
           </div>
           <div className="flex gap-4">
