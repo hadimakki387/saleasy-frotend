@@ -5,11 +5,17 @@ const initialState: {
   isCartDrawerOpen: boolean;
   isSearchDialogOpen: boolean;
   isLandingPageLoading: boolean;
+  isLoginDialogOpen: boolean;
+  isRegisterDialogOpen: boolean;
+  isAuthecationDialogOpen: boolean;
 } = {
   isSearchDrawerOpen: false,
   isCartDrawerOpen: false,
   isSearchDialogOpen: false,
   isLandingPageLoading: true,
+  isLoginDialogOpen: false,
+  isRegisterDialogOpen: false,
+  isAuthecationDialogOpen: false,
 };
 
 const GlobalSlice = createSlice({
@@ -28,6 +34,15 @@ const GlobalSlice = createSlice({
     setIsLandingPageLoading: (state, action) => {
       state.isLandingPageLoading = action.payload;
     },
+    setIsLoginDialogOpen: (state, action) => {
+      state.isLoginDialogOpen = action.payload;
+    },
+    setIsRegisterDialogOpen: (state, action) => {
+      state.isRegisterDialogOpen = action.payload;
+    },
+    setIsAuthecationDialogOpen: (state, action) => {
+      state.isAuthecationDialogOpen = action.payload;
+    },
   },
 });
 
@@ -36,6 +51,9 @@ export const {
   setIsCartDrawerOpen,
   setIsSearchDialogOpen,
   setIsLandingPageLoading,
+  setIsLoginDialogOpen,
+  setIsRegisterDialogOpen,
+  setIsAuthecationDialogOpen,
 } = GlobalSlice.actions;
 
 export default GlobalSlice.reducer;

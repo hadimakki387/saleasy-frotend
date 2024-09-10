@@ -1,15 +1,18 @@
 import { mainApi } from "@/core/rtk-query";
+import Cookies from "js-cookie";
 import { Product } from "../components/LandingPage";
+import {
+  AuthenticationResponse,
+  LoginInterface,
+  RegisterInterface,
+} from "../interfaces/authentication-interface";
+import { ICategories } from "../interfaces/category-interface";
+import { ICategoryRelatedItemsSection } from "../interfaces/category-related-items-section";
+import { ItemInterface } from "../interfaces/items-interface";
 import {
   advertisementSection,
   ILinkEntity,
-  sectionsTypes,
 } from "../interfaces/link-interface";
-import { ICategories } from "../interfaces/category-interface";
-import { ItemInterface } from "../interfaces/items-interface";
-import { ISubCategory } from "../interfaces/sub-categories-interface";
-import { ICategoryRelatedItemsSection } from "../interfaces/category-related-items-section";
-
 interface getProductsParams {
   id: string;
 }
@@ -50,6 +53,28 @@ export const extendedApi = mainApi.injectEndpoints({
     >({
       query: ({ id }) => `/store/get-category-section-items/${id}`,
     }),
+    login: build.mutation<AuthenticationResponse, LoginInterface>({
+      query: (body) => ({
+        url: "/auth/login",
+        method: "POST",
+        body,
+      }),
+      transformResponse: (response: AuthenticationResponse) => {
+        Cookies.set("token", response.token);
+        return response;
+      },
+    }),
+    register: build.mutation<AuthenticationResponse, RegisterInterface>({
+      query: (body) => ({
+        url: "/auth/register",
+        method: "POST",
+        body,
+      }),
+      transformResponse: (response: AuthenticationResponse) => {
+        Cookies.set("token", response.token);
+        return response;
+      },
+    }),
   }),
 });
 
@@ -61,4 +86,6 @@ export const {
   useGetStoreDealsOfTheDayQuery,
   useGetManuallySelectedItemsSectionQuery,
   useGetCategoryRelatedItemsQuery,
+  useLoginMutation,
+  useRegisterMutation,
 } = extendedApi;

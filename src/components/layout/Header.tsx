@@ -20,7 +20,9 @@ import AutoCompleteSearch from "../global/SeAutoCompleteSearch";
 import { faBars, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch } from "react-redux";
 import {
+  setIsAuthecationDialogOpen,
   setIsCartDrawerOpen,
+  setIsLoginDialogOpen,
   setIsSearchDialogOpen,
   setIsSearchDrawerOpen,
 } from "../global-slice";
@@ -280,7 +282,15 @@ function Header({ link }: Props) {
               }}
             />
           </div>
-          <Profile />
+          <div
+            className="cursor-pointer"
+            onClick={() => {
+              dispatch(setIsAuthecationDialogOpen(true));
+              dispatch(setIsLoginDialogOpen(true));
+            }}
+          >
+            <Profile />
+          </div>
           <div
             className="cursor-pointer"
             onClick={() => {

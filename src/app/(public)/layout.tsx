@@ -1,5 +1,4 @@
 "use client";
-import ThemeProvider from "@/providers/ThemeProvider";
 import { notFound, useParams, usePathname } from "next/navigation";
 import React, { Suspense } from "react";
 import NextTopLoader from "nextjs-toploader";
@@ -8,6 +7,7 @@ import MainLoader from "@/components/global/navLoader/MainLoader";
 import Footer from "@/components/layout/footer";
 import { useAppSelector } from "@/providers/StoreWrapper";
 import { useGetStoreDataQuery } from "@/core/features/landing/redux/rtk";
+import AuthenticationDialog from "@/core/features/landing/components/AuthenticationDialog";
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -46,24 +46,26 @@ export default function RootLayout({
                     : "bg-primary-bg"
                 }`}
               >
-                <ThemeProvider>
-                  {" "}
-                  <NextTopLoader
-                    color="var(--error)"
-                    initialPosition={0.08}
-                    crawlSpeed={200}
-                    height={3}
-                    crawl={true}
-                    showSpinner={true}
-                    easing="ease"
-                    speed={200}
-                    shadow="0 0 10px var(--error),0 0 5px var(--error)"
-                    template='<div class="bar" role="bar"><div class="peg"></div></div>'
-                    zIndex={1600}
-                    showAtBottom={false}
-                  />
-                  {children}
-                </ThemeProvider>
+                {" "}
+                <NextTopLoader
+                  color="var(--error)"
+                  initialPosition={0.08}
+                  crawlSpeed={200}
+                  height={3}
+                  crawl={true}
+                  showSpinner={true}
+                  easing="ease"
+                  speed={200}
+                  shadow="0 0 10px var(--error),0 0 5px var(--error)"
+                  template='<div class="bar" role="bar"><div class="peg"></div></div>'
+                  zIndex={1600}
+                  showAtBottom={false}
+                />
+                <AuthenticationDialog
+                  logo={storeData.logo}
+                  storeName={storeData.name}
+                />
+                {children}
               </div>
             </main>
 

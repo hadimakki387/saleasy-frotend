@@ -10,6 +10,7 @@ import {
   useDispatch,
   useSelector,
 } from "react-redux";
+import ToastWrapper from "./ToastWrapper";
 
 const store = configureStore({
   reducer: reducers,
@@ -24,7 +25,11 @@ setupListeners(store.dispatch);
 export { store };
 
 function StoreWrapper({ children }: { children: React.ReactNode }) {
-  return <Provider store={store}>{children}</Provider>;
+  return (
+    <Provider store={store}>
+      <ToastWrapper>{children}</ToastWrapper>
+    </Provider>
+  );
 }
 
 export default StoreWrapper;
