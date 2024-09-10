@@ -98,9 +98,7 @@ function AuthenticationDialog({ logo, storeName }: Props) {
               </p>
             </div>
             <div className="space-y-2">
-              <p className="text-sm font-semibold text-primary">
-                Enter your email
-              </p>
+              <p className="text-sm font-semibold text-primary">Email</p>
               <SeTextField
                 placeholder="Email"
                 formik={loginFormik}
@@ -108,9 +106,7 @@ function AuthenticationDialog({ logo, storeName }: Props) {
               />
             </div>
             <div className="space-y-2">
-              <p className="text-sm font-semibold text-primary">
-                Enter your password
-              </p>
+              <p className="text-sm font-semibold text-primary">Password</p>
               <SeTextField
                 formik={loginFormik}
                 name="password"
@@ -144,9 +140,7 @@ function AuthenticationDialog({ logo, storeName }: Props) {
                 </p>
               </div>
               <div className="space-y-2">
-                <p className="text-sm font-semibold text-primary">
-                  Enter your Full Name
-                </p>
+                <p className="text-sm font-semibold text-primary">Full Name</p>
                 <SeTextField
                   placeholder="Name"
                   formik={registerFormik}
@@ -154,9 +148,7 @@ function AuthenticationDialog({ logo, storeName }: Props) {
                 />
               </div>
               <div className="space-y-2">
-                <p className="text-sm font-semibold text-primary">
-                  Enter your email
-                </p>
+                <p className="text-sm font-semibold text-primary">Email</p>
                 <SeTextField
                   placeholder="Email"
                   formik={registerFormik}
@@ -164,9 +156,7 @@ function AuthenticationDialog({ logo, storeName }: Props) {
                 />
               </div>
               <div className="space-y-2">
-                <p className="text-sm font-semibold text-primary">
-                  Enter your password
-                </p>
+                <p className="text-sm font-semibold text-primary">Eassword</p>
                 <SeTextField
                   formik={registerFormik}
                   name="password"
