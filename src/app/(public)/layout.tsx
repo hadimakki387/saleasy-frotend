@@ -9,6 +9,7 @@ import { useAppSelector } from "@/providers/StoreWrapper";
 import { useGetStoreDataQuery } from "@/core/features/landing/redux/rtk";
 import AuthenticationDialog from "@/core/features/landing/components/AuthenticationDialog";
 import SearchDialog from "@/components/layout/SearchDialog";
+import CartDrawer from "@/core/features/search-page/components/CartDrawer";
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -67,6 +68,9 @@ export default function RootLayout({
                   storeName={storeData.name}
                 />
                 <SearchDialog />
+                <div className="col-span-1 max-lg:hidden">
+                  <CartDrawer />
+                </div>
                 {children}
               </div>
             </main>

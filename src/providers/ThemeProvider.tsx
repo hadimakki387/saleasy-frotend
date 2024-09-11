@@ -19,10 +19,6 @@ const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
       <MuiThemeProvider theme={theme}>
         <CssBaseline />{" "}
         {/* Ensures consistent baseline styling across browsers */}
-        <div className="col-span-1 max-lg:hidden">
-          <CartDrawer />
-        </div>
-        
         {children}
       </MuiThemeProvider>
     </ColorModeContext.Provider>

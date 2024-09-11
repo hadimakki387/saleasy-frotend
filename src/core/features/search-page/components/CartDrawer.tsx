@@ -16,6 +16,7 @@ function CartDrawer({}: Props) {
   const { isCartDrawerOpen } = useAppSelector((state) => state.GlobalSlice);
   const { CartItems } = useAppSelector((state) => state.ItemSlice);
   const dispatch = useDispatch();
+  console.log("CartItems", CartItems);
   return (
     <SeDrawer
       open={isCartDrawerOpen}
