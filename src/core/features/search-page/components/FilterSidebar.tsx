@@ -7,6 +7,9 @@ import { Rating } from "@mui/material";
 import SeCheckbox from "@/components/global/SeCheckbox";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useAppSelector } from "@/providers/StoreWrapper";
+import SeFilterDropDown from "@/components/global/SeFilterDropDown";
+import { useDispatch } from "react-redux";
+import { setOrder, setSortBy } from "../redux/redux";
 
 type Props = {};
 
@@ -16,7 +19,11 @@ function FilterSidebar({}: Props) {
   const params = useSearchParams();
   const newUrl = new URLSearchParams(params.toString());
   const router = useRouter();
-  const { searchResults } = useAppSelector((state) => state.SearchPageSlice);
+  const { searchResults, order, sortBy } = useAppSelector(
+    (state) => state.SearchPageSlice
+  );
+  const dispatch = useDispatch();
+
   const handleChange = (event: Event, newValue: number | number[]) => {
     setValue(newValue as number[]);
   };
@@ -42,8 +49,42 @@ function FilterSidebar({}: Props) {
           <p className="text-sub-title-text text-sm">
             {searchResults} results found
           </p>
+          <p
+            className="text-error text-sm cursor-pointer hover:underline mt-2"
+            onClick={() => {
+              newUrl.delete("q");
+              router.push(`?${newUrl.toString()}`);
+            }}
+          >
+            Clear Search
+          </p>
         </div>
       )}
+      <div className="flex items-start">
+        <div className="flex justify-end items-center gap-2  max-sm:flex-col max-sm:items-start">
+          Sort By:{" "}
+          <SeFilterDropDown
+            order={order}
+            defaultValue={sortBy}
+            options={[
+              {
+                label: "price",
+                value: "price",
+              },
+              {
+                label: "Date Created",
+                value: "createdAt",
+              },
+            ]}
+            onChange={(e) => {
+              dispatch(setSortBy(e.target.value));
+            }}
+            setOrder={(e) => {
+              dispatch(setOrder(e));
+            }}
+          />
+        </div>
+      </div>
       <div className="space-y-3">
         <p className=" text-primary font-semibold">Categories</p>
         <div className="space-y-1">

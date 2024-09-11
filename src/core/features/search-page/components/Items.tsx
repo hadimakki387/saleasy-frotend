@@ -7,7 +7,12 @@ import ItemCard from "./ItemCard";
 import SeFilterDropDown from "@/components/global/SeFilterDropDown";
 import ItemCardSkeleton from "./skeletons/ItemCardSkeleton";
 import { useDispatch } from "react-redux";
-import { setSearchResults } from "../redux/redux";
+import { setOrder, setSearchResults, setSortBy } from "../redux/redux";
+import SeButton from "@/components/global/SeButton";
+import { useAppSelector } from "@/providers/StoreWrapper";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBars, faFilter } from "@fortawesome/free-solid-svg-icons";
+import { setIsSearchDrawerOpen } from "@/components/global-slice";
 
 type Props = {};
 
@@ -15,8 +20,7 @@ function Items({}: Props) {
   const params = useSearchParams();
   const [limit, setLimit] = useState<number>(5); // Start with an initial limit of 5
   const observerRef = useRef<HTMLDivElement | null>(null); // Reference for the observer
-  const [sortBy, setSortBy] = useState<string>("createdAt");
-  const [order, setOrder] = useState<string>("asc");
+  const { order, sortBy } = useAppSelector((state) => state.SearchPageSlice);
   const getSearch = params.get("q");
   const dispatch = useDispatch();
   const router = useRouter();
@@ -71,30 +75,21 @@ function Items({}: Props) {
 
   return (
     <div>
-      <div className="flex justify-end items-center gap-4 mb-4 max-sm:flex-col max-sm:items-start">
-        Sort By:{" "}
-        <SeFilterDropDown
-          order={order}
-          defaultValue={sortBy}
-          options={[
-            {
-              label: "price",
-              value: "price",
-            },
-            {
-              label: "Date Created",
-              value: "createdAt",
-            },
-          ]}
-          onChange={(e) => {
-            setSortBy(e.target.value);
-          }}
-          setOrder={(e) => {
-            setOrder(e);
-          }}
-        />
-      </div>
       <div className="grid grid-cols-2 xl:grid-cols-3 gap-2 sm:gap-8 ">
+        <div
+          className={`flex items-center lg:hidden col-span-2 justify-end mb-4 text-primary`}
+        >
+          <FontAwesomeIcon
+            icon={faFilter}
+            onClick={() => {
+              dispatch(setIsSearchDrawerOpen(true));
+            }}
+            style={{
+              fontSize: "20px",
+              cursor: "pointer",
+            }}
+          />
+        </div>
         {searchData?.data.map((prod, index) => {
           return <ItemCard key={index} product={prod} />;
         })}
