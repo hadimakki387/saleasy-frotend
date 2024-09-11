@@ -12,11 +12,19 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
 import React from "react";
 import CustomImage from "../global/CustomImage";
+import { useTestAuthMutation } from "@/core/features/landing/redux/rtk";
 
 interface Props {
   data: ILinkEntity;
 }
 const Footer = ({ data }: Props) => {
+  const [testAuth, { isSuccess, isError, error, data: res }] =
+    useTestAuthMutation();
+  console.log(isSuccess);
+  console.log(isError);
+  console.log(error);
+  console.log(res);
+
   return (
     <div className="bg-[rgb(34,41,53)] text-white p-8">
       <div className="w-full flex items-start justify-center gap-12 max-md:flex-col max-md:gap-8">
@@ -40,6 +48,13 @@ const Footer = ({ data }: Props) => {
           <p className="text-gray-400">Email: hmakki387@gmail.com</p>
           <p className="text-gray-400">Phone: +96178886897</p>
         </div>
+        <button
+          onClick={() => {
+            testAuth();
+          }}
+        >
+          {isSuccess ? "auth" : isError ? "failed auth" : "Test Auth"}
+        </button>
       </div>
     </div>
   );

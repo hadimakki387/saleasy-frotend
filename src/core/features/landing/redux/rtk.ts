@@ -75,6 +75,12 @@ export const extendedApi = mainApi.injectEndpoints({
         return response;
       },
     }),
+    testAuth: build.mutation<any, void>({
+      query: () => ({
+        url: "/auth/test-auth",
+        method: "POST",
+      }),
+    }),
   }),
 });
 
@@ -88,4 +94,5 @@ export const {
   useGetCategoryRelatedItemsQuery,
   useLoginMutation,
   useRegisterMutation,
+  useTestAuthMutation,
 } = extendedApi;
