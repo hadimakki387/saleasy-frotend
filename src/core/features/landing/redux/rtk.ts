@@ -1,5 +1,4 @@
 import { mainApi } from "@/core/rtk-query";
-import Cookies from "js-cookie";
 import { Product } from "../components/LandingPage";
 import {
   AuthenticationResponse,
@@ -60,7 +59,7 @@ export const extendedApi = mainApi.injectEndpoints({
         body,
       }),
       transformResponse: (response: AuthenticationResponse) => {
-        Cookies.set("token", response.token);
+        localStorage.setItem("beerer", response.token);
         return response;
       },
     }),
@@ -71,7 +70,7 @@ export const extendedApi = mainApi.injectEndpoints({
         body,
       }),
       transformResponse: (response: AuthenticationResponse) => {
-        Cookies.set("token", response.token);
+        localStorage.setItem("beerer", response.token);
         return response;
       },
     }),

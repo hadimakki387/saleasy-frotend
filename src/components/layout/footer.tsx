@@ -20,10 +20,6 @@ interface Props {
 const Footer = ({ data }: Props) => {
   const [testAuth, { isSuccess, isError, error, data: res }] =
     useTestAuthMutation();
-  console.log(isSuccess);
-  console.log(isError);
-  console.log(error);
-  console.log(res);
 
   return (
     <div className="bg-[rgb(34,41,53)] text-white p-8">
