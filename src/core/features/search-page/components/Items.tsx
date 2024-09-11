@@ -22,11 +22,16 @@ function Items({}: Props) {
   const router = useRouter();
 
   const sort = { [sortBy]: order.toUpperCase() };
+  const query: any = { limit, ...sort };
+  if (getSearch) {
+    console.log("getSearch", getSearch);
+    query.name = getSearch;
+  }
   const {
     data: searchData,
     error: searchError,
     isLoading: searchLoading,
-  } = useSearchItemsQuery({ limit, name: getSearch as string, ...sort });
+  } = useSearchItemsQuery(query);
   useEffect(() => {
     dispatch(setSearchResults(searchData?.data.length || 0));
   }, [searchData]);
