@@ -4,6 +4,10 @@ import { ItemInterface } from "../../landing/interfaces/items-interface";
 
 interface CartItemsInterface extends ItemInterface {
   quantity: number;
+  selectedOptions: {
+    key: string;
+    value: string;
+  }[];
 }
 const initialState: {
   CartItems: CartItemsInterface[];

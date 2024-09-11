@@ -80,3 +80,19 @@
 ::-webkit-scrollbar-corner {
   background: transparent;
 }
+
+.PhoneInputInput {
+  border: 2px solid var(--input-border);
+  border-radius: var(--input-border-radius);
+  padding: 6px;
+  width: 100%;
+  font-size: 16px;
+  color: var(--title-text);
+  background-color: transparent;
+  outline: none;
+}
+
+.PhoneInputInput:focus {
+  border-color: var(--error) !important;
+  border-radius: var(--input-border-radius);
+}

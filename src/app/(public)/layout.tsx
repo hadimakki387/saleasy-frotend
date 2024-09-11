@@ -1,6 +1,6 @@
 "use client";
 import { notFound, useParams, usePathname } from "next/navigation";
-import React, { Suspense } from "react";
+import React, { Suspense, useEffect, useLayoutEffect } from "react";
 import NextTopLoader from "nextjs-toploader";
 import Header from "@/components/layout/Header";
 import MainLoader from "@/components/global/navLoader/MainLoader";
@@ -10,6 +10,8 @@ import { useGetStoreDataQuery } from "@/core/features/landing/redux/rtk";
 import AuthenticationDialog from "@/core/features/landing/components/AuthenticationDialog";
 import SearchDialog from "@/components/layout/SearchDialog";
 import CartDrawer from "@/core/features/search-page/components/CartDrawer";
+import { useDispatch } from "react-redux";
+import { setCartItems } from "@/core/features/item-page/redux/redux";
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -24,6 +26,17 @@ export default function RootLayout({
   } = useGetStoreDataQuery({
     id: store as string,
   });
+  // const { CartItems } = useAppSelector((state) => state.ItemSlice);
+  const dispatch = useDispatch();
+  const cart = localStorage.getItem("cart_items");
+  useLayoutEffect(() => {
+    if (cart) {
+      const cartItems = JSON.parse(cart);
+      if (cartItems.length > 0) {
+        dispatch(setCartItems(cartItems));
+      }
+    }
+  }, [cart]);
   if (!storeData && storeError) throw notFound();
   return (
     <>

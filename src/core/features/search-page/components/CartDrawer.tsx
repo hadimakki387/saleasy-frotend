@@ -9,6 +9,8 @@ import { setCartItems } from "../../item-page/redux/redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faX } from "@fortawesome/free-solid-svg-icons";
 import CustomImage from "@/components/global/CustomImage";
+import { Chip } from "@mui/material";
+import { useParams, useRouter } from "next/navigation";
 
 type Props = {};
 
@@ -16,7 +18,8 @@ function CartDrawer({}: Props) {
   const { isCartDrawerOpen } = useAppSelector((state) => state.GlobalSlice);
   const { CartItems } = useAppSelector((state) => state.ItemSlice);
   const dispatch = useDispatch();
-  console.log("CartItems", CartItems);
+  const router = useRouter();
+  const { store } = useParams();
   return (
     <SeDrawer
       open={isCartDrawerOpen}
@@ -57,6 +60,10 @@ function CartDrawer({}: Props) {
                         });
                         if (!findItem) return;
                         dispatch(setCartItems(findItem));
+                        localStorage.setItem(
+                          "cart_items",
+                          JSON.stringify(findItem)
+                        );
                       }}
                     />
                   </div>
@@ -80,6 +87,10 @@ function CartDrawer({}: Props) {
                         });
                         if (!findItem) return;
                         dispatch(setCartItems(findItem));
+                        localStorage.setItem(
+                          "cart_items",
+                          JSON.stringify(findItem)
+                        );
                       }}
                       label={"-"}
                       fullRounded
@@ -110,6 +121,17 @@ function CartDrawer({}: Props) {
                     <p className="text-sm text-error font-semibold">
                       ${item.price * item.quantity}
                     </p>
+                    {item?.selectedOptions?.map((opt, index) => {
+                      return (
+                        <Chip
+                          key={index}
+                          label={opt.value}
+                          variant="outlined"
+                          size="small"
+                          color="error"
+                        />
+                      );
+                    })}
                   </div>
                   <div>
                     <SeButton
@@ -122,6 +144,10 @@ function CartDrawer({}: Props) {
                         );
                         if (!findItem) return;
                         dispatch(setCartItems(findItem));
+                        localStorage.setItem(
+                          "cart_items",
+                          JSON.stringify(findItem)
+                        );
                       }}
                     />
                   </div>
@@ -140,6 +166,9 @@ function CartDrawer({}: Props) {
                 fontSize: "1rem",
               }}
               fullWidth
+              onClick={() => {
+                router.push(`/store/${store}/checkout`);
+              }}
             />
           </div>
         </div>

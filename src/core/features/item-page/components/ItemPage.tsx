@@ -31,7 +31,8 @@ function ItemPage({}: Props) {
   const dispatch = useDispatch();
   const { CartItems } = useAppSelector((state) => state.ItemSlice);
   const { item } = useParams();
-
+  console.log("item", CartItems);
+  console.log(selectedOptions);
   const {
     data: getItem,
     error: getItemError,
@@ -51,6 +52,14 @@ function ItemPage({}: Props) {
       return [...updatedOptions, { key, value }];
     });
   };
+
+  useEffect(() => {
+    if (getItem && !getItemLoading) {
+      setSelectedOptions(
+        getItem.options.map((opt) => ({ key: opt.name, value: opt.options[0] }))
+      );
+    }
+  }, [getItem, getItemLoading]);
 
   if (getItemLoading) return <ItemPageSkeleton />;
 
@@ -138,8 +147,27 @@ function ItemPage({}: Props) {
             onClick={() => {
               if (CartItems.find((item) => item.id === getItem.id)) return;
               dispatch(
-                setCartItems([...CartItems, { ...getItem, quantity: 1 }])
+                setCartItems([
+                  ...CartItems,
+                  { ...getItem, quantity: 1, selectedOptions },
+                ])
               );
+              const cartItems = localStorage.getItem("cart_items");
+              if (cartItems && JSON.parse(cartItems).length > 0) {
+                const items = JSON.parse(cartItems);
+                localStorage.setItem(
+                  "cart_items",
+                  JSON.stringify([
+                    ...items,
+                    { ...getItem, quantity: 1, selectedOptions },
+                  ])
+                );
+              } else {
+                localStorage.setItem(
+                  "cart_items",
+                  JSON.stringify([{ ...getItem, quantity: 1, selectedOptions }])
+                );
+              }
             }}
           />
         </div>
