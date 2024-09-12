@@ -10,7 +10,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faX } from "@fortawesome/free-solid-svg-icons";
 import CustomImage from "@/components/global/CustomImage";
 import { Chip } from "@mui/material";
-import { useParams, useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
+import { useRouter } from "nextjs-toploader/app";
 
 type Props = {};
 
@@ -168,6 +169,7 @@ function CartDrawer({}: Props) {
               fullWidth
               onClick={() => {
                 router.push(`/store/${store}/checkout`);
+                dispatch(setIsCartDrawerOpen(false));
               }}
             />
           </div>

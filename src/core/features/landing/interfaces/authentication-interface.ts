@@ -4,6 +4,8 @@ export interface LoginInterface {
 }
 
 export interface RegisterInterface {
+  phoneNumber: string;
+  countryCode: string;
   email: string;
   password: string;
   name: string;

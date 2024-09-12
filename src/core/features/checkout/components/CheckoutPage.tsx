@@ -1,12 +1,14 @@
 "use client";
+import { setIsAuthecationDialogOpen } from "@/components/global-slice";
 import SeButton from "@/components/global/SeButton";
 import SeTextField from "@/components/global/SeTextField";
+import { useAppSelector } from "@/providers/StoreWrapper";
 import { faStore, faTruck, faX } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button, Radio } from "@mui/material";
 import React, { useState } from "react";
 import PhoneInput from "react-phone-number-input";
-import "react-phone-number-input/style.css";
+import { useDispatch } from "react-redux";
 
 type Props = {};
 
@@ -15,37 +17,15 @@ function CheckoutPage({}: Props) {
   const [delivery, setDelivery] = useState<"ship" | "pick" | "">("");
   const [location, setLocation] = useState("");
   console.log(location);
+  const { user } = useAppSelector((state) => state.GlobalSlice);
+  const { CartItems } = useAppSelector((state) => state.ItemSlice);
+  const dispatch = useDispatch();
+  const total = CartItems.map((item, index) => {
+    return item.price * item.quantity;
+  }).reduce((a, b) => a + b, 0);
+  console.log(total);
   return (
     <div className="flex justify-center py-4 flex-col max-sm:px-2 px-4 xl:px-72 space-y-4">
-      <p className="font-bold text-lg">Contact</p>
-
-      <div className="space-y-2">
-        {" "}
-        <PhoneInput
-          style={{
-            flexDirection: "row-reverse",
-            gap: "1rem",
-          }}
-          placeholder="phone number"
-          defaultCountry="LB"
-          value={value}
-          onChange={(e) => {
-            if (e) setValue(e?.toString());
-          }}
-        />
-        <SeTextField
-          label="Email"
-          sx={{
-            "& .MuiOutlinedInput-notchedOutline": {
-              borderWidth: "2px",
-            },
-          }}
-        />
-        <p className="text-error text-xs">
-          NOTE: If the phone number is not valid, the order will not be
-          processed
-        </p>
-      </div>
       <div>
         <p className="font-bold text-lg">Delivery</p>
         <p className="text-sub-title-text text-xs">
@@ -130,7 +110,7 @@ function CheckoutPage({}: Props) {
       </div>
       <div className="flex items-center justify-between border  text-title-text border-green-500 bg-[#e9f0e9] rounded-md p-4 text-sm">
         <p>Deliery Fees</p>
-        <p>$5</p>
+        <p>${total}</p>
       </div>
       <div className="space-y-2">
         <p className="font-bold text-lg">Payment</p>
@@ -148,6 +128,17 @@ function CheckoutPage({}: Props) {
         size="large"
         sx={{
           fontWeight: "bold",
+        }}
+        onClick={() => {
+          if (!user) dispatch(setIsAuthecationDialogOpen(true));
+          const data = CartItems.map((item) => {
+            return {
+              id: item.id,
+              quantity: item.quantity,
+              options: item.selectedOptions,
+            };
+          });
+          console.log("data", data);
         }}
       >
         Complete Order

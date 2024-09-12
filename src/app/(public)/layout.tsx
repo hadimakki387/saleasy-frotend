@@ -6,12 +6,17 @@ import Header from "@/components/layout/Header";
 import MainLoader from "@/components/global/navLoader/MainLoader";
 import Footer from "@/components/layout/footer";
 import { useAppSelector } from "@/providers/StoreWrapper";
-import { useGetStoreDataQuery } from "@/core/features/landing/redux/rtk";
+import {
+  useGetMeQuery,
+  useGetStoreDataQuery,
+} from "@/core/features/landing/redux/rtk";
 import AuthenticationDialog from "@/core/features/landing/components/AuthenticationDialog";
 import SearchDialog from "@/components/layout/SearchDialog";
 import CartDrawer from "@/core/features/search-page/components/CartDrawer";
 import { useDispatch } from "react-redux";
 import { setCartItems } from "@/core/features/item-page/redux/redux";
+import "react-phone-number-input/style.css";
+import { setUser } from "@/components/global-slice";
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -37,6 +42,13 @@ export default function RootLayout({
       }
     }
   }, [cart]);
+  const { data } = useGetMeQuery();
+  useEffect(() => {
+    if (data) {
+      dispatch(setUser(data));
+    }
+  }, [data]);
+
   if (!storeData && storeError) throw notFound();
   return (
     <>

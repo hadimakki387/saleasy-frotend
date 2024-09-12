@@ -80,6 +80,9 @@ export const extendedApi = mainApi.injectEndpoints({
         method: "POST",
       }),
     }),
+    getMe: build.query<AuthenticationResponse, void>({
+      query: () => "/auth/me",
+    }),
   }),
 });
 
@@ -94,4 +97,5 @@ export const {
   useLoginMutation,
   useRegisterMutation,
   useTestAuthMutation,
+  useGetMeQuery,
 } = extendedApi;

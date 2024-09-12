@@ -44,13 +44,13 @@ const Footer = ({ data }: Props) => {
           <p className="text-gray-400">Email: hmakki387@gmail.com</p>
           <p className="text-gray-400">Phone: +96178886897</p>
         </div>
-        <button
+        {/* <button
           onClick={() => {
             testAuth();
           }}
         >
           {isSuccess ? "auth" : isError ? "failed auth" : "Test Auth"}
-        </button>
+        </button> */}
       </div>
     </div>
   );

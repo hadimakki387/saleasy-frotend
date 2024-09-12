@@ -1,3 +1,4 @@
+import { LoginInterface } from "@/core/features/landing/interfaces/authentication-interface";
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState: {
@@ -8,6 +9,7 @@ const initialState: {
   isLoginDialogOpen: boolean;
   isRegisterDialogOpen: boolean;
   isAuthecationDialogOpen: boolean;
+  user: LoginInterface | null;
 } = {
   isSearchDrawerOpen: false,
   isCartDrawerOpen: false,
@@ -16,6 +18,7 @@ const initialState: {
   isLoginDialogOpen: false,
   isRegisterDialogOpen: false,
   isAuthecationDialogOpen: false,
+  user: null,
 };
 
 const GlobalSlice = createSlice({
@@ -43,6 +46,9 @@ const GlobalSlice = createSlice({
     setIsAuthecationDialogOpen: (state, action) => {
       state.isAuthecationDialogOpen = action.payload;
     },
+    setUser: (state, action) => {
+      state.user = action.payload;
+    },
   },
 });
 
@@ -54,6 +60,7 @@ export const {
   setIsLoginDialogOpen,
   setIsRegisterDialogOpen,
   setIsAuthecationDialogOpen,
+  setUser,
 } = GlobalSlice.actions;
 
 export default GlobalSlice.reducer;

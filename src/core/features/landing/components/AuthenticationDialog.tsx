@@ -2,6 +2,7 @@ import {
   setIsAuthecationDialogOpen,
   setIsLoginDialogOpen,
   setIsRegisterDialogOpen,
+  setUser,
 } from "@/components/global-slice";
 import CustomImage from "@/components/global/CustomImage";
 import SeButton from "@/components/global/SeButton";
@@ -10,12 +11,13 @@ import SeTextField from "@/components/global/SeTextField";
 import { useAppSelector } from "@/providers/StoreWrapper";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import * as yup from "yup";
 import { useFormik } from "formik";
 import { useLoginMutation, useRegisterMutation } from "../redux/rtk";
 import { toast } from "sonner";
+import PhoneInput from "react-phone-number-input";
 
 type Props = {
   logo: string;
@@ -27,6 +29,19 @@ function AuthenticationDialog({ logo, storeName }: Props) {
     useAppSelector((state) => state.GlobalSlice);
   const [passwordVisible, setPasswordVisible] = useState(false);
   const dispatch = useDispatch();
+  const [value, setValue] = useState("");
+  const [focusPhone, setFocusPhone] = useState(false);
+  const [errorPhone, setErrorPhone] = useState("");
+  const [countryCode, setCountryCode] = useState("LB");
+  useEffect(() => {
+    console.log(value);
+    if ((focusPhone && value === "") || value.length < 9) {
+      setErrorPhone("Phone number is required");
+    }
+    if (focusPhone && value.length >= 9) {
+      setErrorPhone("");
+    }
+  }, [focusPhone, value]);
   const [
     login,
     { data: loginData, error: loginError, isLoading: loginLoading },
@@ -49,6 +64,9 @@ function AuthenticationDialog({ logo, storeName }: Props) {
       login(values)
         .unwrap()
         .then((res) => {
+          dispatch(setUser(res));
+          dispatch(setIsLoginDialogOpen(false));
+          dispatch(setIsRegisterDialogOpen(false));
           toast.success("Login successful", { id: toastId });
         })
         .catch((err) => {
@@ -68,7 +86,18 @@ function AuthenticationDialog({ logo, storeName }: Props) {
       password: yup.string().required("Password is required"),
     }),
     onSubmit: (values) => {
-      register(values);
+      const toastId = toast.loading("Registering...");
+      register({ ...values, phoneNumber: value, countryCode })
+        .unwrap()
+        .then((res) => {
+          dispatch(setUser(res));
+          dispatch(setIsLoginDialogOpen(false));
+          dispatch(setIsRegisterDialogOpen(false));
+          toast.success("Register successful", { id: toastId });
+        })
+        .catch((err) => {
+          toast.error("Register failed", { id: toastId });
+        });
     },
   });
   return (
@@ -148,6 +177,30 @@ function AuthenticationDialog({ logo, storeName }: Props) {
                 />
               </div>
               <div className="space-y-2">
+                <p className="text-sm font-semibold text-primary">
+                  Phone Number
+                </p>
+                <PhoneInput
+                  style={{
+                    flexDirection: "row-reverse",
+                    gap: "1rem",
+                  }}
+                  onFocus={() => setFocusPhone(true)}
+                  placeholder="phone number"
+                  defaultCountry="LB"
+                  onCountryChange={(e) => {
+                    if (e) setCountryCode(e?.toString());
+                  }}
+                  value={value}
+                  onChange={(e) => {
+                    if (e) setValue(e?.toString());
+                  }}
+                />
+                {focusPhone && errorPhone.length ? (
+                  <p className="text-error text-xs">Phone number is required</p>
+                ) : null}
+              </div>
+              <div className="space-y-2">
                 <p className="text-sm font-semibold text-primary">Email</p>
                 <SeTextField
                   placeholder="Email"
@@ -156,7 +209,7 @@ function AuthenticationDialog({ logo, storeName }: Props) {
                 />
               </div>
               <div className="space-y-2">
-                <p className="text-sm font-semibold text-primary">Eassword</p>
+                <p className="text-sm font-semibold text-primary">Password</p>
                 <SeTextField
                   formik={registerFormik}
                   name="password"
@@ -186,9 +239,21 @@ function AuthenticationDialog({ logo, storeName }: Props) {
             padding: "10px 0",
           }}
           onClick={() => {
-            isLoginDialogOpen
-              ? loginFormik.handleSubmit()
-              : registerFormik.handleSubmit();
+            if (focusPhone && value.length < 9) {
+              setErrorPhone("Phone number is required");
+              return;
+            }
+            if (isLoginDialogOpen) {
+              loginFormik.handleSubmit();
+            }
+            if (
+              isRegisterDialogOpen &&
+              value.length >= 9 &&
+              value.length <= 15 &&
+              errorPhone.length === 0
+            ) {
+              registerFormik.handleSubmit();
+            }
           }}
         />
         <div className="text-sm text-center max-sm:text-xs max-sm:text-start">
