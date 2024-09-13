@@ -47,7 +47,9 @@ export default function AutoCompleteSearch({
   const [menuItems, setMenuItems] = React.useState(data);
 
   React.useEffect(() => {
-    setMenuItems(data);
+    if (data !== menuItems) {
+      setMenuItems(data);
+    }
   }, [data]);
 
   return (
@@ -71,17 +73,19 @@ export default function AutoCompleteSearch({
         disableClearable={true}
         onChange={(event, value) => {
           const selectedItem = menuItems.find((item) => item.title === value);
-          if (setSelectedItem) setSelectedItem(selectedItem.id);
-          formik?.setFieldValue(name, selectedItem.id);
+          if (selectedItem && setSelectedItem) {
+            setSelectedItem(selectedItem.id);
+            formik?.setFieldValue(name, selectedItem.id);
+          }
         }}
         loading={loading}
         loadingText="Loading..."
         options={menuItems.map((option) => option.title)}
         onInputChange={(event, value) => {
           if (setSearch) setSearch(value);
-          formik?.setFieldValue(name, value);
+          if (formik) formik.setFieldValue(name, value);
         }}
-        value={value && value}
+        value={value || ""}
         style={style}
         className={`${className}`}
         disabled={disabled}

@@ -194,7 +194,7 @@ function Header({ link }: Props) {
                 searchItems?.data.map((e) => ({
                   title: e.name,
                   id: e.id,
-                })) || undefined
+                })) || []
               }
               handleSubmit={() => {
                 newUrl.set("q", search);

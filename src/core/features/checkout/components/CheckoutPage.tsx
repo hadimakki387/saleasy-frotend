@@ -6,24 +6,86 @@ import { useAppSelector } from "@/providers/StoreWrapper";
 import { faStore, faTruck, faX } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button, Radio } from "@mui/material";
+import { useFormik } from "formik";
 import React, { useState } from "react";
 import PhoneInput from "react-phone-number-input";
 import { useDispatch } from "react-redux";
+import { toast } from "sonner";
+import * as Yup from "yup";
+import { useCreateOrderMutation } from "../redux/rtk";
+import { useParams, useSearchParams } from "next/navigation";
+import { setCartItems } from "../../item-page/redux/redux";
+import { useRouter } from "nextjs-toploader/app";
 
 type Props = {};
 
 function CheckoutPage({}: Props) {
-  const [value, setValue] = useState("");
-  const [delivery, setDelivery] = useState<"ship" | "pick" | "">("");
-  const [location, setLocation] = useState("");
-  console.log(location);
+  const [delivery, setDelivery] = useState<"ship" | "pick">("ship");
+  const [location, setLocation] = useState("lebanon");
   const { user } = useAppSelector((state) => state.GlobalSlice);
   const { CartItems } = useAppSelector((state) => state.ItemSlice);
   const dispatch = useDispatch();
-  const total = CartItems.map((item, index) => {
+  const total = CartItems.map((item) => {
     return item.price * item.quantity;
   }).reduce((a, b) => a + b, 0);
-  console.log(total);
+  const router = useRouter();
+  const [
+    createOrder,
+    {
+      data: orderData,
+      isLoading: orderLoading,
+      isSuccess: orderSuccess,
+      isError: orderError,
+      error: orderErrorData,
+    },
+  ] = useCreateOrderMutation();
+  const { store } = useParams();
+
+  const formik = useFormik({
+    initialValues: {
+      name: "",
+      country: "lebanon",
+      company: "",
+      address: "",
+      city: "",
+    },
+    validationSchema: Yup.object({
+      name: Yup.string().required("Required"),
+      country: Yup.string().required("Required"),
+      company: Yup.string(),
+      address: Yup.string().required("Required"),
+      city: Yup.string().required("Required"),
+    }),
+    onSubmit: (values) => {
+      const data = CartItems.map((item) => {
+        return {
+          id: item.id,
+          quantity: item.quantity,
+          options: item.selectedOptions,
+        };
+      });
+      const toastId = toast.loading("Creating order...");
+      createOrder({
+        items: data,
+        shippingInfo: { method: delivery, ...values },
+        storeId: store as string,
+      })
+        .unwrap()
+        .then((data) => {
+          toast.dismiss(toastId);
+          toast.success("Thanks! Your order has been placed successfully");
+          dispatch(setCartItems([]));
+          localStorage.setItem("cart_items", JSON.stringify([]));
+          router.push(`/store/${store}/search`);
+          dispatch(setIsAuthecationDialogOpen(false));
+        })
+        .catch((err) => {
+          toast.dismiss(toastId);
+          toast.error(err.data.message);
+        });
+    },
+  });
+
   return (
     <div className="flex justify-center py-4 flex-col max-sm:px-2 px-4 xl:px-72 space-y-4">
       <div>
@@ -83,30 +145,32 @@ function CheckoutPage({}: Props) {
           <SeTextField
             select
             label="Country"
+            name="country"
             value={location}
+            formik={formik}
             onChange={(e) => {
               setLocation(e.target.value);
             }}
             options={[
               {
-                value: "Lebanon",
                 label: "Lebanon",
-              },
-              {
-                value: "USA",
-                label: "USA",
+                value: "lebanon",
               },
             ]}
           />
         </div>
 
-        <SeTextField label="Name" />
-        <SeTextField label="Company (optional)" />
-        <SeTextField label="Address" />
-        <div className="flex items-center gap-4">
-          <SeTextField label="City" />
-          <SeTextField label="Postal code" />
-        </div>
+        <SeTextField label="Name" name="name" formik={formik} />
+        <SeTextField
+          label="Company (optional)"
+          name="company"
+          formik={formik}
+        />
+        <SeTextField label="Address" name="address" formik={formik} />
+        {/* <div className="flex items-center gap-4"> */}
+        <SeTextField label="City" name="city" formik={formik} />
+        {/* <SeTextField label="Postal code" name="postal" /> */}
+        {/* </div> */}
       </div>
       <div className="flex items-center justify-between border  text-title-text border-green-500 bg-[#e9f0e9] rounded-md p-4 text-sm">
         <p>Deliery Fees</p>
@@ -130,15 +194,12 @@ function CheckoutPage({}: Props) {
           fontWeight: "bold",
         }}
         onClick={() => {
-          if (!user) dispatch(setIsAuthecationDialogOpen(true));
-          const data = CartItems.map((item) => {
-            return {
-              id: item.id,
-              quantity: item.quantity,
-              options: item.selectedOptions,
-            };
-          });
-          console.log("data", data);
+          if (!user) {
+            toast.error("Please login to complete your order");
+            dispatch(setIsAuthecationDialogOpen(true));
+            return;
+          }
+          formik.handleSubmit();
         }}
       >
         Complete Order

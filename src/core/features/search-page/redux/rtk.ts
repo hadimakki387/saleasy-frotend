@@ -3,6 +3,7 @@ import { MainPaginatedDto, PaginationInterface } from "@/services/types";
 import { ItemInterface } from "../../landing/interfaces/items-interface";
 interface ItemResponse extends MainPaginatedDto {
   data: ItemInterface[];
+
 }
 interface searchItemsParams extends PaginationInterface {
   price?: number;

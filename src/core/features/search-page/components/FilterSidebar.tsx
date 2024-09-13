@@ -1,6 +1,6 @@
 "use client";
 import { categories } from "@/fake-db/categories";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Slider from "@mui/material/Slider";
 import SeTextField from "@/components/global/SeTextField";
 import { Rating } from "@mui/material";
@@ -9,13 +9,20 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useAppSelector } from "@/providers/StoreWrapper";
 import SeFilterDropDown from "@/components/global/SeFilterDropDown";
 import { useDispatch } from "react-redux";
-import { setOrder, setSortBy } from "../redux/redux";
+import {
+  setMaxDiscount,
+  setMaxPrice,
+  setMinDiscount,
+  setMinPrice,
+  setOrder,
+  setSortBy,
+} from "../redux/redux";
 
 type Props = {};
 
 function FilterSidebar({}: Props) {
-  const [value, setValue] = useState<number[]>([20, 37]);
-  const [discountValue, setDiscountValue] = useState<number[]>([20, 37]);
+  const [value, setValue] = useState<number[]>([0, 100]);
+  const [discountValue, setDiscountValue] = useState<number[]>([0, 100]);
   const params = useSearchParams();
   const newUrl = new URLSearchParams(params.toString());
   const router = useRouter();
@@ -23,7 +30,25 @@ function FilterSidebar({}: Props) {
     (state) => state.SearchPageSlice
   );
   const dispatch = useDispatch();
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      dispatch(setMinPrice(value[0]));
+      dispatch(setMaxPrice(value[1]));
+    }, 500);
+    return () => {
+      clearTimeout(timeout);
+    };
+  }, [value]);
 
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      dispatch(setMinDiscount(discountValue[0]));
+      dispatch(setMaxDiscount(discountValue[1]));
+    }, 500);
+    return () => {
+      clearTimeout(timeout);
+    };
+  }, [discountValue]);
   const handleChange = (event: Event, newValue: number | number[]) => {
     setValue(newValue as number[]);
   };

@@ -20,7 +20,8 @@ function Items({}: Props) {
   const params = useSearchParams();
   const [limit, setLimit] = useState<number>(5); // Start with an initial limit of 5
   const observerRef = useRef<HTMLDivElement | null>(null); // Reference for the observer
-  const { order, sortBy } = useAppSelector((state) => state.SearchPageSlice);
+  const { order, sortBy, maxPrice, minPrice, maxDiscount, minDiscount } =
+    useAppSelector((state) => state.SearchPageSlice);
   const getSearch = params.get("q");
   const dispatch = useDispatch();
   const router = useRouter();
@@ -31,6 +32,17 @@ function Items({}: Props) {
     console.log("getSearch", getSearch);
     query.name = getSearch;
   }
+  console.log(maxPrice, minPrice, maxDiscount, minDiscount);
+  if (maxPrice !== 100 || minPrice !== 0) {
+    query.minPrice = minPrice;
+    query.maxPrice = maxPrice;
+  }
+  if (maxDiscount !== 100 || minDiscount !== 0) {
+    query.minDiscount = minDiscount;
+    query.maxDiscount = maxDiscount;
+  }
+
+  console.log("query", query);
   const {
     data: searchData,
     error: searchError,

@@ -1,15 +1,8 @@
-import { useTheme } from "@mui/material";
-
 import "swiper/css";
 import "swiper/css/pagination";
 import SeCarousel from "../../../../../components/global/carousel/SeCarousel";
-import SeButton from "../../../../../components/global/SeButton";
-import Image from "next/image";
-import LinkArrowAnimation from "@/components/global/link-arrow-animation";
-import SideHeroBox from "../side-hero-box";
 import { ILinkEntity } from "../../interfaces/link-interface";
-import { getImageById } from "@/hooks/getImageById";
-import { useEffect } from "react";
+import SideHeroBox from "../side-hero-box";
 import HeroCarousel from "./HeroCarousel";
 
 const mySlider = [

@@ -1,22 +1,21 @@
 "use client";
-import { notFound, useParams, usePathname } from "next/navigation";
-import React, { Suspense, useEffect, useLayoutEffect } from "react";
-import NextTopLoader from "nextjs-toploader";
-import Header from "@/components/layout/Header";
+import { setUser } from "@/components/global-slice";
 import MainLoader from "@/components/global/navLoader/MainLoader";
 import Footer from "@/components/layout/footer";
-import { useAppSelector } from "@/providers/StoreWrapper";
+import Header from "@/components/layout/Header";
+import SearchDialog from "@/components/layout/SearchDialog";
+import { setCartItems } from "@/core/features/item-page/redux/redux";
+import AuthenticationDialog from "@/core/features/landing/components/AuthenticationDialog";
 import {
   useGetMeQuery,
   useGetStoreDataQuery,
 } from "@/core/features/landing/redux/rtk";
-import AuthenticationDialog from "@/core/features/landing/components/AuthenticationDialog";
-import SearchDialog from "@/components/layout/SearchDialog";
 import CartDrawer from "@/core/features/search-page/components/CartDrawer";
-import { useDispatch } from "react-redux";
-import { setCartItems } from "@/core/features/item-page/redux/redux";
+import { notFound, useParams, usePathname } from "next/navigation";
+import NextTopLoader from "nextjs-toploader";
+import React, { Suspense, useLayoutEffect } from "react";
 import "react-phone-number-input/style.css";
-import { setUser } from "@/components/global-slice";
+import { useDispatch } from "react-redux";
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -43,7 +42,7 @@ export default function RootLayout({
     }
   }, [cart]);
   const { data } = useGetMeQuery();
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (data) {
       dispatch(setUser(data));
     }
