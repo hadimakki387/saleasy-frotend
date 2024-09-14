@@ -1,5 +1,5 @@
+import { IconProps } from "@/services/types";
 import React from "react";
-import { IconProps } from "./types";
 
 export const ColumnsIcon: React.FC<IconProps> = ({
   size = 18,

@@ -1,5 +1,4 @@
 // import { FontAwesomeIconProps } from "@fortawesome/react-fontawesome";
-import { IconProps } from "@mui/material";
 import { ReactNode } from "react";
 
 export interface DropdownValue {
@@ -7,6 +6,9 @@ export interface DropdownValue {
   label: string;
   group?: string;
   priority?: number;
+}
+export interface IconProps extends React.SVGAttributes<HTMLOrSVGElement> {
+  size?: number;
 }
 
 export interface UserI {

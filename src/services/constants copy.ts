@@ -1,10 +1,3 @@
-import { SidebarData } from "../core/features/broadcast/broadcast-sidebar";
-
-export const ServerUrl =
-  process.env.NEXT_PUBLIC_MODE !== "development"
-    ? "https://api.residents.ai/v1/"
-    : "http://localhost:8080/v1/";
-
 export enum APIEndpoints {
   login = "auth/login",
   register = "auth/register",
@@ -67,17 +60,16 @@ export enum SortBy {
   Responsednb = "Responsednb",
 }
 
-
 export const SortByOptions = [
   { label: "Date", value: SortBy.date },
   { label: "Title", value: SortBy.Title },
   { label: "Responsednb", value: SortBy.Responsednb },
-]
+];
 
 export enum Status {
   archived = "archived",
   draft = "draft",
-  published = "published"
+  published = "published",
 }
 
 export const StatusOptions = [
@@ -116,64 +108,3 @@ export enum SubType {
 export const SubTypeOptions = [
   { label: "Animal Removal", value: SubType.type },
 ];
-
-export const SidebarInfo: SidebarData = {
-  "sms-campaign": {
-    title: "SMS Campaign",
-    links: [
-      {
-        id: 1,
-        label: "Create Campaign",
-        link: "/broadcast/sms-campaign/create-campaign",
-      },
-      {
-        id: 2,
-        label: "Scheduled Campaigns",
-        link: "/broadcast/sms-campaign/scheduled-campaigns",
-      },
-      { id: 3, label: "Drafts", link: "/broadcast/sms-campaign/sms-drafts" },
-      { id: 4, label: "History", link: "/broadcast/sms-campaign/history" },
-    ],
-  },
-  "email-campaign": {
-    title: "Email Campaign",
-    links: [
-      {
-        id: 1,
-        label: "Create Campaign",
-        link: "/broadcast/email-campaign/create-campaign",
-      },
-      {
-        id: 2,
-        label: "Scheduled Campaigns",
-        link: "/broadcast/email-campaign/scheduled-campaigns",
-      },
-      {
-        id: 3,
-        label: "Drafts",
-        link: "/broadcast/email-campaign/email-drafts",
-      },
-    ],
-  },
-  "in-app": {
-    title: "In App Notifications",
-    links: [
-      {
-        id: 1,
-        label: "Create Notifications",
-        link: "/broadcast/in-app/create-notification",
-      },
-      {
-        id: 2,
-        label: "Scheduled Notifications",
-        link: "/broadcast/in-app/scheduled-notification",
-      },
-      { id: 3, label: "Drafts", link: "/broadcast/in-app/drafts-notification" },
-      {
-        id: 4,
-        label: "Notifications History",
-        link: "/broadcast/in-app/history-notification",
-      },
-    ],
-  },
-};
