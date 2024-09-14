@@ -1,4 +1,4 @@
-import SearchPage from "@/core/features/search-page/components/SearchPage";
+import SearchPage from "@/core/features/customer/search-page/components/SearchPage";
 import React from "react";
 
 type Props = {};

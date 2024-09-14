@@ -4,13 +4,13 @@ import MainLoader from "@/components/global/navLoader/MainLoader";
 import Footer from "@/components/layout/footer";
 import Header from "@/components/layout/Header";
 import SearchDialog from "@/components/layout/SearchDialog";
-import { setCartItems } from "@/core/features/item-page/redux/redux";
-import AuthenticationDialog from "@/core/features/landing/components/AuthenticationDialog";
+import { setCartItems } from "@/core/features/customer/item-page/redux/redux";
+import AuthenticationDialog from "@/core/features/customer/landing/components/AuthenticationDialog";
 import {
   useGetMeQuery,
   useGetStoreDataQuery,
-} from "@/core/features/landing/redux/rtk";
-import CartDrawer from "@/core/features/search-page/components/CartDrawer";
+} from "@/core/features/customer/landing/redux/rtk";
+import CartDrawer from "@/core/features/customer/search-page/components/CartDrawer";
 import { notFound, useParams, usePathname } from "next/navigation";
 import NextTopLoader from "nextjs-toploader";
 import React, { Suspense, useLayoutEffect } from "react";

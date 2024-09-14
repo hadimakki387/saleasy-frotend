@@ -8,7 +8,7 @@ import { useParams } from "next/navigation";
 import { useRouter } from "nextjs-toploader/app";
 import { useDispatch } from "react-redux";
 import { setIsSearchDialogOpen } from "../global-slice";
-import { useSearchItemsQuery } from "@/core/features/search-page/redux/rtk";
+import { useSearchItemsQuery } from "@/core/features/customer/search-page/redux/rtk";
 import SeLoader from "../global/SeLoader";
 import CustomImage from "../global/CustomImage";
 

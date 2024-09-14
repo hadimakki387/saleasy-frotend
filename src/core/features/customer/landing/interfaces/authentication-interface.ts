@@ -18,6 +18,6 @@ export interface AuthenticationResponse {
   isDeactivated: boolean;
   email: string;
   name: string;
-  role: string;
+  role: "admin" | "user";
   token: string;
 }

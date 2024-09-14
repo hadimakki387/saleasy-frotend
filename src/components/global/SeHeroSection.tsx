@@ -1,6 +1,6 @@
 import React from "react";
 import SeButton from "./SeButton";
-import { advertisementSection } from "@/core/features/landing/interfaces/link-interface";
+import { advertisementSection } from "@/core/features/customer/landing/interfaces/link-interface";
 
 interface BannerProps {
   data: advertisementSection;

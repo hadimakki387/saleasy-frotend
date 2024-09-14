@@ -1,10 +1,11 @@
 import { combineReducers } from "@reduxjs/toolkit";
-import LandingPage from "./landing/redux/redux";
+import LandingPage from "./customer/landing/redux/redux";
 import { mainApi } from "../rtk-query";
 import globalSlice from "@/components/global-slice";
-import SearchPageSlice from "./search-page/redux/redux";
-import ItemSlice from "./item-page/redux/redux";
-import CheckoutSlice from "./checkout/redux/redux";
+import SearchPageSlice from "./customer/search-page/redux/redux";
+import ItemSlice from "./customer/item-page/redux/redux";
+import CheckoutSlice from "./customer/checkout/redux/redux";
+import GlobalAdminRedux from "./admin/global-admin-redux";
 
 const reducers = combineReducers({
   landingPage: LandingPage,
@@ -12,6 +13,7 @@ const reducers = combineReducers({
   SearchPageSlice: SearchPageSlice,
   ItemSlice: ItemSlice,
   CheckoutSlice: CheckoutSlice,
+  GlobalAdminRedux: GlobalAdminRedux,
   [mainApi.reducerPath]: mainApi.reducer,
 });
 

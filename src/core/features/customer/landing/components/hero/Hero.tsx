@@ -1,6 +1,6 @@
 import "swiper/css";
 import "swiper/css/pagination";
-import SeCarousel from "../../../../../components/global/carousel/SeCarousel";
+import SeCarousel from "../../../../../../components/global/carousel/SeCarousel";
 import { ILinkEntity } from "../../interfaces/link-interface";
 import SideHeroBox from "../side-hero-box";
 import HeroCarousel from "./HeroCarousel";

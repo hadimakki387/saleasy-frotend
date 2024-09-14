@@ -1,4 +1,4 @@
-import CheckoutPage from "@/core/features/checkout/components/CheckoutPage";
+import CheckoutPage from "@/core/features/customer/checkout/components/CheckoutPage";
 import React from "react";
 
 type Props = {};

@@ -1,4 +1,4 @@
-import ItemPage from "@/core/features/item-page/components/ItemPage";
+import ItemPage from "@/core/features/customer/item-page/components/ItemPage";
 import React from "react";
 
 type Props = {};

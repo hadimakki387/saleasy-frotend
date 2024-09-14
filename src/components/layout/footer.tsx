@@ -1,4 +1,4 @@
-import { ILinkEntity } from "@/core/features/landing/interfaces/link-interface";
+import { ILinkEntity } from "@/core/features/customer/landing/interfaces/link-interface";
 import {
   faAppStore,
   faFacebook,
@@ -12,7 +12,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
 import React from "react";
 import CustomImage from "../global/CustomImage";
-import { useTestAuthMutation } from "@/core/features/landing/redux/rtk";
+import { useTestAuthMutation } from "@/core/features/customer/landing/redux/rtk";
 
 interface Props {
   data: ILinkEntity;

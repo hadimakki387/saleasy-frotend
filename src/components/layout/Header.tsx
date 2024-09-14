@@ -28,10 +28,10 @@ import {
 } from "../global-slice";
 import { useAppSelector } from "@/providers/StoreWrapper";
 import { useRouter } from "nextjs-toploader/app";
-import { ILinkEntity } from "@/core/features/landing/interfaces/link-interface";
+import { ILinkEntity } from "@/core/features/customer/landing/interfaces/link-interface";
 import CustomImage from "../global/CustomImage";
 import Link from "next/link";
-import { useSearchItemsQuery } from "@/core/features/search-page/redux/rtk";
+import { useSearchItemsQuery } from "@/core/features/customer/search-page/redux/rtk";
 
 type Props = {
   link: ILinkEntity;

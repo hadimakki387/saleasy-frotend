@@ -3,8 +3,8 @@ import React, { ReactNode } from "react";
 import { ThemeProvider as MuiThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import { ColorModeContext, useMode } from "../theme/theme"; // Adjust path as needed
-import FilterSidebar from "@/core/features/search-page/components/FilterSidebar";
-import CartDrawer from "@/core/features/search-page/components/CartDrawer";
+import FilterSidebar from "@/core/features/customer/search-page/components/FilterSidebar";
+import CartDrawer from "@/core/features/customer/search-page/components/CartDrawer";
 import SearchDialog from "@/components/layout/SearchDialog";
 
 interface ThemeProviderProps {

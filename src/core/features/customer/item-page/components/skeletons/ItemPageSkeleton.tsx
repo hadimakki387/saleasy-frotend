@@ -1,4 +1,4 @@
-import LandingCarouselSkeleton from "@/core/features/landing/components/skeletons/LandingCarouselSkeleton";
+import LandingCarouselSkeleton from "@/core/features/customer/landing/components/skeletons/LandingCarouselSkeleton";
 import { Skeleton } from "@mui/material";
 import React from "react";
 
