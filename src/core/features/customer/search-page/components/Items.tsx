@@ -1,8 +1,8 @@
 import SeLoader from "@/components/global/SeLoader";
 import SeTextField from "@/components/global/SeTextField";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { useSearchItemsQuery } from "../redux/rtk";
+import { searchItemsParams, useSearchItemsQuery } from "../redux/rtk";
 import ItemCard from "./ItemCard";
 import SeFilterDropDown from "@/components/global/SeFilterDropDown";
 import ItemCardSkeleton from "./skeletons/ItemCardSkeleton";
@@ -27,7 +27,7 @@ function Items({}: Props) {
   const router = useRouter();
 
   const sort = { [sortBy]: order.toUpperCase() };
-  const query: any = { limit, ...sort };
+  const query: searchItemsParams = { limit, ...sort };
   if (getSearch) {
     console.log("getSearch", getSearch);
     query.name = getSearch;
@@ -41,8 +41,8 @@ function Items({}: Props) {
     query.minDiscount = minDiscount;
     query.maxDiscount = maxDiscount;
   }
-
-  console.log("query", query);
+  const { store } = useParams();
+  query.storeId = store as string;
   const {
     data: searchData,
     error: searchError,

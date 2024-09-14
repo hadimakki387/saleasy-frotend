@@ -6,7 +6,7 @@ import { twMerge } from "tailwind-merge";
 export interface CIButtonProps extends ButtonProps {
   label?: any;
   variant?: "text" | "outlined" | "contained";
-  color?: "primary" | "secondary" | "error";
+  color_custom?: "primary" | "secondary" | "error" | "admin-primary";
   padding?: string;
   rounded?: boolean;
   radius?: string;
@@ -19,7 +19,7 @@ export interface CIButtonProps extends ButtonProps {
 }
 
 const sxOptions = (
-  color: "primary" | "secondary" | "error",
+  color: "primary" | "secondary" | "error" | "admin-primary",
   disabled: boolean,
   noBorder: boolean = false
 ) => ({
@@ -74,6 +74,7 @@ function SeButton({
   iconButton = false,
   noBorder = false,
   icon,
+  color_custom,
   ...rest
 }: CIButtonProps) {
   return (
@@ -88,35 +89,36 @@ function SeButton({
             "&:hover": {
               backgroundColor:
                 variant === "outlined"
-                  ? sxOptions(color || "primary", disabled, noBorder).outlined
-                      .color
+                  ? sxOptions(color_custom || "primary", disabled, noBorder)
+                      .outlined.color
                   : variant === "contained"
                   ? "white !important"
                   : "var(--primary) !important",
               color:
-                variant === "contained" && color === "primary"
+                variant === "contained" && color_custom === "primary"
                   ? "var(--primary) !important"
-                  : variant === "contained" && color === "error"
+                  : variant === "contained" && color_custom === "error"
                   ? "var(--error) !important"
                   : variant === "outlined" &&
-                    (color === "error" || color === "primary")
+                    (color_custom === "error" || color_custom === "primary")
                   ? "white !important"
+                  : color_custom === "admin-primary"
+                  ? "var(--admin-primary) !important"
                   : "var(--primary) !important",
             },
             fontWeight: "bold",
             minWidth: "100px",
             borderRadius: fullRounded
               ? "10000000px !important"
-              : radius ??
-                (!rounded
-                  ? "var(--button-border-radius) !important"
-                  : "10px !important"),
+              : rounded
+              ? "var(--button-border-radius) !important"
+              : radius && "10px !important",
             padding: padding || "var(--button-padding) !important",
             whiteSpace: "nowrap",
             fontSize: "0.875rem",
             lineHeight: "1.25rem",
             textTransform: "none",
-            ...sxOptions(color || "primary", disabled, noBorder)[
+            ...sxOptions(color_custom || "primary", disabled, noBorder)[
               variant || "text"
             ],
             ...sx,
@@ -131,7 +133,7 @@ function SeButton({
         <IconButton
           onClick={onClick}
           sx={{
-            color: `var(--${color || "primary"}) !important`,
+            color: `var(--${color_custom || "primary"}) !important`,
             backgroundColor: "transparent !important",
             border: "none !important",
             padding: padding || "var(--button-padding) !important",

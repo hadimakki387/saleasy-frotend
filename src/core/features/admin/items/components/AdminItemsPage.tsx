@@ -1,21 +1,93 @@
 "use client";
-import React from "react";
-import { useGetStoreItemsQuery } from "../redux/rtk";
+import React, { useEffect } from "react";
+
 import { useParams } from "next/navigation";
 import SeTable from "@/components/global/Table/SE-Table";
 import { ItemsColumn } from "../columns/items-column";
+import SeDialog from "@/components/global/SeDialog";
+import { useDispatch } from "react-redux";
+import { setCreateItemDialogOpen, setSelectedItem } from "../redux/redux";
+import EditItemDialog from "./EditItemDialog";
+import SeTextField from "@/components/global/SeTextField";
+import SeButton from "@/components/global/SeButton";
+import { useSearchItemsQuery } from "@/core/features/customer/search-page/redux/rtk";
+import { useDeleteItemMutation, useSearchAdminItemsQuery } from "../redux/rtk";
+import AddItemDialog from "./AddItemDialog";
+import { toast } from "sonner";
 
 type Props = {};
 
 function AdminItemsPage({}: Props) {
   const { store } = useParams();
-  const { data } = useGetStoreItemsQuery(store as string);
-  console.log(data);
+  const [search, setSearch] = React.useState("");
+  const [debouncedSearch, setDebouncedSearch] = React.useState("");
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedSearch(search);
+    }, 200);
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [search]);
+  const { data } = useSearchAdminItemsQuery({
+    storeId: store as string,
+    name: debouncedSearch,
+  });
+  const dispatch = useDispatch();
+  const [
+    deleteItem,
+    { isLoading: deleteItemLoading, isSuccess: deleteItemSuccess },
+  ] = useDeleteItemMutation();
+  const handleDelete = (id: string) => {
+    const toastId = toast.loading("Deleting Item");
+    deleteItem({ itemId: id, name: debouncedSearch, storeId: store as string })
+      .unwrap()
+      .then(() => {
+        toast.dismiss(toastId);
+        toast.success("Item Deleted");
+      })
+      .catch(() => {
+        toast.dismiss(toastId);
+        toast.error("Failed to delete item");
+      });
+  };
   return (
-    <div>
-      {data && (
+    <div className="p-4">
+      <div className="text-2xl text-primary font-semibold">Items List</div>
+      <div className="flex items-center justify-between">
+        <SeTextField
+          placeholder="Search Items"
+          className="w-40"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
+        <SeButton
+          label={"Add Item"}
+          color_custom="admin-primary"
+          rounded
+          variant="contained"
+          onClick={() => {
+            dispatch(setCreateItemDialogOpen(true));
+          }}
+        />
+      </div>
+      {data && data.data && (
         <SeTable
-          rows={data.map((item) => {
+          onActionClick={(action, row) => {
+            switch (row) {
+              case "edit":
+                dispatch(
+                  setSelectedItem(data.data.find((item) => item.id === action))
+                );
+                break;
+              case "delete":
+                handleDelete(action);
+                break;
+              default:
+                break;
+            }
+          }}
+          rows={data.data.map((item) => {
             return {
               ...item,
               createdAt: new Date(item.createdAt).toLocaleDateString(),
@@ -25,6 +97,8 @@ function AdminItemsPage({}: Props) {
           columnGetter={ItemsColumn}
         />
       )}
+      <EditItemDialog debouncedSearch={debouncedSearch} />
+      <AddItemDialog debouncedSearch={debouncedSearch} />
     </div>
   );
 }

@@ -95,7 +95,11 @@ function Header({ link }: Props) {
   const path = usePathname();
   const { CartItems } = useAppSelector((state) => state.ItemSlice);
   const { data: searchItems, isLoading: loadingSearchItems } =
-    useSearchItemsQuery({ name: debouncedSearch, limit: 5 });
+    useSearchItemsQuery({
+      name: debouncedSearch,
+      limit: 5,
+      storeId: store as string,
+    });
 
   return (
     <>

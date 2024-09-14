@@ -14,6 +14,7 @@ const config: Config = {
         display: ["Protest Guerrilla", "sans-serif"],
       },
       colors: {
+        "admin-primary": "var(--admin-primary)",
         "item-card-bg": "var(--item-card-bg)",
         primary: "var(--primary)",
         secondary: "var(--secondary)",

@@ -1,5 +1,6 @@
 import { CircularProgress } from "@mui/material";
 import React from "react";
+import { twMerge } from "tailwind-merge";
 
 interface SeCardProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
@@ -16,9 +17,10 @@ function SeCard({
 }: SeCardProps) {
   return (
     <div
-      className={`${
-        noPadding ? "" : "p-4"
-      } bg-white rounded-sm max-md:p-2  ${className}`}
+      className={twMerge(
+        `${noPadding ? "" : "p-4"} bg-white rounded-sm max-md:p-2  `,
+        className
+      )}
       {...rest}
       onClick={(e) => {
         if (rest.onClick && !loading) {

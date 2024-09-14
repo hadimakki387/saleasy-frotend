@@ -33,7 +33,11 @@ function SearchDialog({}: Props) {
     };
   }, [search]);
   const { data: searchItems, isLoading: loadingSearchItems } =
-    useSearchItemsQuery({ name: debouncedSearch, limit: 5 });
+    useSearchItemsQuery({
+      name: debouncedSearch,
+      limit: 5,
+      storeId: params.store as string,
+    });
   return (
     <SeDialog
       open={isSearchDialogOpen}

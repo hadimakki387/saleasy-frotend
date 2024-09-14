@@ -6,6 +6,7 @@
   font-family: "Open Sans", sans-serif !important;
 } */
 :root {
+  --admin-primary: #3e8bfd;
   --item-card-bg: #fafafa;
   --primary: rgb(43, 52, 69);
   --secondary: #ffffff;
@@ -17,7 +18,7 @@
   --shadow: 1px 1px 8px rgba(0, 0, 0, 0.15);
   --error: #d23f57;
   --button-padding: 5px 10px;
-  --button-border-radius: 2px;
+  --button-border-radius: 4px;
   --main-bg: #f7f7f9;
   --icon-bg: #bdbdbd;
   --input-border: #d1d5db;

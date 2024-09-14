@@ -1,6 +1,7 @@
 "use client";
 import { setUser } from "@/components/global-slice";
 import MainLoader from "@/components/global/navLoader/MainLoader";
+import AdminHeader from "@/components/layout/AdminHeader";
 import Footer from "@/components/layout/footer";
 import Header from "@/components/layout/Header";
 import { SideBar } from "@/components/layout/reactsideBar/SideBar.tsx";
@@ -55,7 +56,10 @@ export default function RootLayout({
         storeData && (
           <>
             <SideBar />
-            <div className="md:ml-[250px] 2xl:ml-[15vw]">{children}</div>
+            <div className="md:ml-[250px] 2xl:ml-[15vw]">
+              <AdminHeader />
+              {children}
+            </div>
           </>
         )
       )}{" "}
