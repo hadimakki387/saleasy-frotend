@@ -3,7 +3,7 @@ import { setToggle } from "@/components/global-slice";
 import { useAppSelector } from "@/providers/StoreWrapper";
 import { NavItems } from "@/services/NavItems";
 import { CircularProgress, rgbToHex } from "@mui/material";
-import { useParams, usePathname, useRouter } from "next/navigation";
+import { useParams, usePathname,  } from "next/navigation";
 import React from "react";
 import {
   Menu,
@@ -18,6 +18,7 @@ import { SidebarHeader } from "./components/SidebarHeader";
 import { Typography } from "./components/Typography";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDotCircle } from "@fortawesome/free-solid-svg-icons";
+import { useRouter } from "nextjs-toploader/app";
 
 type Theme = "light" | "dark";
 

@@ -37,19 +37,8 @@ export const NavItems = (): items[] => {
         },
         {
           label: "Categories",
-          path: "",
+          path: "/categories",
           icon: Categories,
-          hasSubItems: true,
-          subItems: [
-            {
-              label: "Categories",
-              path: "/categories",
-            },
-            {
-              label: "Sub Categories",
-              path: "/sub-categories",
-            },
-          ],
         },
       ],
     },

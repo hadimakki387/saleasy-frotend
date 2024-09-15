@@ -1,9 +1,9 @@
-import React from "react";
+import CategoriesPage from "@/core/features/admin/categories/components/CategoriesPage";
 
 type Props = {};
 
 function page({}: Props) {
-  return <div>page</div>;
+  return <CategoriesPage />;
 }
 
 export default page;

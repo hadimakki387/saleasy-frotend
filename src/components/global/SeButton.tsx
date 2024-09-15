@@ -3,7 +3,7 @@ import { Button, ButtonProps, IconButton } from "@mui/material";
 import React, { ReactNode } from "react";
 import { twMerge } from "tailwind-merge";
 
-export interface CIButtonProps extends ButtonProps {
+export interface SeButtonProps extends ButtonProps {
   label?: any;
   variant?: "text" | "outlined" | "contained";
   color_custom?: "primary" | "secondary" | "error" | "admin-primary";
@@ -76,7 +76,7 @@ function SeButton({
   icon,
   color_custom,
   ...rest
-}: CIButtonProps) {
+}: SeButtonProps) {
   return (
     <>
       {!iconButton && label ? (
@@ -86,26 +86,26 @@ function SeButton({
           fullWidth={fullWidth}
           className={twMerge(rest.className)}
           sx={{
-            "&:hover": {
-              backgroundColor:
-                variant === "outlined"
-                  ? sxOptions(color_custom || "primary", disabled, noBorder)
-                      .outlined.color
-                  : variant === "contained"
-                  ? "white !important"
-                  : "var(--primary) !important",
-              color:
-                variant === "contained" && color_custom === "primary"
-                  ? "var(--primary) !important"
-                  : variant === "contained" && color_custom === "error"
-                  ? "var(--error) !important"
-                  : variant === "outlined" &&
-                    (color_custom === "error" || color_custom === "primary")
-                  ? "white !important"
-                  : color_custom === "admin-primary"
-                  ? "var(--admin-primary) !important"
-                  : "var(--primary) !important",
-            },
+            // "&:hover": {
+            //   backgroundColor:
+            //     variant === "outlined"
+            //       ? sxOptions(color_custom || "primary", disabled, noBorder)
+            //           .outlined.color
+            //       : variant === "contained"
+            //       ? "white !important"
+            //       : "var(--primary) !important",
+            //   color:
+            //     variant === "contained" && color_custom === "primary"
+            //       ? "var(--primary) !important"
+            //       : variant === "contained" && color_custom === "error"
+            //       ? "var(--error) !important"
+            //       : variant === "outlined" &&
+            //         (color_custom === "error" || color_custom === "primary")
+            //       ? "white !important"
+            //       : color_custom === "admin-primary"
+            //       ? "var(--admin-primary) !important"
+            //       : "var(--primary) !important",
+            // },
             fontWeight: "bold",
             minWidth: "100px",
             borderRadius: fullRounded

@@ -10,6 +10,7 @@ import { CreateItemDto } from "../interface/create-item";
 const extendedApi = mainApi.injectEndpoints({
   endpoints: (build) => ({
     searchAdminItems: build.query<ItemResponse, searchItemsParams>({
+      providesTags: ["removed_sub_category"],
       query: (params) => {
         const { storeId, ...restParams } = params;
         return { url: `/item/store/${storeId}`, params: restParams };
@@ -47,6 +48,8 @@ const extendedApi = mainApi.injectEndpoints({
         itemId: string;
         storeId: string;
         name: string;
+        page: number;
+        limit: number;
       }
     >({
       query: ({ data, itemId }) => {
@@ -58,7 +61,7 @@ const extendedApi = mainApi.injectEndpoints({
         };
       },
       onQueryStarted: async (
-        { storeId, data, name },
+        { storeId, data, name, page, limit },
         { dispatch, queryFulfilled }
       ) => {
         try {
@@ -67,7 +70,7 @@ const extendedApi = mainApi.injectEndpoints({
           dispatch(
             extendedApi.util.updateQueryData(
               "searchAdminItems",
-              { storeId, name },
+              { storeId, name, page, limit },
               (draft) => {
                 const index = draft.data.findIndex(
                   (item) => item.id === updatedUser.id
@@ -91,7 +94,13 @@ const extendedApi = mainApi.injectEndpoints({
     }),
     createdItem: build.mutation<
       ItemInterface,
-      { data: CreateItemDto; storeId: string; name: string }
+      {
+        data: CreateItemDto;
+        storeId: string;
+        name: string;
+        page: number;
+        limit: number;
+      }
     >({
       query: (data) => ({
         url: "item/create",
@@ -99,7 +108,7 @@ const extendedApi = mainApi.injectEndpoints({
         body: data.data,
       }),
       onQueryStarted: async (
-        { storeId, data, name },
+        { storeId, data, name, limit, page },
         { dispatch, queryFulfilled }
       ) => {
         try {
@@ -108,7 +117,7 @@ const extendedApi = mainApi.injectEndpoints({
           dispatch(
             extendedApi.util.updateQueryData(
               "searchAdminItems",
-              { storeId, name },
+              { storeId, name, limit, page },
               (draft) => {
                 draft.data.push(createdItem);
               }
@@ -121,14 +130,20 @@ const extendedApi = mainApi.injectEndpoints({
     }),
     deleteItem: build.mutation<
       { id: string },
-      { itemId: string; storeId: string; name: string }
+      {
+        itemId: string;
+        storeId: string;
+        name: string;
+        page: number;
+        limit: number;
+      }
     >({
       query: ({ itemId }) => ({
         url: `item/delete/${itemId}`,
         method: "DELETE",
       }),
       onQueryStarted: async (
-        { storeId, name, itemId },
+        { storeId, name, itemId, limit, page },
         { dispatch, queryFulfilled }
       ) => {
         try {
@@ -137,7 +152,7 @@ const extendedApi = mainApi.injectEndpoints({
           dispatch(
             extendedApi.util.updateQueryData(
               "searchAdminItems",
-              { storeId, name },
+              { storeId, name, limit, page },
               (draft) => {
                 const index = draft.data.findIndex(
                   (item) => item.id === itemId

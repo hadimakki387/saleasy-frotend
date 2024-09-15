@@ -110,8 +110,8 @@ export interface SemesterInterface {
 
 export interface MainInterface {
   id: string;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
   isDeactivated: boolean;
 }
 

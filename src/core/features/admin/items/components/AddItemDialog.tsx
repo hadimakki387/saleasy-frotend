@@ -27,7 +27,7 @@ function AddItemDialog({ debouncedSearch }: Props) {
   const [uploadImage] = useUploadImageMutation();
   const [createItem, { isLoading: loadingCreateItem }] =
     useCreatedItemMutation();
-  const { createItemDialogOpen } = useAppSelector(
+  const { createItemDialogOpen,limit,page } = useAppSelector(
     (state) => state.AdminItemsSlice
   );
   const dispatch = useDispatch();
@@ -80,6 +80,8 @@ function AddItemDialog({ debouncedSearch }: Props) {
           },
           storeId: store as string,
           name: debouncedSearch,
+          page,
+          limit,
         })
           .unwrap()
           .then(() => {

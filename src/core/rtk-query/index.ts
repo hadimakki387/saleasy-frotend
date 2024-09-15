@@ -10,7 +10,13 @@ const getToken = () => {
 
 export const mainApi = createApi({
   reducerPath: "mainApi",
-
+  tagTypes: [
+    "removed_sub_category",
+    "created_sub_category",
+    "updated_sub_category",
+    "removed_category",
+    "created_category",
+  ],
   baseQuery: fetchBaseQuery({
     baseUrl: process.env.NEXT_PUBLIC_API_URL,
     prepareHeaders: (headers) => {

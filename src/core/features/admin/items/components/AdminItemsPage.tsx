@@ -6,7 +6,11 @@ import SeTable from "@/components/global/Table/SE-Table";
 import { ItemsColumn } from "../columns/items-column";
 import SeDialog from "@/components/global/SeDialog";
 import { useDispatch } from "react-redux";
-import { setCreateItemDialogOpen, setSelectedItem } from "../redux/redux";
+import {
+  setCreateItemDialogOpen,
+  setPage,
+  setSelectedItem,
+} from "../redux/redux";
 import EditItemDialog from "./EditItemDialog";
 import SeTextField from "@/components/global/SeTextField";
 import SeButton from "@/components/global/SeButton";
@@ -14,6 +18,7 @@ import { useSearchItemsQuery } from "@/core/features/customer/search-page/redux/
 import { useDeleteItemMutation, useSearchAdminItemsQuery } from "../redux/rtk";
 import AddItemDialog from "./AddItemDialog";
 import { toast } from "sonner";
+import { useAppSelector } from "@/providers/StoreWrapper";
 
 type Props = {};
 
@@ -21,6 +26,8 @@ function AdminItemsPage({}: Props) {
   const { store } = useParams();
   const [search, setSearch] = React.useState("");
   const [debouncedSearch, setDebouncedSearch] = React.useState("");
+  const { page, limit } = useAppSelector((state) => state.AdminItemsSlice);
+
   useEffect(() => {
     const timer = setTimeout(() => {
       setDebouncedSearch(search);
@@ -32,6 +39,8 @@ function AdminItemsPage({}: Props) {
   const { data } = useSearchAdminItemsQuery({
     storeId: store as string,
     name: debouncedSearch,
+    page,
+    limit,
   });
   const dispatch = useDispatch();
   const [
@@ -40,7 +49,13 @@ function AdminItemsPage({}: Props) {
   ] = useDeleteItemMutation();
   const handleDelete = (id: string) => {
     const toastId = toast.loading("Deleting Item");
-    deleteItem({ itemId: id, name: debouncedSearch, storeId: store as string })
+    deleteItem({
+      itemId: id,
+      name: debouncedSearch,
+      storeId: store as string,
+      page,
+      limit,
+    })
       .unwrap()
       .then(() => {
         toast.dismiss(toastId);
@@ -73,6 +88,11 @@ function AdminItemsPage({}: Props) {
       </div>
       {data && data.data && (
         <SeTable
+          onPaginationChange={(e, page) => {
+            dispatch(setPage(page));
+          }}
+          pageNumber={page}
+          pages={data.meta.totalPages}
           onActionClick={(action, row) => {
             switch (row) {
               case "edit":

@@ -23,6 +23,9 @@ type Props = Omit<DataGridProps, "rows" | "columns"> & {
   onChange?: (column: string, rowId: string, e: any) => void;
   isColumnDisabled?: (column: string, rowId: string) => boolean;
   aboveTableChildren?: React.ReactNode;
+  onPaginationChange?: (e: any, page: number) => void;
+  pages?: number;
+  pageNumber?: number;
 };
 
 function SeTable({
@@ -46,6 +49,9 @@ function SeTable({
     menuItems: [],
   },
   aboveTableChildren,
+  onPaginationChange,
+  pages,
+  pageNumber,
   ...props
 }: Props) {
   const table = (
@@ -106,7 +112,9 @@ function SeTable({
       )}
       {hasPagination && (
         <Pagination
-          count={10}
+          onChange={onPaginationChange}
+          count={pages || 1}
+          page={pageNumber || 1}
           variant="text"
           shape="circular"
           sx={{

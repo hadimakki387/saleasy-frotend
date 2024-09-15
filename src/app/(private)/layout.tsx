@@ -55,6 +55,20 @@ export default function RootLayout({
       ) : (
         storeData && (
           <>
+            <NextTopLoader
+              color="var(--admin-primary)"
+              initialPosition={0.08}
+              crawlSpeed={200}
+              height={3}
+              crawl={true}
+              showSpinner={true}
+              easing="ease"
+              speed={200}
+              shadow="0 0 10px var(--admin-primary),0 0 5px var(--admin-primary)"
+              template='<div class="bar" role="bar"><div class="peg"></div></div>'
+              zIndex={1600}
+              showAtBottom={false}
+            />
             <SideBar />
             <div className="md:ml-[250px] 2xl:ml-[15vw]">
               <AdminHeader />

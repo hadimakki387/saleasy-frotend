@@ -27,7 +27,9 @@ type Props = {
 };
 
 function EditItemDialog({ debouncedSearch }: Props) {
-  const { selectedItem } = useAppSelector((state) => state.AdminItemsSlice);
+  const { selectedItem, limit, page } = useAppSelector(
+    (state) => state.AdminItemsSlice
+  );
   const [image, setImage] = useState<string>();
   const [addOption, setAddOption] = useState(false);
   const [opt, setOpt] = useState<
@@ -483,6 +485,8 @@ function EditItemDialog({ debouncedSearch }: Props) {
                     itemId: selectedItem.id,
                     storeId: store as string,
                     name: debouncedSearch,
+                    page,
+                    limit,
                   })
                     .then(() => {
                       toast.dismiss(toastId);

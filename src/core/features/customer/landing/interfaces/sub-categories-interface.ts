@@ -4,6 +4,4 @@ export interface ISubCategory {
   updatedAt: string;
   isDeactivated: boolean;
   name: string;
-  description: string;
-  image: string;
 }
