@@ -73,7 +73,7 @@ function EditItemDialog({ debouncedSearch }: Props) {
       {selectedItem && (
         <SeDialog
           open={selectedItem ? true : false}
-          maxWidth="xl"
+          maxWidth="lg"
           onClose={() => {
             dispatch(setSelectedItem(null));
             setOpt([]);
