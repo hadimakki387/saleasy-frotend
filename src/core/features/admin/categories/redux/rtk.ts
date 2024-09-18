@@ -206,6 +206,43 @@ const extendedApi = mainApi.injectEndpoints({
         }
       },
     }),
+    updateCategoryName: build.mutation<
+      ICategories,
+      { name: string; categoryId: string; storeId: string }
+    >({
+      query: ({ name, categoryId }) => ({
+        url: `/item-category/update-name/${categoryId}`,
+        method: "PATCH",
+        body: {
+          name,
+        },
+      }),
+      onQueryStarted: async (
+        { name, storeId, categoryId },
+        { dispatch, queryFulfilled }
+      ) => {
+        try {
+          await queryFulfilled;
+
+          dispatch(
+            extendedApi.util.updateQueryData(
+              "getACategoriesWithSubCategories",
+              storeId,
+              (draft) => {
+                const findCategory = draft.findIndex(
+                  (cat) => cat.id === categoryId
+                );
+                if (findCategory !== -1) {
+                  draft[findCategory].name = name;
+                }
+              }
+            )
+          );
+        } catch (err) {
+          console.log(err);
+        }
+      },
+    }),
   }),
 });
 
@@ -216,4 +253,5 @@ export const {
   useUpdateSubCategoryMutation,
   useDeleteCategoryMutation,
   useCreateCategoryMutation,
+  useUpdateCategoryNameMutation,
 } = extendedApi;

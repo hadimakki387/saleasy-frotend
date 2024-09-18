@@ -17,6 +17,7 @@ import { Tooltip } from "@mui/material";
 import {
   useAddSubCategoryMutation,
   useDeleteSubCategoryMutation,
+  useUpdateCategoryNameMutation,
   useUpdateSubCategoryMutation,
 } from "../redux/rtk";
 import SeLoader from "@/components/global/SeLoader";
@@ -36,6 +37,8 @@ type Props = {
 function CategoryAccordion({ category }: Props) {
   const [expanded, setExpanded] = useState<boolean>(false);
   const [name, setName] = useState<string>("");
+  const [isEditCategory, setIsEditCategory] = useState<boolean>(false);
+  const [editCategoryName, setEditCategoryName] = useState<string>("");
   const [isCreateSubCategory, setIsCreateSubCategory] =
     useState<boolean>(false);
   const { store } = useParams();
@@ -53,6 +56,13 @@ function CategoryAccordion({ category }: Props) {
       isSuccess: updateSubCategorySuccess,
     },
   ] = useUpdateSubCategoryMutation();
+  const [
+    updateCategoryName,
+    {
+      isLoading: updateCategoryNameLoading,
+      isSuccess: updateCategoryNameSuccess,
+    },
+  ] = useUpdateCategoryNameMutation();
   const dispatch = useDispatch();
 
   const [updateSelectedSubCat, setUpdateSelectedSubCat] = useState<string>("");
@@ -68,7 +78,54 @@ function CategoryAccordion({ category }: Props) {
             className="w-12 h-12 rounded-md"
             alt={category.name}
           />
-          <p className="select-none">{category.name}</p>
+          {!isEditCategory ? (
+            <p className="select-none">{category.name}</p>
+          ) : (
+            <div className="flex items-center gap-4">
+              <SeTextField
+                placeholder="Name"
+                value={editCategoryName}
+                onChange={(e) => {
+                  setEditCategoryName(e.target.value);
+                }}
+              />
+              {!updateCategoryNameLoading ? (
+                <>
+                  <Tooltip title="Submit" placement="top">
+                    <FontAwesomeIcon
+                      icon={faCheck}
+                      className="cursor-pointer"
+                      onClick={() => {
+                        updateCategoryName({
+                          name: editCategoryName,
+                          categoryId: category.id,
+                          storeId: store as string,
+                        })
+                          .unwrap()
+                          .then(() => {
+                            toast.success("Category Updated");
+                            setIsEditCategory(false);
+                          });
+                      }}
+                    />
+                  </Tooltip>
+
+                  <Tooltip title="Cancel">
+                    <FontAwesomeIcon
+                      icon={faX}
+                      className="cursor-pointer"
+                      onClick={() => {
+                        setIsEditCategory(false);
+                        setEditCategoryName(category.name);
+                      }}
+                    />
+                  </Tooltip>
+                </>
+              ) : (
+                <SeLoader size={12} />
+              )}
+            </div>
+          )}
         </div>
         <div className="flex items-center gap-4">
           <FontAwesomeIcon
@@ -81,6 +138,10 @@ function CategoryAccordion({ category }: Props) {
           <FontAwesomeIcon
             icon={faPen}
             className="cursor-pointer text-primary text-sm"
+            onClick={() => {
+              setIsEditCategory(true);
+              setEditCategoryName(category.name);
+            }}
           />
           <FontAwesomeIcon
             icon={expanded ? faAngleUp : faAngleDown}

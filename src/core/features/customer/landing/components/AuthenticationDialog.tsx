@@ -92,7 +92,6 @@ function AuthenticationDialog({ logo, storeName }: Props) {
         .then((res) => {
           dispatch(setUser(res));
           dispatch(setIsLoginDialogOpen(false));
-          dispatch(setIsRegisterDialogOpen(false));
           toast.success("Register successful", { id: toastId });
         })
         .catch((err) => {
@@ -103,6 +102,8 @@ function AuthenticationDialog({ logo, storeName }: Props) {
   return (
     <SeDialog
       open={isAuthecationDialogOpen}
+      hasCloseButton={false}
+      hasOkButton={false}
       onClose={() => {
         dispatch(setIsAuthecationDialogOpen(!isAuthecationDialogOpen));
         setTimeout(() => {

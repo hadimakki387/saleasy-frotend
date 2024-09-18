@@ -254,6 +254,7 @@ function EditItemDialog({ debouncedSearch }: Props) {
                                 ),
                               })
                             );
+                            setAddOption(false);
                           }}
                         />
                         <FontAwesomeIcon
@@ -268,6 +269,7 @@ function EditItemDialog({ debouncedSearch }: Props) {
                                 ),
                               })
                             );
+                            setAddOption(false);
                           }}
                         />
                       </div>
@@ -373,6 +375,7 @@ function EditItemDialog({ debouncedSearch }: Props) {
                                     return o;
                                   });
                                 });
+                                setAddOption(true);
                               }}
                             />
                           </div>
@@ -399,6 +402,7 @@ function EditItemDialog({ debouncedSearch }: Props) {
                                 setOpt((prev) => {
                                   return prev.filter((o) => o.id !== opti.id);
                                 });
+                                setAddOption(false);
                               }}
                             />
                             <SeButton
@@ -423,6 +427,7 @@ function EditItemDialog({ debouncedSearch }: Props) {
                                 setOpt((prev) => {
                                   return prev.filter((o) => o.id !== opti.id);
                                 });
+                                setAddOption(false);
                               }}
                             />
                           </div>
@@ -430,28 +435,30 @@ function EditItemDialog({ debouncedSearch }: Props) {
                       );
                     })
                   : null}
-                <div className="flex items-center justify-start max-w-40">
-                  <SeButton
-                    className="w-full"
-                    onClick={() => {
-                      setAddOption(true);
-                      setOpt((prev) => {
-                        return [
-                          ...prev,
-                          {
-                            id: Math.random(),
-                            name: `Option Name ${prev.length + 1}`,
-                            options: ["option"],
-                          },
-                        ];
-                      });
-                    }}
-                    label={"Add Option"}
-                    variant="contained"
-                    fullWidth={true}
-                    color="error"
-                  />
-                </div>
+                {!addOption ? (
+                  <div className="flex items-center justify-start max-w-40">
+                    <SeButton
+                      className="w-full"
+                      onClick={() => {
+                        setAddOption(true);
+                        setOpt((prev) => {
+                          return [
+                            ...prev,
+                            {
+                              id: Math.random(),
+                              name: `Option Name ${prev.length + 1}`,
+                              options: ["option"],
+                            },
+                          ];
+                        });
+                      }}
+                      label={"Add Option"}
+                      variant="contained"
+                      fullWidth={true}
+                      color="error"
+                    />
+                  </div>
+                ) : null}
                 <p className="flex items-center">
                   Stock Available:
                   <SeEditInput
