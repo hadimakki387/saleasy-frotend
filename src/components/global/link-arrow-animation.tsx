@@ -7,12 +7,17 @@ import React from "react";
 type Props = {
   text?: string;
   textClassName?: string;
+  target?: string;
 };
 
-function LinkArrowAnimation({ text = "more products", textClassName }: Props) {
+function LinkArrowAnimation({
+  text = "more products",
+  textClassName,
+  target,
+}: Props) {
   return (
     <Link
-      href="/"
+      href={target || "/"}
       className="relative inline-flex items-center gap-2 pb-1 text-[var(--primary)] font-semibold hover:text-[#1F2937] transition-colors"
     >
       <span className={"relative group " + textClassName}>

@@ -10,6 +10,7 @@ import AddHeroCarouselItemDialog from "./dialogs/edit-carousel/AddHeroCarouselIt
 import SeButton from "@/components/global/SeButton";
 import { useDispatch } from "react-redux";
 import { setCreateNewCarousel } from "../../redux/redux";
+import EditBoxCarousel from "./dialogs/edit-boxes/EditBoxCarousel";
 
 type Props = {
   data: ILinkEntity;
@@ -21,6 +22,7 @@ function HeroEdit({ data }: Props) {
     <div className="xl:grid xl:grid-cols-8 gap-4">
       <EditHeroCarouselItemsDialog />
       <AddHeroCarouselItemDialog />
+      <EditBoxCarousel />
       <div className="col-span-8 xl:col-span-6">
         <SeCarousel
           options={{
@@ -42,7 +44,9 @@ function HeroEdit({ data }: Props) {
                 text1={item.text1}
                 text2={item.text2}
                 text3={item.text3}
-                backgroundId={item.backgroundImage}
+                backgroundImage={item.backgroundImage}
+                id={item.id}
+                link={item.link}
               />
             </div>
           );

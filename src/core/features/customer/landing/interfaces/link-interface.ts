@@ -48,19 +48,21 @@ export interface ICarousel {
   };
 }
 
+export interface sideBoxInterface {
+  id: string;
+  backgroundImage: string;
+  text1: string;
+  text2: string;
+  text3: string;
+  link: {
+    title: string;
+    target: string;
+  };
+}
+
 export interface IHeroSection {
   Carousel: ICarousel[];
-  sideBoxes: {
-    id: string;
-    backgroundImage: string;
-    text1: string;
-    text2: string;
-    text3: string;
-    link: {
-      title: string;
-      target: string;
-    };
-  }[];
+  sideBoxes: sideBoxInterface[];
 }
 
 export interface ILinkEntity extends MainInterface {

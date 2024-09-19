@@ -45,7 +45,7 @@ function SeEditInput({
           {extraCharachters}
           <FontAwesomeIcon
             icon={faCheck}
-            className="text-primary text-sm"
+            className="text-primary text-sm cursor-pointer"
             onClick={() => setEdit(false)}
           />
         </div>

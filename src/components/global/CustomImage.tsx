@@ -65,7 +65,6 @@ function CustomImage({
       setLoading(false);
     }
   }, [src]);
-  console.log("loading", loading);
 
   return (
     <>

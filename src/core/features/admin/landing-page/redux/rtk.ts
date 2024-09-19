@@ -3,6 +3,7 @@ import {
   IHeaderLink,
   IHeroSection,
   ILinkEntity,
+  sideBoxInterface,
 } from "@/core/features/customer/landing/interfaces/link-interface";
 import { getProductsParams } from "@/core/features/customer/landing/redux/rtk";
 import { mainApi } from "@/core/rtk-query";
@@ -137,6 +138,46 @@ const extendedApi = mainApi.injectEndpoints({
         }
       },
     }),
+    updateSideBox: builder.mutation<
+      sideBoxInterface,
+      {
+        item: FormData;
+        storeId: string;
+        linkId: string;
+        sideboxItem: string;
+      }
+    >({
+      query: (body) => ({
+        url: `/link/update-sidebox-item/${body.linkId}/${body.sideboxItem}`,
+        method: "PATCH",
+        body: body.item,
+      }),
+      onQueryStarted: async (
+        { storeId, sideboxItem },
+        { dispatch, queryFulfilled }
+      ) => {
+        try {
+          const { data } = await queryFulfilled;
+
+          dispatch(
+            extendedApi.util.updateQueryData(
+              "getAdminStoreData",
+              storeId,
+              (draft) => {
+                const findIndex = draft.link.Hero.sideBoxes.findIndex(
+                  (item) => item.id === sideboxItem
+                );
+                if (findIndex !== -1) {
+                  draft.link.Hero.sideBoxes[findIndex] = data;
+                }
+              }
+            )
+          );
+        } catch (err) {
+          console.log(err);
+        }
+      },
+    }),
   }),
 });
 
@@ -146,4 +187,5 @@ export const {
   useAddCarouselItemMutation,
   useEditCarouselItemMutation,
   useRemoveCarouselItemMutation,
+  useUpdateSideBoxMutation,
 } = extendedApi;
