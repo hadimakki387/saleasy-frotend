@@ -23,6 +23,46 @@ export interface SectionInterface {
   advertisementSection: advertisementSection[];
 }
 
+export interface IHeaderLink {
+  id?: string;
+  links: {
+    instagram: string;
+    facebook: string;
+    twitter: string;
+  };
+  logoSize: number;
+  logo: string;
+  shippingFee: string;
+}
+
+export interface ICarousel {
+  id: string;
+  text1: string;
+  text2: string;
+  text3: string;
+  text4: string;
+  backgroundImage: string;
+  link: {
+    title: string;
+    target: string;
+  };
+}
+
+export interface IHeroSection {
+  Carousel: ICarousel[];
+  sideBoxes: {
+    id: string;
+    backgroundImage: string;
+    text1: string;
+    text2: string;
+    text3: string;
+    link: {
+      title: string;
+      target: string;
+    };
+  }[];
+}
+
 export interface ILinkEntity extends MainInterface {
   name: string;
   description: string;
@@ -33,39 +73,10 @@ export interface ILinkEntity extends MainInterface {
   isPublished: boolean;
   categories: ICategories[];
   link: {
-    header: {
-      links: {
-        instagram: string;
-        facebook: string;
-        twitter: string;
-      };
-      logo: string;
-      shippingFee: string;
-    };
+    id: string;
+    header: IHeaderLink;
 
-    Hero: {
-      Carousel: {
-        text1: string;
-        text2: string;
-        text3: string;
-        text4: string;
-        backgroundImage: string;
-        link: {
-          title: string;
-          target: string;
-        };
-      }[];
-      sideBoxes: {
-        backgroundImage: string;
-        text1: string;
-        text2: string;
-        text3: string;
-        link: {
-          title: string;
-          target: string;
-        };
-      }[];
-    };
+    Hero: IHeroSection;
 
     sections: SectionInterface[];
 

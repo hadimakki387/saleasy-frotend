@@ -10,6 +10,7 @@ import SeCheckbox from "@/components/global/SeCheckbox";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEllipsis } from "@fortawesome/free-solid-svg-icons";
 import CustomImage from "@/components/global/CustomImage";
+import Image from "next/image";
 
 export type getChipProps = {
   values?: {
@@ -158,16 +159,31 @@ export const getActionMore = ({
   );
 };
 
-export const renderImage = (params: any) => {
-  return (
-    <div className="min-h-full flex items-center w-10 h-10">
-      <CustomImage
-        src={params.row.images[0]}
-        alt={params.row.name}
-        className="object-cover rounded-md w-10 h-10"
-      />
-    </div>
-  );
+export const renderImage = (params: any, isUser: boolean) => {
+  console.log("this is the is user", isUser);
+  if (params.row.image || params.row.images) {
+    return (
+      <div className="min-h-full flex items-center w-10 h-10">
+        <CustomImage
+          src={
+            params?.row?.images?.length
+              ? params.row.images[0]
+              : params.row.image
+          }
+          alt={params.row.name}
+          className="object-cover rounded-md w-10 h-10"
+        />
+      </div>
+    );
+  }
+  if (isUser) {
+    console.log("we are in the is user");
+    return (
+      <div className="min-h-full flex items-center justify-center ">
+        <Image src={"/profile-image.png"} alt="user" width={40} height={40} />
+      </div>
+    );
+  }
 };
 export const getCheckBox = ({
   disabled = true,

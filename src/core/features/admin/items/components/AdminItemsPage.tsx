@@ -36,7 +36,11 @@ function AdminItemsPage({}: Props) {
       clearTimeout(timer);
     };
   }, [search]);
-  const { data } = useSearchAdminItemsQuery({
+  const {
+    data,
+    isLoading: itemsLoading,
+    error: itemsError,
+  } = useSearchAdminItemsQuery({
     storeId: store as string,
     name: debouncedSearch,
     page,
@@ -86,18 +90,19 @@ function AdminItemsPage({}: Props) {
           }}
         />
       </div>
-      {data && data.data && (
+      {!itemsError && (
         <SeTable
+          loading={itemsLoading}
           onPaginationChange={(e, page) => {
             dispatch(setPage(page));
           }}
           pageNumber={page}
-          pages={data.meta.totalPages}
+          pages={data?.meta.totalPages}
           onActionClick={(action, row) => {
             switch (row) {
               case "edit":
                 dispatch(
-                  setSelectedItem(data.data.find((item) => item.id === action))
+                  setSelectedItem(data?.data.find((item) => item.id === action))
                 );
                 break;
               case "delete":
@@ -107,13 +112,15 @@ function AdminItemsPage({}: Props) {
                 break;
             }
           }}
-          rows={data.data.map((item) => {
-            return {
-              ...item,
-              createdAt: new Date(item.createdAt).toLocaleDateString(),
-              updatedAt: new Date(item.updatedAt).toLocaleDateString(),
-            };
-          })}
+          rows={
+            data?.data.map((item) => {
+              return {
+                ...item,
+                createdAt: new Date(item.createdAt).toLocaleDateString(),
+                updatedAt: new Date(item.updatedAt).toLocaleDateString(),
+              };
+            }) || []
+          }
           columnGetter={ItemsColumn}
         />
       )}

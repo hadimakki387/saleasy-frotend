@@ -40,7 +40,8 @@ export const SidebarHeader: React.FC<SidebarHeaderProps> = ({
             <CustomImage
               src={store?.logo}
               alt={`${store?.name}-logo`}
-              className="w-24 ml-4"
+              size={store.link.header.logoSize}
+              className=" ml-4"
             />
             {/* <div className="flex-col gap-4">
               <div className="text-subTitleText font-semibold">{`${user?.firstName} ${user?.lastName}`}</div>

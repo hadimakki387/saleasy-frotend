@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import SeTextField from "./SeTextField";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPen } from "@fortawesome/free-solid-svg-icons";
+import { faCheck, faPen } from "@fortawesome/free-solid-svg-icons";
 import { twMerge } from "tailwind-merge";
 
 type Props = {
@@ -25,7 +25,7 @@ function SeEditInput({
   return (
     <div>
       {edit ? (
-        <div className={`${extraCharachters ? "flex items-center gap-1" : ""}`}>
+        <div className={`flex items-center gap-1`}>
           <SeTextField
             type={type}
             defaultValue={defaultValue}
@@ -43,6 +43,11 @@ function SeEditInput({
             className="lg:max-w-[50%]"
           />
           {extraCharachters}
+          <FontAwesomeIcon
+            icon={faCheck}
+            className="text-primary text-sm"
+            onClick={() => setEdit(false)}
+          />
         </div>
       ) : (
         <div className="flex items-center gap-2">
@@ -52,9 +57,9 @@ function SeEditInput({
               `${extraCharachters ? "flex items-center gap-1" : ""}`
             )}
           >
-            {defaultValue || "Click to edit"} {extraCharachters}
+            {defaultValue || "Click to Add"} {extraCharachters}
           </p>
-          <p onClick={() => setEdit(true)}>
+          <p onClick={() => setEdit(true)} className="flex items-center">
             <FontAwesomeIcon
               icon={faPen}
               className="text-primary text-sm cursor-pointer"

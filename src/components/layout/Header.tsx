@@ -154,8 +154,8 @@ function Header({ link }: Props) {
           <CustomImage
             src={link.link.header.logo}
             alt="logo"
-            size={100}
-            className="cursor-pointer  "
+            size={link.link.header?.logoSize || 100}
+            className="cursor-pointer"
             onClick={() => {
               router.push(`/store/${store}`);
             }}

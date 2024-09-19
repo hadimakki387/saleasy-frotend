@@ -12,7 +12,7 @@ import {
   advertisementSection,
   ILinkEntity,
 } from "../interfaces/link-interface";
-interface getProductsParams {
+export interface getProductsParams {
   id: string;
 }
 export const extendedApi = mainApi.injectEndpoints({
@@ -29,6 +29,7 @@ export const extendedApi = mainApi.injectEndpoints({
     }),
     getStoreData: build.query<ILinkEntity, getProductsParams>({
       query: ({ id }) => `/store/${id}`,
+      providesTags: ["logo_changed"],
     }),
     getStoreCategories: build.query<ICategories[], getProductsParams>({
       query: ({ id }) => `/item-category/get-categories-by-store-id/${id}`,

@@ -26,6 +26,11 @@ export const NavItems = (): items[] => {
       title: "",
       links: [
         {
+          label: "Landing Page",
+          path: "/landing",
+          icon: Home,
+        },
+        {
           label: "Customers",
           path: "/customers",
           icon: Customers,

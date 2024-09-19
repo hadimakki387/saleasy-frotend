@@ -2,6 +2,7 @@
 import { Button, ButtonProps, IconButton } from "@mui/material";
 import React, { ReactNode } from "react";
 import { twMerge } from "tailwind-merge";
+import SeLoader from "./SeLoader";
 
 export interface SeButtonProps extends ButtonProps {
   label?: any;
@@ -16,6 +17,7 @@ export interface SeButtonProps extends ButtonProps {
   iconButton?: boolean;
   icon?: ReactNode;
   noBorder?: boolean;
+  loading?: boolean;
 }
 
 const sxOptions = (
@@ -75,6 +77,7 @@ function SeButton({
   noBorder = false,
   icon,
   color_custom,
+  loading,
   ...rest
 }: SeButtonProps) {
   return (
@@ -86,26 +89,6 @@ function SeButton({
           fullWidth={fullWidth}
           className={twMerge(rest.className)}
           sx={{
-            // "&:hover": {
-            //   backgroundColor:
-            //     variant === "outlined"
-            //       ? sxOptions(color_custom || "primary", disabled, noBorder)
-            //           .outlined.color
-            //       : variant === "contained"
-            //       ? "white !important"
-            //       : "var(--primary) !important",
-            //   color:
-            //     variant === "contained" && color_custom === "primary"
-            //       ? "var(--primary) !important"
-            //       : variant === "contained" && color_custom === "error"
-            //       ? "var(--error) !important"
-            //       : variant === "outlined" &&
-            //         (color_custom === "error" || color_custom === "primary")
-            //       ? "white !important"
-            //       : color_custom === "admin-primary"
-            //       ? "var(--admin-primary) !important"
-            //       : "var(--primary) !important",
-            // },
             fontWeight: "bold",
             minWidth: "100px",
             borderRadius: fullRounded
@@ -127,7 +110,21 @@ function SeButton({
           endIcon={rest.endIcon}
           {...rest}
         >
-          <div>{label}</div>
+          {!loading ? (
+            <div>{label}</div>
+          ) : (
+            <SeLoader
+              sx={{
+                "& .MuiCircularProgress-svg": {
+                  color:
+                    variant === "contained"
+                      ? "white"
+                      : `var(--${color_custom || "primary"})`,
+                },
+              }}
+              size={16}
+            />
+          )}
         </Button>
       ) : (
         <IconButton

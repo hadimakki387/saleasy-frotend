@@ -14,7 +14,7 @@ export const ItemsColumn: ColumnGetter = ({ onActionClick }) => {
       headerName: "IMAGE",
       flex: 1,
       renderCell: (params) => {
-        return renderImage(params);
+        return renderImage(params, false);
       },
     },
     {

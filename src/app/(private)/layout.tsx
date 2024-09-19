@@ -7,6 +7,7 @@ import Header from "@/components/layout/Header";
 import { SideBar } from "@/components/layout/reactsideBar/SideBar.tsx";
 import SearchDialog from "@/components/layout/SearchDialog";
 import { setStore } from "@/core/features/admin/global-admin-redux";
+import { useGetAdminStoreDataQuery } from "@/core/features/admin/landing-page/redux/rtk";
 import { setCartItems } from "@/core/features/customer/item-page/redux/redux";
 import AuthenticationDialog from "@/core/features/customer/landing/components/AuthenticationDialog";
 import {
@@ -29,9 +30,7 @@ export default function RootLayout({
     data: storeData,
     isLoading: storeLoading,
     error: storeError,
-  } = useGetStoreDataQuery({
-    id: store as string,
-  });
+  } = useGetAdminStoreDataQuery(store as string);
   // const { CartItems } = useAppSelector((state) => state.ItemSlice);
   const dispatch = useDispatch();
   const { data, isError, isLoading } = useGetMeQuery();

@@ -1,23 +1,9 @@
 {
-  "items": [
-    {
-      "id": "ada9433f-fdcc-4b3f-91e2-81c61ea16457",
-      "quantity": 1,
-      "options": [{ "key": "Color", "value": "Red" }]
-    },
-    {
-      "id": "d40c6f84-5a23-4a81-8b62-e42a87de6ba7",
-      "quantity": 3,
-      "options": [{ "key": "Color", "value": "Red" }]
-    }
-  ],
-  "shippingInfo": {
-    "method": "ship",
-    "name": "asdf",
-    "country": "lebanon",
-    "company": "asdf",
-    "address": "asdf",
-    "city": "asdf"
+  "logo": "res",
+  "links": {
+    "facebook": "facebook || link.link.header.links?.facebook",
+    "instagram": "instagram || link.link.header.links?.instagram,",
+    "twitter": "twitter || link.link.header.links?.twitter"
   },
-  "storeId": "aecca3e4-23c4-4c1e-92ff-d9dabb1517df"
+  "shippingFee": "smallTopRightText"
 }
