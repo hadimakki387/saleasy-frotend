@@ -8,6 +8,9 @@ import { useGetAdminStoreDataQuery } from "../redux/rtk";
 import AdminCategory from "./AdminCategory";
 import SeCarousel from "@/components/global/carousel/SeCarousel";
 import HeroEdit from "./hero-edit/HeroEdit";
+import AdminManuallySelectedItems from "./manually-selected-items/AdminManuallySelectedItems";
+import AdminDealsOfTheDay from "./deals-of-the-day/AdminDealsOfTheDay";
+import AdminCategorySection from "./category-section/AdminCategorySection";
 
 type Props = {};
 
@@ -33,7 +36,7 @@ function LinkPageEdit({}: Props) {
           </div>
         ) : (
           storeData && (
-            <>
+            <div className="space-y-4">
               <div className="shadow-md shadow-neutral-200 p-4 md:px-12 ">
                 <HeaderEdit link={storeData} />
               </div>
@@ -51,7 +54,16 @@ function LinkPageEdit({}: Props) {
                   ))}
                 </SeCarousel>
               </div>
-            </>
+              <div className="shadow-md shadow-neutral-200 p-4 md:px-12">
+                <AdminDealsOfTheDay />
+              </div>
+              <div className="shadow-md shadow-neutral-200 p-4 md:px-12">
+                <AdminManuallySelectedItems />
+              </div>
+              <div className="shadow-md shadow-neutral-200 p-4 md:px-12">
+                <AdminCategorySection />
+              </div>
+            </div>
           )
         )}
       </div>

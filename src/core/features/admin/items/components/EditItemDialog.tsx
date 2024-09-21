@@ -78,6 +78,34 @@ function EditItemDialog({ debouncedSearch }: Props) {
             dispatch(setSelectedItem(null));
             setOpt([]);
           }}
+          onOk={() => {
+            const toastId = toast.loading("Saving changes...");
+            saveChanges({
+              data: {
+                description: selectedItem.description,
+                name: selectedItem.name,
+                price: selectedItem.price,
+                stock: selectedItem.stock,
+                images: selectedItem.images,
+                options: selectedItem.options,
+              },
+              itemId: selectedItem.id,
+              storeId: store as string,
+              name: debouncedSearch,
+              page,
+              limit,
+            })
+              .then(() => {
+                toast.dismiss(toastId);
+                toast.success("Changes saved successfully");
+                dispatch(setSelectedItem(null));
+              })
+              .catch((err) => {
+                toast.dismiss(toastId);
+                toast.error("Failed to save changes");
+              });
+          }}
+          okText="Save Changes"
         >
           <div className="space-y-16 py-8">
             <div className="flex items-start gap-4 justify-center max-lg:flex-col">
@@ -472,40 +500,6 @@ function EditItemDialog({ debouncedSearch }: Props) {
                   />
                 </p>
               </div>
-            </div>
-            <div className="flex center justify-end">
-              <SeButton
-                label="Save Changes"
-                color_custom="admin-primary"
-                variant="contained"
-                onClick={() => {
-                  const toastId = toast.loading("Saving changes...");
-                  saveChanges({
-                    data: {
-                      description: selectedItem.description,
-                      name: selectedItem.name,
-                      price: selectedItem.price,
-                      stock: selectedItem.stock,
-                      images: selectedItem.images,
-                      options: selectedItem.options,
-                    },
-                    itemId: selectedItem.id,
-                    storeId: store as string,
-                    name: debouncedSearch,
-                    page,
-                    limit,
-                  })
-                    .then(() => {
-                      toast.dismiss(toastId);
-                      toast.success("Changes saved successfully");
-                      dispatch(setSelectedItem(null));
-                    })
-                    .catch((err) => {
-                      toast.dismiss(toastId);
-                      toast.error("Failed to save changes");
-                    });
-                }}
-              />
             </div>
           </div>
         </SeDialog>

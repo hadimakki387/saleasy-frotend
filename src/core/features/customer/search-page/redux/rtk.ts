@@ -20,7 +20,13 @@ const extendedApi = mainApi.injectEndpoints({
         return { url: `/item/store/${storeId}`, params: restParams };
       },
     }),
+    adminSearchItems: build.query<ItemResponse, searchItemsParams>({
+      query: (params) => {
+        const { storeId, ...restParams } = params;
+        return { url: `/item/store/${storeId}`, params: restParams };
+      },
+    }),
   }),
 });
 
-export const { useSearchItemsQuery } = extendedApi;
+export const { useSearchItemsQuery, useAdminSearchItemsQuery } = extendedApi;

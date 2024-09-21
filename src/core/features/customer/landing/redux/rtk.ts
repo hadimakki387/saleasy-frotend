@@ -39,6 +39,7 @@ export const extendedApi = mainApi.injectEndpoints({
     }),
     getManuallySelectedItemsSection: build.query<
       {
+        id: string;
         items: ItemInterface[];
         sectionName: string;
         sections: advertisementSection[];

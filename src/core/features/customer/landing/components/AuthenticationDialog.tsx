@@ -65,8 +65,11 @@ function AuthenticationDialog({ logo, storeName }: Props) {
         .unwrap()
         .then((res) => {
           dispatch(setUser(res));
-          dispatch(setIsLoginDialogOpen(false));
-          dispatch(setIsRegisterDialogOpen(false));
+          dispatch(setIsAuthecationDialogOpen(!isAuthecationDialogOpen));
+          setTimeout(() => {
+            dispatch(setIsLoginDialogOpen(false));
+            dispatch(setIsRegisterDialogOpen(false));
+          }, 100);
           toast.success("Login successful", { id: toastId });
         })
         .catch((err) => {
@@ -91,7 +94,11 @@ function AuthenticationDialog({ logo, storeName }: Props) {
         .unwrap()
         .then((res) => {
           dispatch(setUser(res));
-          dispatch(setIsLoginDialogOpen(false));
+          dispatch(setIsAuthecationDialogOpen(!isAuthecationDialogOpen));
+          setTimeout(() => {
+            dispatch(setIsLoginDialogOpen(false));
+            dispatch(setIsRegisterDialogOpen(false));
+          }, 100);
           toast.success("Register successful", { id: toastId });
         })
         .catch((err) => {

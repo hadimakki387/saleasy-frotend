@@ -11,6 +11,7 @@ type Props = {
   className?: string;
   type?: "text" | "number";
   extraCharachters?: string;
+  handleSubmition?: () => void;
 };
 
 function SeEditInput({
@@ -19,8 +20,10 @@ function SeEditInput({
   className,
   type = "text",
   extraCharachters,
+  handleSubmition,
 }: Props) {
   const [edit, setEdit] = useState(false);
+  console.log("defaultValue", defaultValue);
 
   return (
     <div>
@@ -37,16 +40,17 @@ function SeEditInput({
                 setEdit(false);
               }
             }}
-            onBlur={() => {
-              setEdit(false);
-            }}
             className="lg:max-w-[50%]"
           />
           {extraCharachters}
           <FontAwesomeIcon
             icon={faCheck}
             className="text-primary text-sm cursor-pointer"
-            onClick={() => setEdit(false)}
+            onClick={() => {
+              console.log("handleSubmition");
+              handleSubmition && handleSubmition();
+              setEdit(false);
+            }}
           />
         </div>
       ) : (

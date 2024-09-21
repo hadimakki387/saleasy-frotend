@@ -1,20 +1,11 @@
-import LinkArrowAnimation from "@/components/global/link-arrow-animation";
-import SeButton from "@/components/global/SeButton";
-import SeCard from "@/components/global/SeCard";
-import Image from "next/image";
-import React from "react";
-import {
-  useGetCategoryRelatedItemsQuery,
-  useGetProductsQuery,
-} from "../redux/rtk";
 import SeCarousel from "@/components/global/carousel/SeCarousel";
-import ProductCard from "./SeProductCard";
-import { products } from "@/fake-db/products-2";
-import DealsOfTheDay from "./DealsOfTheDay";
-import { useParams } from "next/navigation";
-import { useRouter } from "nextjs-toploader/app";
+import LinkArrowAnimation from "@/components/global/link-arrow-animation";
 import { ArrowForward } from "@mui/icons-material";
 import Link from "next/link";
+import { useParams } from "next/navigation";
+import { useRouter } from "nextjs-toploader/app";
+import { useGetCategoryRelatedItemsQuery } from "../redux/rtk";
+import ProductCard from "./SeProductCard";
 import LandingCarouselSkeleton from "./skeletons/LandingCarouselSkeleton";
 
 type Props = {};

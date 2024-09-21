@@ -8,17 +8,21 @@ export enum sectionsTypes {
 }
 
 export interface advertisementSection {
+  id: string;
   text1: string;
   text2: string;
   redText: string;
+  backgroundImage: string;
   link: {
     title: string;
     target: string;
   };
 }
 export interface SectionInterface {
+  id: string;
   title: string;
   categoryId: string;
+  items?: string[];
   type: sectionsTypes;
   advertisementSection: advertisementSection[];
 }

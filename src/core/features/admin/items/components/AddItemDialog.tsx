@@ -1,19 +1,19 @@
-import SeDialog from "@/components/global/SeDialog";
-import React, { useEffect, useState } from "react";
-import { useGetCategoriesByStoreIdQuery } from "../../sub-categories/redux/rtk";
-import { useParams } from "next/navigation";
-import SeTextField from "@/components/global/SeTextField";
-import { useFormik } from "formik";
-import * as Yup from "yup";
 import SeButton from "@/components/global/SeButton";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus, faTrashCan } from "@fortawesome/free-solid-svg-icons";
-import { toast } from "sonner";
-import { useCreatedItemMutation, useUploadImageMutation } from "../redux/rtk";
+import SeDialog from "@/components/global/SeDialog";
+import SeTextField from "@/components/global/SeTextField";
 import { useAppSelector } from "@/providers/StoreWrapper";
-import { useDispatch } from "react-redux";
-import { setCreateItemDialogOpen } from "../redux/redux";
+import { faPlus, faTrashCan } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useFormik } from "formik";
 import Image from "next/image";
+import { useParams } from "next/navigation";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { toast } from "sonner";
+import * as Yup from "yup";
+import { useGetSubCategoriesByStoreIdQuery } from "../../sub-categories/redux/rtk";
+import { setCreateItemDialogOpen } from "../redux/redux";
+import { useCreatedItemMutation, useUploadImageMutation } from "../redux/rtk";
 
 type Props = {
   debouncedSearch: string;
@@ -22,12 +22,12 @@ type Props = {
 function AddItemDialog({ debouncedSearch }: Props) {
   const { store } = useParams();
   const { data: subCategories, isLoading: loadingCategories } =
-    useGetCategoriesByStoreIdQuery(store as string);
+    useGetSubCategoriesByStoreIdQuery(store as string);
   const [images, setImages] = useState<File[]>([]);
   const [uploadImage] = useUploadImageMutation();
   const [createItem, { isLoading: loadingCreateItem }] =
     useCreatedItemMutation();
-  const { createItemDialogOpen,limit,page } = useAppSelector(
+  const { createItemDialogOpen, limit, page } = useAppSelector(
     (state) => state.AdminItemsSlice
   );
   const dispatch = useDispatch();
