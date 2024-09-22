@@ -154,7 +154,7 @@ function CategoryAccordion({ category }: Props) {
       </div>
       {expanded && (
         <div className="mt-4">
-          {category.subCategories.map((subcat, index) => (
+          {category.subCategories?.map((subcat, index) => (
             <div
               key={index}
               className="p-2 select-none flex items-center justify-between"

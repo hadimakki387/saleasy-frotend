@@ -76,7 +76,7 @@ const LandingPage: React.FC = () => {
           ))}
         </SeCarousel>
 
-        {storeData.link.sections.map((item, index) => {
+        {storeData.link.sections?.map((item, index) => {
           switch (item.type) {
             case sectionsTypes.deals_of_the_day:
               return (
@@ -87,7 +87,7 @@ const LandingPage: React.FC = () => {
                     containerWidthPercentage={100} // 100% width
                   />
                   <div className="flex items-center gap-4 w-full sm:max-h-[15rem] max-sm:flex-col max-sm:hidden">
-                    {item.advertisementSection.map((ad, index) => {
+                    {item.advertisementSection?.map((ad, index) => {
                       return (
                         <div className="w-full" key={index}>
                           <Banner
@@ -108,7 +108,7 @@ const LandingPage: React.FC = () => {
                 <>
                   <CategorySection />
                   <div className="flex items-center gap-4 w-full sm:max-h-[15rem] max-sm:flex-col max-sm:hidden">
-                    {item.advertisementSection.map((ad, index) => {
+                    {item.advertisementSection?.map((ad, index) => {
                       return (
                         <div className="w-full" key={index}>
                           <Banner

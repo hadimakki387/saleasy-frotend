@@ -402,7 +402,7 @@ const extendedApi = mainApi.injectEndpoints({
                   (section) => section.id === sectionId
                 );
                 if (findSectionIndex !== -1) {
-                  draft.link.sections[findSectionIndex].items = data.items.map(
+                  draft.link.sections[findSectionIndex].items = data.items?.map(
                     (item) => item.id
                   );
                 }

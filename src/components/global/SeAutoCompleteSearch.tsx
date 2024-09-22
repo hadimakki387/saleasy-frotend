@@ -80,7 +80,7 @@ export default function AutoCompleteSearch({
         }}
         loading={loading}
         loadingText="Loading..."
-        options={menuItems.map((option) => option.title)}
+        options={menuItems?.map((option) => option.title)}
         onInputChange={(event, value) => {
           if (setSearch) setSearch(value);
           if (formik) formik.setFieldValue(name, value);

@@ -185,7 +185,7 @@ export default function SeFilterDropDown({
       }}
       {...rest}
     >
-      {options.map((option) => (
+      {options?.map((option) => (
         <MenuItem key={option.value} value={option.value}>
           <FormControlLabel
             value={option.value}

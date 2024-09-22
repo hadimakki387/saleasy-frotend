@@ -25,7 +25,7 @@ function CheckoutPage({}: Props) {
   const { user } = useAppSelector((state) => state.GlobalSlice);
   const { CartItems } = useAppSelector((state) => state.ItemSlice);
   const dispatch = useDispatch();
-  const total = CartItems.map((item) => {
+  const total = CartItems?.map((item) => {
     return item.price * item.quantity;
   }).reduce((a, b) => a + b, 0);
   const router = useRouter();
@@ -57,7 +57,7 @@ function CheckoutPage({}: Props) {
       city: Yup.string().required("Required"),
     }),
     onSubmit: (values) => {
-      const data = CartItems.map((item) => {
+      const data = CartItems?.map((item) => {
         return {
           id: item.id,
           quantity: item.quantity,

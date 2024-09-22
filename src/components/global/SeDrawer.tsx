@@ -73,7 +73,7 @@ function SeDrawer({
           <div className="sticky bottom-0 left-0 right-0 w-full bg-white py-4 px-4 z-50">
             {footerButtons.length > 0 ? (
               <div className="w-full flex justify-between gap-3">
-                {footerButtons.map((button) => {
+                {footerButtons?.map((button) => {
                   return (
                     <SeButton
                       key={button.label}

@@ -21,7 +21,7 @@ function CategorySection({}: Props) {
         <p className="font-bold text-lg">{data.name}</p>
 
         <div className="space-y-2">
-          {data.subCategories.map((subCat, index) => {
+          {data.subCategories?.map((subCat, index) => {
             return (
               <div
                 className="cursor-pointer"

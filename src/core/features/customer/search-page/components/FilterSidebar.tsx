@@ -113,7 +113,7 @@ function FilterSidebar({}: Props) {
       <div className="space-y-3">
         <p className=" text-primary font-semibold">Categories</p>
         <div className="space-y-1">
-          {categories.map((category: string) => (
+          {categories?.map((category: string) => (
             <div
               key={category}
               className={` text-sm cursor-pointer text-sub-title-text

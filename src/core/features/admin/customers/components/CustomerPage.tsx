@@ -75,7 +75,7 @@ function CustomerPage({}: Props) {
             }
           }}
           rows={
-            customers?.data.map((customer) => {
+            customers?.data?.map((customer) => {
               return {
                 ...customer,
                 createdAt: new Date(customer.createdAt).toLocaleDateString(),

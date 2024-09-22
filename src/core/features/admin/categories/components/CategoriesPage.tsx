@@ -43,7 +43,7 @@ function CategoriesPage({}: Props) {
         ?.filter((item) =>
           item.name.toLowerCase().includes(search.toLowerCase())
         )
-        .map((category, index) => (
+        ?.map((category, index) => (
           <CategoryAccordion key={index} category={category} />
         ))}
     </div>

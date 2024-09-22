@@ -60,7 +60,7 @@ function SearchDialog({}: Props) {
       />
       {searchItems?.data.length ? (
         <div className="h-40 mt-4 overflow-y-auto space-y-2">
-          {searchItems.data.map((item, index) => {
+          {searchItems.data?.map((item, index) => {
             return (
               <div
                 key={index}

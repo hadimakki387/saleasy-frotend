@@ -43,7 +43,7 @@ const SeProductInfo: React.FC<SeProductInfoProps> = ({
               <h2 className="text-gray-900 font-bold text-3xl mb-4">{title}</h2>
               <p className="text-red-500 font-bold text-4xl mb-4">${price}</p>
               <div className="flex items-center mb-4">
-                {[...Array(rating)].map((_, i) => (
+                {[...Array(rating)]?.map((_, i) => (
                   <StarIcon key={i} />
                 ))}
                 <span className="text-gray-600 ml-2 text-lg">({rating})</span>

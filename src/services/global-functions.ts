@@ -12,7 +12,7 @@ export function getHeaderNames(columns: ColumnGetter): ColumnFilter[] {
       (col) =>
         col.headerName && col.headerName != "" && col.field && col.field != ""
     )
-    .map((col) => ({
+    ?.map((col) => ({
       field: col.field || "",
       headerName: col.headerName || "",
     }));

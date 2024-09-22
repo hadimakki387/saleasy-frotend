@@ -76,7 +76,7 @@ function DaPopOver({
         }}
       >
         <div className="flex flex-col py-1">
-          {menuItems.map((item, inex) => {
+          {menuItems?.map((item, inex) => {
             return (
               <MenuItem
                 key={inex}

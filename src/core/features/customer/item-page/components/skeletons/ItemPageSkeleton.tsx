@@ -13,7 +13,7 @@ function ItemPageSkeleton({}: Props) {
             <Skeleton variant="rectangular" width={"100%"} height={"100%"} />
           </div>
           <div className="flex gap-4 mt-4">
-            {Array.from({ length: 3 }).map((_, index) => (
+            {Array.from({ length: 3 })?.map((_, index) => (
               <Skeleton
                 key={index}
                 variant="rectangular"
@@ -41,14 +41,14 @@ function ItemPageSkeleton({}: Props) {
           </div>
 
           {/* Iterate over item options and pass them to SeToggleButtonGroup */}
-          {Array.from({ length: 2 }).map((opt, index) => {
+          {Array.from({ length: 2 })?.map((opt, index) => {
             return (
               <div key={index} className="space-y-2">
                 <p>
                   <Skeleton variant="rectangular" width={100} height={20} />
                 </p>
                 <div className="flex items-center gap-2">
-                  {Array.from({ length: 3 }).map((_, index) => (
+                  {Array.from({ length: 3 })?.map((_, index) => (
                     <Skeleton
                       key={index}
                       variant="rectangular"

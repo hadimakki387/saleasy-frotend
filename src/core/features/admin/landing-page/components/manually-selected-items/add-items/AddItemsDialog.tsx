@@ -108,7 +108,7 @@ function AddItemsDialog({}: Props) {
         {loadingSearchItems ? (
           <div>Loading...</div>
         ) : (
-          searchItems?.data.map((item) => (
+          searchItems?.data?.map((item) => (
             <Fragment key={item.id}>
               {" "}
               <div className="flex items-center justify-between p-2">

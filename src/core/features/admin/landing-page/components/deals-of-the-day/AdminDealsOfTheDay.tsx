@@ -76,7 +76,7 @@ const AdminDealsOfTheDay = ({
         style={{ width: `${containerWidthPercentage}%` }}
       >
         <SeCarousel options={options}>
-          {dealsOfTheDay.items.map((product) => (
+          {dealsOfTheDay.items?.map((product) => (
             <ProductCard
               key={product.id}
               id={product.id}
@@ -95,7 +95,7 @@ const AdminDealsOfTheDay = ({
         </p>
       </div>
       <div className="flex items-center gap-4 w-full sm:max-h-[15rem] max-sm:flex-col max-sm:hidden">
-        {dealsOfTheDay.sections?.advertisementSection.map((ad, index) => {
+        {dealsOfTheDay.sections?.advertisementSection?.map((ad, index) => {
           return (
             <div className="w-full" key={index}>
               <EditDealsOfTheDayBanner

@@ -127,7 +127,7 @@ function EditItemDialog({ debouncedSearch }: Props) {
                   )}
                 </div>
                 <div className="flex gap-4 items-center">
-                  {selectedItem.images.map((img) => (
+                  {selectedItem.images?.map((img) => (
                     <div
                       key={img}
                       className="flex flex-col justify-center gap-1"
@@ -252,7 +252,7 @@ function EditItemDialog({ debouncedSearch }: Props) {
                   />
                 </div>
                 {/* Iterate over item options and pass them to SeToggleButtonGroup */}
-                {selectedItem.options.map((opt, index) => {
+                {selectedItem.options?.map((opt, index) => {
                   return (
                     <div key={index}>
                       <div className="flex items-center gap-2">
@@ -316,7 +316,7 @@ function EditItemDialog({ debouncedSearch }: Props) {
                   );
                 })}
                 {opt.length
-                  ? opt.map((opti, index) => {
+                  ? opt?.map((opti, index) => {
                       return (
                         <div key={index}>
                           <SeTextField
@@ -325,7 +325,7 @@ function EditItemDialog({ debouncedSearch }: Props) {
                             value={opti.name}
                             onChange={(e) => {
                               setOpt((prev) => {
-                                return prev.map((o) => {
+                                return prev?.map((o) => {
                                   if (o.id === opti.id) {
                                     return { ...o, name: e.target.value };
                                   }
@@ -335,7 +335,7 @@ function EditItemDialog({ debouncedSearch }: Props) {
                             }}
                           />
                           <div className="flex items-center gap-2 flex-wrap ">
-                            {opti.options.map((o, i) => {
+                            {opti.options?.map((o, i) => {
                               return (
                                 <SeTextField
                                   trailingIcon={
@@ -344,7 +344,7 @@ function EditItemDialog({ debouncedSearch }: Props) {
                                       icon={faTrash}
                                       onClick={() => {
                                         setOpt((prev) => {
-                                          return prev.map((op) => {
+                                          return prev?.map((op) => {
                                             if (op.id === opti.id) {
                                               return {
                                                 ...op,
@@ -367,11 +367,11 @@ function EditItemDialog({ debouncedSearch }: Props) {
                                   key={i}
                                   onChange={(e) => {
                                     setOpt((prev) => {
-                                      return prev.map((op) => {
+                                      return prev?.map((op) => {
                                         if (op.id === opti.id) {
                                           return {
                                             ...op,
-                                            options: op.options.map(
+                                            options: op.options?.map(
                                               (op, ind) => {
                                                 if (ind === i) {
                                                   return e.target.value;
@@ -393,7 +393,7 @@ function EditItemDialog({ debouncedSearch }: Props) {
                               className="text-primary cursor-pointer"
                               onClick={() => {
                                 setOpt((prev) => {
-                                  return prev.map((o) => {
+                                  return prev?.map((o) => {
                                     if (o.id === opti.id) {
                                       return {
                                         ...o,

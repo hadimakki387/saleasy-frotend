@@ -90,7 +90,7 @@ function AdminCategorySection({}: Props) {
           <p className="font-bold text-lg">{data.name}</p>
 
           <div className="space-y-2">
-            {data.subCategories.map((subCat, index) => {
+            {data.subCategories?.map((subCat, index) => {
               return (
                 <div className="cursor-pointer" key={index} onClick={() => {}}>
                   {subCat.name}
@@ -138,7 +138,7 @@ function AdminCategorySection({}: Props) {
         </p>
       </div>
       <div className="flex items-center gap-4 w-full sm:max-h-[15rem] max-sm:flex-col max-sm:hidden">
-        {data.section.advertisementSection.map((ad, index) => {
+        {data.section.advertisementSection?.map((ad, index) => {
           return (
             <div className="w-full" key={index}>
               <EditDealsOfTheDayBanner

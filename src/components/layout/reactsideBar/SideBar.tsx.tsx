@@ -3,7 +3,7 @@ import { setToggle } from "@/components/global-slice";
 import { useAppSelector } from "@/providers/StoreWrapper";
 import { NavItems } from "@/services/NavItems";
 import { CircularProgress, rgbToHex } from "@mui/material";
-import { useParams, usePathname,  } from "next/navigation";
+import { useParams, usePathname } from "next/navigation";
 import React from "react";
 import {
   Menu,
@@ -235,7 +235,7 @@ export const SideBar: React.FC = () => {
                               // }
                             >
                               {link.subItems.length > 0 ? (
-                                link.subItems.map((subItem, index: number) => {
+                                link.subItems?.map((subItem, index: number) => {
                                   return (
                                     <MenuItem
                                       key={index}

@@ -169,7 +169,7 @@ function DaAutocomplete({
         renderTags
           ? renderTags
           : (value, getTagProps) =>
-              value.map((option, index) => {
+              value?.map((option, index) => {
                 const { key, ...props } = getTagProps({ index });
                 return (
                   <Chip

@@ -31,7 +31,7 @@ function CartDrawer({}: Props) {
     >
       {CartItems.length ? (
         <div className="space-y-2">
-          {CartItems.map((item, index) => {
+          {CartItems?.map((item, index) => {
             return (
               <div key={index} className="flex items-center gap-4 ">
                 <div className="flex flex-col gap-1 items-center justify-between min-h-full">
@@ -49,7 +49,7 @@ function CartDrawer({}: Props) {
                       color="error"
                       size="small"
                       onClick={() => {
-                        const findItem = CartItems.map((cartItem) => {
+                        const findItem = CartItems?.map((cartItem) => {
                           if (cartItem.id === item.id) {
                             return {
                               ...cartItem,
@@ -73,7 +73,7 @@ function CartDrawer({}: Props) {
                     <SeButton
                       disabled={item.quantity === 1}
                       onClick={() => {
-                        const findItem = CartItems.map((cartItem) => {
+                        const findItem = CartItems?.map((cartItem) => {
                           if (
                             cartItem.id === item.id &&
                             cartItem.quantity > 1

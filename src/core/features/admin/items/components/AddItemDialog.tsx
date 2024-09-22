@@ -53,7 +53,7 @@ function AddItemDialog({ debouncedSearch }: Props) {
         return;
       }
       const toastId = toast.loading("Creating Item");
-      const uploadImages = images.map(async (image) => {
+      const uploadImages = images?.map(async (image) => {
         const formData = new FormData();
         formData.append("file", image);
         const uploadedImage = uploadImage(formData)
@@ -122,7 +122,7 @@ function AddItemDialog({ debouncedSearch }: Props) {
           })}
         />
         <div className="space-y-2 rounded-md">
-          {images.map((image) => (
+          {images?.map((image) => (
             <div key={image.name} className="flex items-center justify-between">
               <Image
                 src={URL.createObjectURL(image)}

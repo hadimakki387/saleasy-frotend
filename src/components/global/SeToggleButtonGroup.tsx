@@ -33,7 +33,7 @@ function SeToggleButtonGroup({
         },
       }}
     >
-      {options.map((option) => (
+      {options?.map((option) => (
         <ToggleButton
           sx={{
             padding: "2px 15px",

@@ -26,7 +26,7 @@ function CIColumns({
         left: -3,
       }}
       hasClose={false}
-      menuItems={columns.map((column) => ({
+      menuItems={columns?.map((column) => ({
         name: column.headerName,
         suffix: (
           <SeCheckbox

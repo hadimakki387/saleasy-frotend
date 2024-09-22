@@ -10,18 +10,18 @@ interface Props {
     label: string;
     value: string;
   }[];
-  label:string
+  label: string;
 }
 
-function DropDown({  disabled = false, options, label }: Props) {
+function DropDown({ disabled = false, options, label }: Props) {
   const [age, setAge] = React.useState("");
 
   const handleChange = (event: SelectChangeEvent) => {
     setAge(event.target.value as string);
   };
   return (
-    <FormControl  sx={{  minWidth: 120}}>
-      <InputLabel id="demo-simple-select-label" >{label}</InputLabel>
+    <FormControl sx={{ minWidth: 120 }}>
+      <InputLabel id="demo-simple-select-label">{label}</InputLabel>
       <Select
         labelId="demo-simple-select-label"
         id="demo-simple-select"
@@ -32,7 +32,7 @@ function DropDown({  disabled = false, options, label }: Props) {
         className="bg-white"
         size="small"
       >
-        {options.map((option, index) => {
+        {options?.map((option, index) => {
           return (
             <MenuItem value={option.value} key={index}>
               {option.label}

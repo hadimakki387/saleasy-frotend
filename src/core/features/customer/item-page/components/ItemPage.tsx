@@ -56,7 +56,10 @@ function ItemPage({}: Props) {
   useEffect(() => {
     if (getItem && !getItemLoading) {
       setSelectedOptions(
-        getItem.options.map((opt) => ({ key: opt.name, value: opt.options[0] }))
+        getItem.options?.map((opt) => ({
+          key: opt.name,
+          value: opt.options[0],
+        }))
       );
     }
   }, [getItem, getItemLoading]);
@@ -78,7 +81,7 @@ function ItemPage({}: Props) {
             />
           </div>
           <div className="flex gap-4">
-            {getItem.images.map((img) => (
+            {getItem.images?.map((img) => (
               <CustomImage
                 key={img}
                 src={img}
@@ -117,7 +120,7 @@ function ItemPage({}: Props) {
           </div>
 
           {/* Iterate over item options and pass them to SeToggleButtonGroup */}
-          {getItem.options.map((opt, index) => {
+          {getItem.options?.map((opt, index) => {
             return (
               <div key={index}>
                 <p>{opt.name}</p>

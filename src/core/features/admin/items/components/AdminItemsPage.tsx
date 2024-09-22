@@ -113,7 +113,7 @@ function AdminItemsPage({}: Props) {
             }
           }}
           rows={
-            data?.data.map((item) => {
+            data?.data?.map((item) => {
               return {
                 ...item,
                 createdAt: new Date(item.createdAt).toLocaleDateString(),

@@ -17,7 +17,7 @@ function LandingCarouselSkeleton({}: Props) {
         </p>
       </div>
       <SeCarousel>
-        {Array.from({ length: 10 }).map((_, index) => {
+        {Array.from({ length: 10 })?.map((_, index) => {
           return (
             <SeCard
               key={index}

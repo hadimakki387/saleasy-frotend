@@ -19,10 +19,9 @@ function TabsSwitch({ tabs, value, onChange, sx, tabSx }: Props) {
       onChange={(_, newValue: number) => {
         onChange(newValue);
       }}
-
       sx={{
         width: "100%",
-        
+
         ".MuiTabs-indicator": {
           backgroundColor: "var(--primary)",
         },
@@ -33,21 +32,19 @@ function TabsSwitch({ tabs, value, onChange, sx, tabSx }: Props) {
           "&.Mui-selected": {
             color: "var(--primary-color)",
             fontWeight: "bold",
-            
           },
         },
 
         ...sx,
       }}
     >
-      {tabs.map((tab, index) => (
+      {tabs?.map((tab, index) => (
         <Tab
           key={`${tab}-${index}`}
           label={tab}
           sx={{
             ...tabSx,
           }}
-          
         />
       ))}
     </Tabs>
@@ -55,4 +52,3 @@ function TabsSwitch({ tabs, value, onChange, sx, tabSx }: Props) {
 }
 
 export default TabsSwitch;
-

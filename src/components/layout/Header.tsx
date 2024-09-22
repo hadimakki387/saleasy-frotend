@@ -195,7 +195,7 @@ function Header({ link }: Props) {
                 setSearch(e);
               }}
               data={
-                searchItems?.data.map((e) => ({
+                searchItems?.data?.map((e) => ({
                   title: e.name,
                   id: e.id,
                 })) || []
@@ -263,7 +263,7 @@ function Header({ link }: Props) {
                   role: "listbox",
                 }}
               >
-                {link.categories.map((option, index) => (
+                {link.categories?.map((option, index) => (
                   <MenuItem
                     sx={{ fontSize: "13px" }}
                     key={option.name}

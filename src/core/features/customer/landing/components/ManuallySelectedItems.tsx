@@ -48,7 +48,7 @@ function ManuallySelectedItems() {
         </div>
         <div className=" right-0" style={{ width: `100%` }}>
           <SeCarousel options={options}>
-            {data.items.map((product, index) => {
+            {data.items?.map((product, index) => {
               return (
                 <ProductCard
                   key={product.id}
@@ -64,7 +64,7 @@ function ManuallySelectedItems() {
         </div>
       </div>
       <div className="flex items-center gap-4 w-full sm:max-h-[15rem] max-sm:flex-col max-hidden">
-        {data.sections.map((ad, index) => {
+        {data.sections?.map((ad, index) => {
           return (
             <div className="w-full" key={index}>
               <Banner fullBanner={data.sections.length > 1} data={ad} />

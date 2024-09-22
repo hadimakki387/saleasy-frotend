@@ -104,7 +104,7 @@ export const getActionButtons = ({
 }) => {
   return (
     <div className="flex gap-3 items-center justify-center">
-      {buttons.map((button) =>
+      {buttons?.map((button) =>
         button.id === "toolbar" ? (
           <Tooltip key={button.id} title={button.title}>
             <IconButton
@@ -143,7 +143,7 @@ export const getActionMore = ({
     className?: string;
   }[];
 }) => {
-  const menuItems = buttons.map((button) => ({
+  const menuItems = buttons?.map((button) => ({
     id: button.id,
     name: button.name,
     className: button.className,

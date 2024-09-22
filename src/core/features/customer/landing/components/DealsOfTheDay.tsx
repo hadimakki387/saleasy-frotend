@@ -62,7 +62,7 @@ const DealsOfTheDay = ({
         style={{ width: `${containerWidthPercentage}%` }}
       >
         <SeCarousel options={options}>
-          {dealsOfTheDay.items.map((product) => (
+          {dealsOfTheDay.items?.map((product) => (
             <ProductCard
               key={product.id}
               id={product.id}

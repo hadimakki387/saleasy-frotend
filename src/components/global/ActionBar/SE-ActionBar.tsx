@@ -24,7 +24,7 @@ export default function SeActionBar({ menuItems, className }: ActionBarProps) {
       <div
         className={`bg-primary gap-3 p-4 text-coloredText rounded-lg hidden sm:flex ${className}`}
       >
-        {menuItems.map((item, index) => (
+        {menuItems?.map((item, index) => (
           <div
             key={item.name}
             onClick={item.onClick}

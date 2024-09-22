@@ -126,7 +126,7 @@ function AdminManuallySelectedItems() {
         </div>
         <div className="mb-2 right-0" style={{ width: `100%` }}>
           <SeCarousel options={options}>
-            {data.items.map((product, index) => {
+            {data.items?.map((product, index) => {
               return (
                 <AdminProductCard
                   key={product.id}

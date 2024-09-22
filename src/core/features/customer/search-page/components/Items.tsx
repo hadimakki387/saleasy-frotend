@@ -79,7 +79,7 @@ function Items({}: Props) {
   if (searchLoading)
     return (
       <div className=" grid grid-cols-2 xl:grid-cols-3 gap-2 sm:gap-8">
-        {Array.from({ length: 15 }).map((_, index) => {
+        {Array.from({ length: 15 })?.map((_, index) => {
           return <ItemCardSkeleton key={index} />;
         })}
       </div>
@@ -102,7 +102,7 @@ function Items({}: Props) {
             }}
           />
         </div>
-        {searchData?.data.map((prod, index) => {
+        {searchData?.data?.map((prod, index) => {
           return <ItemCard key={index} product={prod} />;
         })}
       </div>
