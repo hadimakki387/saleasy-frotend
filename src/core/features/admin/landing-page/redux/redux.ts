@@ -23,6 +23,13 @@ const initialState: {
     | (advertisementSection & { sectionId: string })
     | null;
   dealsOfTheDayCreateNewAd: string | null;
+  categoryRelatedItemsAdvertismentSection:
+    | (advertisementSection & { sectionId: string })
+    | null;
+  categoryRelatedItemsSelectedDeleteAd:
+    | (advertisementSection & { sectionId: string })
+    | null;
+  categoryRelatedItemsCreateNewAd: string | null;
 } = {
   selectedHeroCarousel: null,
   createNewCarousel: false,
@@ -36,6 +43,9 @@ const initialState: {
   dealsOfTheDayAdvertismentSection: null,
   dealsOfTheDaySelectedDeleteAd: null,
   dealsOfTheDayCreateNewAd: null,
+  categoryRelatedItemsAdvertismentSection: null,
+  categoryRelatedItemsSelectedDeleteAd: null,
+  categoryRelatedItemsCreateNewAd: null,
 };
 
 const AdminLandingPageEdit = createSlice({
@@ -78,6 +88,15 @@ const AdminLandingPageEdit = createSlice({
     setDealsOfTheDayCreateNewAd: (state, action) => {
       state.dealsOfTheDayCreateNewAd = action.payload;
     },
+    setCategoryRelatedItemsAdvertismentSection: (state, action) => {
+      state.categoryRelatedItemsAdvertismentSection = action.payload;
+    },
+    setCategoryRelatedItemsSelectedDeleteAd: (state, action) => {
+      state.categoryRelatedItemsSelectedDeleteAd = action.payload;
+    },
+    setCategoryRelatedItemsCreateNewAd: (state, action) => {
+      state.categoryRelatedItemsCreateNewAd = action.payload;
+    },
   },
 });
 
@@ -94,6 +113,9 @@ export const {
   setDealsOfTheDayAdvertismentSection,
   setDealsOfTheDaySelectedDeleteAd,
   setDealsOfTheDayCreateNewAd,
+  setCategoryRelatedItemsAdvertismentSection,
+  setCategoryRelatedItemsSelectedDeleteAd,
+  setCategoryRelatedItemsCreateNewAd,
 } = AdminLandingPageEdit.actions;
 
 export default AdminLandingPageEdit.reducer;

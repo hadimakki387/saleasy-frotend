@@ -2,7 +2,6 @@ import SeCarousel from "@/components/global/carousel/SeCarousel";
 import LinkArrowAnimation from "@/components/global/link-arrow-animation";
 import SeTextField from "@/components/global/SeTextField";
 import {
-  useAdminGetCategoryRelatedItemsQuery,
   useGetAdminCategoriesQuery,
   useUpdateCategoryRelatedItemsSectionMutation,
 } from "@/core/features/admin/landing-page/redux/rtk";
@@ -15,6 +14,15 @@ import { toast } from "sonner";
 import { useGetSubCategoriesByStoreIdQuery } from "../../../sub-categories/redux/rtk";
 import AdminProductCard from "../manually-selected-items/AdminProductItem";
 import { sectionsTypes } from "@/core/features/customer/landing/interfaces/link-interface";
+import { useAdminGetCategoryRelatedItemsQuery } from "./redux/rtk";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import EditDealsOfTheDayBanner from "../deals-of-the-day/EditDealsOfTheDaytBanner";
+import { useDispatch } from "react-redux";
+import {
+  setCategoryRelatedItemsCreateNewAd,
+  setDealsOfTheDayCreateNewAd,
+} from "../../redux/redux";
 
 type Props = {};
 
@@ -23,6 +31,7 @@ function AdminCategorySection({}: Props) {
   const { data } = useAdminGetCategoryRelatedItemsQuery({
     id: store?.id as string,
   });
+  console.log(data);
   const {
     data: categoryData,
     error: categoryError,
@@ -33,6 +42,7 @@ function AdminCategorySection({}: Props) {
     { isLoading: updateCategoryLoading },
   ] = useUpdateCategoryRelatedItemsSectionMutation();
   const router = useRouter();
+  const dispatch = useDispatch();
   if (!data) return <LandingCarouselSkeleton />;
   return (
     <>
@@ -120,6 +130,35 @@ function AdminCategorySection({}: Props) {
             ))}
           </SeCarousel>
         </div>
+      </div>
+      <div className="text-2xl text-primary font-semibold my-8">
+        Edit you Advertisment sections here
+        <p className="text-sm text-sub-title-text">
+          These sections will only be visible on the desktop version of the site
+        </p>
+      </div>
+      <div className="flex items-center gap-4 w-full sm:max-h-[15rem] max-sm:flex-col max-sm:hidden">
+        {data.section.advertisementSection.map((ad, index) => {
+          return (
+            <div className="w-full" key={index}>
+              <EditDealsOfTheDayBanner
+                fullBanner={data.section.advertisementSection.length > 1}
+                data={ad}
+                sectionId={data.id}
+              />
+            </div>
+          );
+        })}
+        {data.section.advertisementSection.length < 2 && (
+          <div
+            className="h-10 w-10 flex items-center justify-center bg-slate-300 rounded-md cursor-pointer"
+            onClick={() => {
+              dispatch(setCategoryRelatedItemsCreateNewAd(data.section.id));
+            }}
+          >
+            <FontAwesomeIcon icon={faPlus} className="text-primary" />
+          </div>
+        )}
       </div>
     </>
   );

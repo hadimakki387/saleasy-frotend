@@ -1,4 +1,4 @@
-# [[redirects]]
-#   from = "https://:subdomain.saleasy.store/*"
-#   to = "/"
-#   status = 200
+[[redirects]]
+  from = "https://:subdomain.saleasy.store/*"
+  to = "/"
+  status = 200
