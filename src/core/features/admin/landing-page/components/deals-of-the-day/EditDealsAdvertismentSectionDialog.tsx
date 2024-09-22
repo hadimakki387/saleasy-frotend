@@ -1,32 +1,30 @@
+import SeButton from "@/components/global/SeButton";
 import SeDialog from "@/components/global/SeDialog";
+import SeEditInput from "@/components/global/SeEditInput";
+import { getImageById } from "@/hooks/getImageById";
 import { useAppSelector } from "@/providers/StoreWrapper";
+import { faPen } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { toast } from "sonner";
-import { UpdateCarouselInterface } from "../../interfaces/update-carousel-interface";
 import {
   setAdvertismentSection,
-  setAllAdvertisementSections,
-  setSelectedHeroCarousel,
+  setDealsOfTheDayAdvertismentSection,
+  setDealsOfTheDaySelectedDeleteAd,
 } from "../../redux/redux";
 import {
   useEditCarouselItemMutation,
   useUpdateAdvertisementSectionMutation,
 } from "../../redux/rtk";
-import HeroAdminEditCarousel from "../hero-edit/dialogs/edit-carousel/HeroAdminEditCarousel";
-import EditBanner from "./EditBanner";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPen, faTrashCan } from "@fortawesome/free-solid-svg-icons";
-import { getImageById } from "@/hooks/getImageById";
-import SeButton from "@/components/global/SeButton";
-import SeEditInput from "@/components/global/SeEditInput";
+import { useUpdateDealsOfTheDayAdvertismentSectionMutation } from "./redux/rtk";
 
 type Props = {
   fullBanner?: boolean;
 };
 
-function EditAdvertismentSectionDialog({ fullBanner }: Props) {
-  const { allAdvertisementSections, advertismentSection } = useAppSelector(
+function EditDealsOfTheDayAdvertismentSectionDialog({ fullBanner }: Props) {
+  const { dealsOfTheDayAdvertismentSection } = useAppSelector(
     (state) => state.AdminLandingPageEdit
   );
 
@@ -38,42 +36,50 @@ function EditAdvertismentSectionDialog({ fullBanner }: Props) {
   const [imageSrc, setImageSrc] = useState<string | null>(null);
 
   useEffect(() => {
-    if (advertismentSection)
-      getImageById(advertismentSection.backgroundImage, (base64data) => {
-        if (base64data) {
-          setImageSrc(base64data); // Set the image data in the state when ready
+    if (dealsOfTheDayAdvertismentSection)
+      getImageById(
+        dealsOfTheDayAdvertismentSection.backgroundImage,
+        (base64data) => {
+          if (base64data) {
+            setImageSrc(base64data); // Set the image data in the state when ready
+          }
         }
-      });
-  }, [advertismentSection]);
+      );
+  }, [dealsOfTheDayAdvertismentSection]);
   const [image, setImage] = useState<File | null>(null);
-  const [text1, setText1] = useState(advertismentSection?.text1);
-  const [text2, setText2] = useState(advertismentSection?.text2);
-  const [redText, setRedText] = useState(advertismentSection?.redText);
-  const [linkTitle, setLinkTitle] = useState(advertismentSection?.link.title);
+  const [text1, setText1] = useState(dealsOfTheDayAdvertismentSection?.text1);
+  const [text2, setText2] = useState(dealsOfTheDayAdvertismentSection?.text2);
+  const [redText, setRedText] = useState(
+    dealsOfTheDayAdvertismentSection?.redText
+  );
+  const [linkTitle, setLinkTitle] = useState(
+    dealsOfTheDayAdvertismentSection?.link.title
+  );
   const [linkTarget, setLinkTarget] = useState(
-    advertismentSection?.link.target
+    dealsOfTheDayAdvertismentSection?.link.target
   );
   useEffect(() => {
-    setText1(advertismentSection?.text1);
-    setText2(advertismentSection?.text2);
-    setRedText(advertismentSection?.redText);
-    setLinkTitle(advertismentSection?.link.title);
-    setLinkTarget(advertismentSection?.link.target);
-  }, [advertismentSection]);
+    setText1(dealsOfTheDayAdvertismentSection?.text1);
+    setText2(dealsOfTheDayAdvertismentSection?.text2);
+    setRedText(dealsOfTheDayAdvertismentSection?.redText);
+    setLinkTitle(dealsOfTheDayAdvertismentSection?.link.title);
+    setLinkTarget(dealsOfTheDayAdvertismentSection?.link.target);
+  }, [dealsOfTheDayAdvertismentSection]);
 
   const [
     editAdvertisementSection,
     { isLoading: editAdvertisementSectionLoading },
-  ] = useUpdateAdvertisementSectionMutation();
+  ] = useUpdateDealsOfTheDayAdvertismentSectionMutation();
+  console.log(dealsOfTheDayAdvertismentSection);
   return (
     <SeDialog
-      open={advertismentSection ? true : false}
-      maxWidth="sm"
+      open={dealsOfTheDayAdvertismentSection ? true : false}
+      maxWidth={!fullBanner ? "lg" : "sm"}
       onClose={() => {
-        dispatch(setAdvertismentSection(null));
+        dispatch(setDealsOfTheDayAdvertismentSection(null));
       }}
       onOk={() => {
-        if (!image && !advertismentSection?.backgroundImage) {
+        if (!image && !dealsOfTheDayAdvertismentSection?.backgroundImage) {
           toast.error("Please select an image");
           return;
         }
@@ -86,19 +92,22 @@ function EditAdvertismentSectionDialog({ fullBanner }: Props) {
         formData.append("redText", redText || "");
         formData.append("linkTitle", linkTitle || "");
         formData.append("linkTarget", linkTarget || "");
-        formData.append("imageId", advertismentSection?.backgroundImage || "");
+        formData.append(
+          "imageId",
+          dealsOfTheDayAdvertismentSection?.backgroundImage || ""
+        );
 
         const toastId = toast.loading("Updating carousel item...");
         editAdvertisementSection({
-          advertismentId: advertismentSection?.id || "",
-          sectionId: advertismentSection?.sectionId || "",
+          advertismentId: dealsOfTheDayAdvertismentSection?.id || "",
+          sectionId: dealsOfTheDayAdvertismentSection?.sectionId || "",
           item: formData,
           linkId: store?.link.id || "",
           storeId: store?.id || "",
         })
           .unwrap()
           .then(() => {
-            dispatch(setAdvertismentSection(null));
+            dispatch(setDealsOfTheDayAdvertismentSection(null));
             toast.dismiss(toastId);
             toast.success("Carousel item updated successfully");
           })
@@ -108,7 +117,7 @@ function EditAdvertismentSectionDialog({ fullBanner }: Props) {
           });
       }}
     >
-      {advertismentSection && (
+      {dealsOfTheDayAdvertismentSection && (
         <div className="item-nkw  w-full relative">
           <div className="absolute top-4 right-4 z-50 flex gap-4">
             <div className="flex items-center justify-center w-full">
@@ -295,4 +304,4 @@ function EditAdvertismentSectionDialog({ fullBanner }: Props) {
   );
 }
 
-export default EditAdvertismentSectionDialog;
+export default EditDealsOfTheDayAdvertismentSectionDialog;

@@ -16,6 +16,13 @@ const initialState: {
   createNewAd: string | null;
   addItemsDialog: boolean;
   alreadySelectedItems: string[];
+  dealsOfTheDayAdvertismentSection:
+    | (advertisementSection & { sectionId: string })
+    | null;
+  dealsOfTheDaySelectedDeleteAd:
+    | (advertisementSection & { sectionId: string })
+    | null;
+  dealsOfTheDayCreateNewAd: string | null;
 } = {
   selectedHeroCarousel: null,
   createNewCarousel: false,
@@ -26,6 +33,9 @@ const initialState: {
   createNewAd: null,
   addItemsDialog: false,
   alreadySelectedItems: [],
+  dealsOfTheDayAdvertismentSection: null,
+  dealsOfTheDaySelectedDeleteAd: null,
+  dealsOfTheDayCreateNewAd: null,
 };
 
 const AdminLandingPageEdit = createSlice({
@@ -59,6 +69,15 @@ const AdminLandingPageEdit = createSlice({
     setAlreadySelectedItems: (state, action) => {
       state.alreadySelectedItems = action.payload;
     },
+    setDealsOfTheDayAdvertismentSection: (state, action) => {
+      state.dealsOfTheDayAdvertismentSection = action.payload;
+    },
+    setDealsOfTheDaySelectedDeleteAd: (state, action) => {
+      state.dealsOfTheDaySelectedDeleteAd = action.payload;
+    },
+    setDealsOfTheDayCreateNewAd: (state, action) => {
+      state.dealsOfTheDayCreateNewAd = action.payload;
+    },
   },
 });
 
@@ -72,6 +91,9 @@ export const {
   setCreateNewAd,
   setAddItemsDialog,
   setAlreadySelectedItems,
+  setDealsOfTheDayAdvertismentSection,
+  setDealsOfTheDaySelectedDeleteAd,
+  setDealsOfTheDayCreateNewAd,
 } = AdminLandingPageEdit.actions;
 
 export default AdminLandingPageEdit.reducer;

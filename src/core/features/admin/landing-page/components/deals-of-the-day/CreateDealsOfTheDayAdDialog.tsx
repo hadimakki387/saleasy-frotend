@@ -1,20 +1,19 @@
-import SeButton from "@/components/global/SeButton";
 import SeDialog from "@/components/global/SeDialog";
 import SeEditInput from "@/components/global/SeEditInput";
 import { useAppSelector } from "@/providers/StoreWrapper";
 import { faPen } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useEffect, useState } from "react";
-import Image from "../../../../../../../public/banner-18.webp";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { setCreateNewAd } from "../../redux/redux";
-import { useAddAdvertisementSectionMutation } from "../../redux/rtk";
 import { toast } from "sonner";
+import Image from "../../../../../../../public/banner-18.webp";
+import { setDealsOfTheDayCreateNewAd } from "../../redux/redux";
+import { useDealsOfTheDayAddAdvertisementSectionMutation } from "./redux/rtk";
 
 type Props = {};
 
-function CreateAdDialog({}: Props) {
-  const { createNewAd } = useAppSelector(
+function CreateDealsOfTheDayAdDialog({}: Props) {
+  const { dealsOfTheDayCreateNewAd } = useAppSelector(
     (state) => state.AdminLandingPageEdit
   );
   const [text1, setText1] = useState("NEW ARRIVALS");
@@ -35,14 +34,14 @@ function CreateAdDialog({}: Props) {
   const [
     addAdvertisementSection,
     { isLoading: addAdvertisementSectionLoading },
-  ] = useAddAdvertisementSectionMutation();
+  ] = useDealsOfTheDayAddAdvertisementSectionMutation();
   const { store } = useAppSelector((state) => state.GlobalAdminRedux);
 
   return (
     <SeDialog
-      open={createNewAd ? true : false}
+      open={dealsOfTheDayCreateNewAd ? true : false}
       onClose={() => {
-        dispatch(setCreateNewAd(null));
+        dispatch(setDealsOfTheDayCreateNewAd(null));
       }}
       onOk={() => {
         const toastId = toast.loading("Creating new ad...");
@@ -58,12 +57,12 @@ function CreateAdDialog({}: Props) {
         addAdvertisementSection({
           item: formData,
           linkId: store?.link.id || "",
-          sectionId: createNewAd || "",
+          sectionId: dealsOfTheDayCreateNewAd || "",
           storeId: store?.id || "",
         })
           .unwrap()
           .then(() => {
-            dispatch(setCreateNewAd(null));
+            dispatch(setDealsOfTheDayCreateNewAd(null));
             toast.dismiss(toastId);
             toast.success("Ad created successfully");
           })
@@ -166,4 +165,4 @@ function CreateAdDialog({}: Props) {
   );
 }
 
-export default CreateAdDialog;
+export default CreateDealsOfTheDayAdDialog;

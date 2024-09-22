@@ -32,6 +32,7 @@ const extendedApi = mainApi.injectEndpoints({
     >({
       query: ({ id }) => `/store/manually-selected-items-section/${id}`,
     }),
+
     adminGetCategoryRelatedItems: builder.query<
       ICategoryRelatedItemsSection,
       getProductsParams
@@ -248,6 +249,7 @@ const extendedApi = mainApi.injectEndpoints({
         }
       },
     }),
+
     deleteAdvertisementSection: builder.mutation<
       string,
       {

@@ -11,6 +11,7 @@ import { ItemInterface } from "../interfaces/items-interface";
 import {
   advertisementSection,
   ILinkEntity,
+  SectionInterface,
 } from "../interfaces/link-interface";
 export interface getProductsParams {
   id: string;
@@ -34,7 +35,11 @@ export const extendedApi = mainApi.injectEndpoints({
     getStoreCategories: build.query<ICategories[], getProductsParams>({
       query: ({ id }) => `/item-category/get-categories-by-store-id/${id}`,
     }),
-    getStoreDealsOfTheDay: build.query<ItemInterface[], getProductsParams>({
+    getStoreDealsOfTheDay: build.query<
+      { items: ItemInterface[]; sections: SectionInterface },
+      getProductsParams
+    >({
+      providesTags: ["deals_of_the_day_changed"],
       query: ({ id }) => `/store/deals-of-the-day/${id}`,
     }),
     getManuallySelectedItemsSection: build.query<

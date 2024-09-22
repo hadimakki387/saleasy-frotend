@@ -1,14 +1,19 @@
-import React, { useState } from "react";
-
 import SeCarousel from "@/components/global/carousel/SeCarousel";
-import { products } from "@/fake-db/products-2";
+import ProductCard from "@/core/features/customer/landing/components/SeProductCard";
+import LandingCarouselSkeleton from "@/core/features/customer/landing/components/skeletons/LandingCarouselSkeleton";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ArrowForward } from "@mui/icons-material";
 import { EmblaOptionsType } from "embla-carousel";
-import { useParams } from "next/navigation";
 import Link from "next/link";
-import { useGetStoreDealsOfTheDayQuery } from "@/core/features/customer/landing/redux/rtk";
-import LandingCarouselSkeleton from "@/core/features/customer/landing/components/skeletons/LandingCarouselSkeleton";
-import ProductCard from "@/core/features/customer/landing/components/SeProductCard";
+import { useParams } from "next/navigation";
+import { useDispatch } from "react-redux";
+import { setDealsOfTheDayCreateNewAd } from "../../redux/redux";
+import CreateDealsOfTheDayAdDialog from "./CreateDealsOfTheDayAdDialog";
+import DeleteDealsOfTheDayAdDialog from "./DeleteDealsOfTheDayAdDialog";
+import EditDealsOfTheDayBanner from "./EditDealsOfTheDaytBanner";
+import { useAdminGetStoreDealsOfTheDayQuery } from "./redux/rtk";
+import EditDealsOfTheDayAdvertismentSectionDialog from "./EditDealsAdvertismentSectionDialog";
 
 interface ProductSectionProps {
   visibleCards?: number;
@@ -24,14 +29,11 @@ const AdminDealsOfTheDay = ({
   title = "Deals Of The Day",
 }: ProductSectionProps) => {
   const { store } = useParams();
-  const { data: dealsOfTheDay } = useGetStoreDealsOfTheDayQuery({
+  const { data: dealsOfTheDay } = useAdminGetStoreDealsOfTheDayQuery({
     id: store as string,
   });
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string>("");
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error}</div>;
+  const dispatch = useDispatch();
 
   const options: EmblaOptionsType = {
     loop: false,
@@ -39,7 +41,6 @@ const AdminDealsOfTheDay = ({
     containScroll: "trimSnaps",
     startIndex: 0,
   };
-
   if (!dealsOfTheDay) return <LandingCarouselSkeleton />;
 
   return (
@@ -52,6 +53,11 @@ const AdminDealsOfTheDay = ({
         </p>
         <p className="text-xs text-error">un-editable section</p>
       </div>
+      <CreateDealsOfTheDayAdDialog />
+      <DeleteDealsOfTheDayAdDialog />
+      <EditDealsOfTheDayAdvertismentSectionDialog
+        fullBanner={dealsOfTheDay.sections.advertisementSection.length === 2}
+      />
       <div className=" flex items-center justify-between mb-6  max-sm:flex max-sm:flex-col max-sm:gap-2 max-sm:items-start">
         <h3 className="text-2xl font-bold text-primary ">{title}</h3>
         <Link
@@ -70,7 +76,7 @@ const AdminDealsOfTheDay = ({
         style={{ width: `${containerWidthPercentage}%` }}
       >
         <SeCarousel options={options}>
-          {dealsOfTheDay.map((product) => (
+          {dealsOfTheDay.items.map((product) => (
             <ProductCard
               key={product.id}
               id={product.id}
@@ -81,6 +87,37 @@ const AdminDealsOfTheDay = ({
             />
           ))}
         </SeCarousel>
+      </div>
+      <div className="text-2xl text-primary font-semibold my-8">
+        Edit you Advertisment sections here
+        <p className="text-sm text-sub-title-text">
+          These sections will only be visible on the desktop version of the site
+        </p>
+      </div>
+      <div className="flex items-center gap-4 w-full sm:max-h-[15rem] max-sm:flex-col max-sm:hidden">
+        {dealsOfTheDay.sections?.advertisementSection.map((ad, index) => {
+          return (
+            <div className="w-full" key={index}>
+              <EditDealsOfTheDayBanner
+                fullBanner={
+                  dealsOfTheDay.sections.advertisementSection.length > 1
+                }
+                data={ad}
+                sectionId={dealsOfTheDay.sections.id}
+              />
+            </div>
+          );
+        })}
+        {dealsOfTheDay.sections.advertisementSection.length < 2 && (
+          <div
+            className="h-10 w-10 flex items-center justify-center bg-slate-300 rounded-md cursor-pointer"
+            onClick={() => {
+              dispatch(setDealsOfTheDayCreateNewAd(dealsOfTheDay.sections.id));
+            }}
+          >
+            <FontAwesomeIcon icon={faPlus} className="text-primary" />
+          </div>
+        )}
       </div>
     </div>
   );

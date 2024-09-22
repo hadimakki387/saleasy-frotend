@@ -9,8 +9,9 @@ import AdminCategory from "./AdminCategory";
 import SeCarousel from "@/components/global/carousel/SeCarousel";
 import HeroEdit from "./hero-edit/HeroEdit";
 import AdminManuallySelectedItems from "./manually-selected-items/AdminManuallySelectedItems";
-import AdminDealsOfTheDay from "./deals-of-the-day/AdminDealsOfTheDay";
+
 import AdminCategorySection from "./category-section/AdminCategorySection";
+import AdminDealsOfTheDay from "./deals-of-the-day/AdminDealsOfTheDay";
 
 type Props = {};
 
