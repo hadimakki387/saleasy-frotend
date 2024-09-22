@@ -1,0 +1,4 @@
+[[redirects]]
+  from = "https://:subdomain.saleasy.store/*"
+  to = "/"
+  status = 200
