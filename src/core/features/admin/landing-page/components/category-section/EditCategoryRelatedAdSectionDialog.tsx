@@ -8,23 +8,16 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { toast } from "sonner";
-import {
-  setAdvertismentSection,
-  setDealsOfTheDayAdvertismentSection,
-  setDealsOfTheDaySelectedDeleteAd,
-} from "../../redux/redux";
-import {
-  useEditCarouselItemMutation,
-  useUpdateAdvertisementSectionMutation,
-} from "../../redux/rtk";
-import { useUpdateDealsOfTheDayAdvertismentSectionMutation } from "./redux/rtk";
+import { setCategoryRelatedItemsAdvertismentSection } from "../../redux/redux";
+import { useEditCarouselItemMutation } from "../../redux/rtk";
+import { useUpdateCategoriesRelatedAdvertismentSectionMutation } from "./redux/rtk";
 
 type Props = {
   fullBanner?: boolean;
 };
 
 function EditCategoryRelatedAdSectionDialog({ fullBanner }: Props) {
-  const { dealsOfTheDayAdvertismentSection } = useAppSelector(
+  const { categoryRelatedItemsAdvertismentSection } = useAppSelector(
     (state) => state.AdminLandingPageEdit
   );
 
@@ -36,50 +29,57 @@ function EditCategoryRelatedAdSectionDialog({ fullBanner }: Props) {
   const [imageSrc, setImageSrc] = useState<string | null>(null);
 
   useEffect(() => {
-    if (dealsOfTheDayAdvertismentSection)
+    if (categoryRelatedItemsAdvertismentSection)
       getImageById(
-        dealsOfTheDayAdvertismentSection.backgroundImage,
+        categoryRelatedItemsAdvertismentSection.backgroundImage,
         (base64data) => {
           if (base64data) {
             setImageSrc(base64data); // Set the image data in the state when ready
           }
         }
       );
-  }, [dealsOfTheDayAdvertismentSection]);
+  }, [categoryRelatedItemsAdvertismentSection]);
   const [image, setImage] = useState<File | null>(null);
-  const [text1, setText1] = useState(dealsOfTheDayAdvertismentSection?.text1);
-  const [text2, setText2] = useState(dealsOfTheDayAdvertismentSection?.text2);
+  const [text1, setText1] = useState(
+    categoryRelatedItemsAdvertismentSection?.text1
+  );
+  const [text2, setText2] = useState(
+    categoryRelatedItemsAdvertismentSection?.text2
+  );
   const [redText, setRedText] = useState(
-    dealsOfTheDayAdvertismentSection?.redText
+    categoryRelatedItemsAdvertismentSection?.redText
   );
   const [linkTitle, setLinkTitle] = useState(
-    dealsOfTheDayAdvertismentSection?.link.title
+    categoryRelatedItemsAdvertismentSection?.link.title
   );
   const [linkTarget, setLinkTarget] = useState(
-    dealsOfTheDayAdvertismentSection?.link.target
+    categoryRelatedItemsAdvertismentSection?.link.target
   );
   useEffect(() => {
-    setText1(dealsOfTheDayAdvertismentSection?.text1);
-    setText2(dealsOfTheDayAdvertismentSection?.text2);
-    setRedText(dealsOfTheDayAdvertismentSection?.redText);
-    setLinkTitle(dealsOfTheDayAdvertismentSection?.link.title);
-    setLinkTarget(dealsOfTheDayAdvertismentSection?.link.target);
-  }, [dealsOfTheDayAdvertismentSection]);
+    setText1(categoryRelatedItemsAdvertismentSection?.text1);
+    setText2(categoryRelatedItemsAdvertismentSection?.text2);
+    setRedText(categoryRelatedItemsAdvertismentSection?.redText);
+    setLinkTitle(categoryRelatedItemsAdvertismentSection?.link.title);
+    setLinkTarget(categoryRelatedItemsAdvertismentSection?.link.target);
+  }, [categoryRelatedItemsAdvertismentSection]);
 
   const [
     editAdvertisementSection,
     { isLoading: editAdvertisementSectionLoading },
-  ] = useUpdateDealsOfTheDayAdvertismentSectionMutation();
-  console.log(dealsOfTheDayAdvertismentSection);
+  ] = useUpdateCategoriesRelatedAdvertismentSectionMutation();
+  console.log(categoryRelatedItemsAdvertismentSection);
   return (
     <SeDialog
-      open={dealsOfTheDayAdvertismentSection ? true : false}
+      open={categoryRelatedItemsAdvertismentSection ? true : false}
       maxWidth={!fullBanner ? "lg" : "sm"}
       onClose={() => {
-        dispatch(setDealsOfTheDayAdvertismentSection(null));
+        dispatch(setCategoryRelatedItemsAdvertismentSection(null));
       }}
       onOk={() => {
-        if (!image && !dealsOfTheDayAdvertismentSection?.backgroundImage) {
+        if (
+          !image &&
+          !categoryRelatedItemsAdvertismentSection?.backgroundImage
+        ) {
           toast.error("Please select an image");
           return;
         }
@@ -94,20 +94,20 @@ function EditCategoryRelatedAdSectionDialog({ fullBanner }: Props) {
         formData.append("linkTarget", linkTarget || "");
         formData.append(
           "imageId",
-          dealsOfTheDayAdvertismentSection?.backgroundImage || ""
+          categoryRelatedItemsAdvertismentSection?.backgroundImage || ""
         );
 
         const toastId = toast.loading("Updating carousel item...");
         editAdvertisementSection({
-          advertismentId: dealsOfTheDayAdvertismentSection?.id || "",
-          sectionId: dealsOfTheDayAdvertismentSection?.sectionId || "",
+          advertismentId: categoryRelatedItemsAdvertismentSection?.id || "",
+          sectionId: categoryRelatedItemsAdvertismentSection?.sectionId || "",
           item: formData,
           linkId: store?.link.id || "",
           storeId: store?.id || "",
         })
           .unwrap()
           .then(() => {
-            dispatch(setDealsOfTheDayAdvertismentSection(null));
+            dispatch(setCategoryRelatedItemsAdvertismentSection(null));
             toast.dismiss(toastId);
             toast.success("Carousel item updated successfully");
           })
@@ -117,7 +117,7 @@ function EditCategoryRelatedAdSectionDialog({ fullBanner }: Props) {
           });
       }}
     >
-      {dealsOfTheDayAdvertismentSection && (
+      {categoryRelatedItemsAdvertismentSection && (
         <div className="item-nkw  w-full relative">
           <div className="absolute top-4 right-4 z-50 flex gap-4">
             <div className="flex items-center justify-center w-full">

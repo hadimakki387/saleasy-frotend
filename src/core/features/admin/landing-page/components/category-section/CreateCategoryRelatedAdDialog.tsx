@@ -7,13 +7,13 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { toast } from "sonner";
 import Image from "../../../../../../../public/banner-18.webp";
-import { setDealsOfTheDayCreateNewAd } from "../../redux/redux";
-import { useDealsOfTheDayAddAdvertisementSectionMutation } from "./redux/rtk";
+import { setCategoryRelatedItemsCreateNewAd } from "../../redux/redux";
+import { useCategoriesRelatedAddAdvertisementSectionMutation } from "./redux/rtk";
 
 type Props = {};
 
-function CreateDealsOfTheDayAdDialog({}: Props) {
-  const { dealsOfTheDayCreateNewAd } = useAppSelector(
+function CreateCategoriesRelatedAdDialog({}: Props) {
+  const { categoryRelatedItemsCreateNewAd } = useAppSelector(
     (state) => state.AdminLandingPageEdit
   );
   const [text1, setText1] = useState("NEW ARRIVALS");
@@ -34,14 +34,14 @@ function CreateDealsOfTheDayAdDialog({}: Props) {
   const [
     addAdvertisementSection,
     { isLoading: addAdvertisementSectionLoading },
-  ] = useDealsOfTheDayAddAdvertisementSectionMutation();
+  ] = useCategoriesRelatedAddAdvertisementSectionMutation();
   const { store } = useAppSelector((state) => state.GlobalAdminRedux);
 
   return (
     <SeDialog
-      open={dealsOfTheDayCreateNewAd ? true : false}
+      open={categoryRelatedItemsCreateNewAd ? true : false}
       onClose={() => {
-        dispatch(setDealsOfTheDayCreateNewAd(null));
+        dispatch(setCategoryRelatedItemsCreateNewAd(null));
       }}
       onOk={() => {
         const toastId = toast.loading("Creating new ad...");
@@ -57,12 +57,12 @@ function CreateDealsOfTheDayAdDialog({}: Props) {
         addAdvertisementSection({
           item: formData,
           linkId: store?.link.id || "",
-          sectionId: dealsOfTheDayCreateNewAd || "",
+          sectionId: categoryRelatedItemsCreateNewAd || "",
           storeId: store?.id || "",
         })
           .unwrap()
           .then(() => {
-            dispatch(setDealsOfTheDayCreateNewAd(null));
+            dispatch(setCategoryRelatedItemsCreateNewAd(null));
             toast.dismiss(toastId);
             toast.success("Ad created successfully");
           })
@@ -165,4 +165,4 @@ function CreateDealsOfTheDayAdDialog({}: Props) {
   );
 }
 
-export default CreateDealsOfTheDayAdDialog;
+export default CreateCategoriesRelatedAdDialog;

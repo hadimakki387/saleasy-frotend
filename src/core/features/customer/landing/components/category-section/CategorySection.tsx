@@ -7,6 +7,7 @@ import { useParams } from "next/navigation";
 import { getImageById } from "@/hooks/getImageById";
 import { useRouter } from "nextjs-toploader/app";
 import CustomImage from "@/components/global/CustomImage";
+import CategorySectionSkeleton from "./CategorySectionSkeleton";
 
 type Props = {
   product: ICategories;
@@ -15,20 +16,12 @@ type Props = {
 function CategoryItem({ product }: Props) {
   const router = useRouter();
   const { store } = useParams();
-  const [imageSrc, setImageSrc] = useState<string | null>(null);
-
-  useEffect(() => {
-    getImageById(product.image, (base64data) => {
-      if (base64data) {
-        setImageSrc(base64data); // Set the image data in the state when ready
-      }
-    });
-  }, [product.image]);
+  if (!product) return <CategorySectionSkeleton />;
   return (
     <SeCard>
       <CustomImage
         size={100}
-        src={imageSrc || ""}
+        src={product.image}
         alt={product.name}
         className=" object-cover transform transition-transform duration-300 ease-in-out group-hover:scale-110 min-w-56 max-sm:min-w-h-32 max-w-56 h-56 max-sm:h-32 max-sm:max-w-32 max-sm:min-w-32"
       />
@@ -37,7 +30,7 @@ function CategoryItem({ product }: Props) {
         fullWidth
         variant="outlined"
         color="primary"
-        label={product.name}
+        label={product.name || ""}
         onClick={() =>
           router.push(`/store/${store}/search?category=${product.id}`)
         }

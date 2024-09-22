@@ -7,8 +7,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import {
-  setDealsOfTheDayAdvertismentSection,
-  setDealsOfTheDaySelectedDeleteAd,
+  setCategoryRelatedItemsAdvertismentSection,
+  setCategoryRelatedItemsSelectedDeleteAd,
 } from "../../redux/redux";
 
 export interface BannerProps {
@@ -25,7 +25,7 @@ const EditCategoryRelatedBanner: React.FC<BannerProps> = ({
   sectionId,
 }) => {
   const dispatch = useDispatch();
-  const { dealsOfTheDayAdvertismentSection } = useAppSelector(
+  const { categoryRelatedItemsAdvertismentSection } = useAppSelector(
     (state) => state.AdminLandingPageEdit
   );
   const [imageSrc, setImageSrc] = useState<string | null>(null);
@@ -37,7 +37,10 @@ const EditCategoryRelatedBanner: React.FC<BannerProps> = ({
       }
     });
   }, [data.backgroundImage]);
-  console.log(dealsOfTheDayAdvertismentSection);
+  console.log(
+    "categoryRelatedItemsAdvertismentSection",
+    categoryRelatedItemsAdvertismentSection
+  );
   return (
     <div className="item-nkw  w-full relative">
       <div className="absolute top-4 right-4 z-50 flex gap-4">
@@ -45,7 +48,7 @@ const EditCategoryRelatedBanner: React.FC<BannerProps> = ({
           onClick={() => {
             console.log("sectionId", sectionId);
             dispatch(
-              setDealsOfTheDayAdvertismentSection({ ...data, sectionId })
+              setCategoryRelatedItemsAdvertismentSection({ ...data, sectionId })
             );
           }}
           className="h-10 w-10 bg-primary rounded-md flex items-center justify-center z-[5000]"
@@ -56,7 +59,7 @@ const EditCategoryRelatedBanner: React.FC<BannerProps> = ({
           className="h-10 w-10 bg-slate-300 rounded-md flex items-center justify-center z-[5000]"
           onClick={() => {
             dispatch(
-              setDealsOfTheDaySelectedDeleteAd({
+              setCategoryRelatedItemsSelectedDeleteAd({
                 ...data,
                 sectionId,
               })

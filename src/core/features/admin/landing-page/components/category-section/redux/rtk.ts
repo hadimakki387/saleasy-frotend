@@ -15,7 +15,7 @@ const extendedApi = mainApi.injectEndpoints({
     >({
       query: ({ id }) => `/store/get-category-section-items/${id}`,
     }),
-    updateDealsOfTheDayAdvertismentSection: builder.mutation<
+    updateCategoriesRelatedAdvertismentSection: builder.mutation<
       advertisementSection,
       {
         item: FormData;
@@ -61,7 +61,7 @@ const extendedApi = mainApi.injectEndpoints({
         }
       },
     }),
-    dealsOfTheDayDeleteAdvertisementSection: builder.mutation<
+    categoriesRelatedDeleteAdvertisementSection: builder.mutation<
       string,
       {
         advertismentId: string;
@@ -98,7 +98,7 @@ const extendedApi = mainApi.injectEndpoints({
         }
       },
     }),
-    dealsOfTheDayAddAdvertisementSection: builder.mutation<
+    categoriesRelatedAddAdvertisementSection: builder.mutation<
       advertisementSection,
       {
         item: FormData;
@@ -138,7 +138,7 @@ const extendedApi = mainApi.injectEndpoints({
 
 export const {
   useAdminGetCategoryRelatedItemsQuery,
-  useUpdateDealsOfTheDayAdvertismentSectionMutation,
-  useDealsOfTheDayDeleteAdvertisementSectionMutation,
-  useDealsOfTheDayAddAdvertisementSectionMutation,
+  useUpdateCategoriesRelatedAdvertismentSectionMutation,
+  useCategoriesRelatedDeleteAdvertisementSectionMutation,
+  useCategoriesRelatedAddAdvertisementSectionMutation,
 } = extendedApi;

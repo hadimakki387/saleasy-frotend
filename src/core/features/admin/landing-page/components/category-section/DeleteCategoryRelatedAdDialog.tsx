@@ -1,22 +1,20 @@
 import SeDialog from "@/components/global/SeDialog";
 import { useAppSelector } from "@/providers/StoreWrapper";
-import React from "react";
-import { useDeleteAdvertisementSectionMutation } from "../../redux/rtk";
 import { useDispatch } from "react-redux";
-import { setDealsOfTheDaySelectedDeleteAd } from "../../redux/redux";
 import { toast } from "sonner";
-import { useDealsOfTheDayDeleteAdvertisementSectionMutation } from "./redux/rtk";
+import { useCategoriesRelatedDeleteAdvertisementSectionMutation } from "./redux/rtk";
+import { setCategoryRelatedItemsSelectedDeleteAd } from "../../redux/redux";
 
 type Props = {};
 
-function DeleteDealsOfTheDayAdDialog({}: Props) {
-  const { dealsOfTheDaySelectedDeleteAd } = useAppSelector(
+function DeleteCategoriesRelatedAdDialog({}: Props) {
+  const { categoryRelatedItemsSelectedDeleteAd } = useAppSelector(
     (state) => state.AdminLandingPageEdit
   );
   const [
     deleteAdvertisementSection,
     { isLoading: deleteAdvertisementSectionLoading },
-  ] = useDealsOfTheDayDeleteAdvertisementSectionMutation();
+  ] = useCategoriesRelatedDeleteAdvertisementSectionMutation();
   const dispatch = useDispatch();
   const { store } = useAppSelector((state) => state.GlobalAdminRedux);
   return (
@@ -25,14 +23,14 @@ function DeleteDealsOfTheDayAdDialog({}: Props) {
       onOk={() => {
         const toastId = toast.loading("Deleting item...");
         deleteAdvertisementSection({
-          advertismentId: dealsOfTheDaySelectedDeleteAd?.id || "",
+          advertismentId: categoryRelatedItemsSelectedDeleteAd?.id || "",
           linkId: store?.link.id || "",
-          sectionId: dealsOfTheDaySelectedDeleteAd?.sectionId || "",
+          sectionId: categoryRelatedItemsSelectedDeleteAd?.sectionId || "",
           storeId: store?.id || "",
         })
           .unwrap()
           .then(() => {
-            dispatch(setDealsOfTheDaySelectedDeleteAd(null));
+            dispatch(setCategoryRelatedItemsSelectedDeleteAd(null));
             toast.dismiss(toastId);
             toast.success("Item deleted successfully");
           })
@@ -42,9 +40,9 @@ function DeleteDealsOfTheDayAdDialog({}: Props) {
           });
       }}
       onClose={() => {
-        dispatch(setDealsOfTheDaySelectedDeleteAd(null));
+        dispatch(setCategoryRelatedItemsSelectedDeleteAd(null));
       }}
-      open={dealsOfTheDaySelectedDeleteAd ? true : false}
+      open={categoryRelatedItemsSelectedDeleteAd ? true : false}
       styling={{
         okButton: {
           color: "error",
@@ -61,4 +59,4 @@ function DeleteDealsOfTheDayAdDialog({}: Props) {
   );
 }
 
-export default DeleteDealsOfTheDayAdDialog;
+export default DeleteCategoriesRelatedAdDialog;

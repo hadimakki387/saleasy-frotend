@@ -6,23 +6,22 @@ import {
   useUpdateCategoryRelatedItemsSectionMutation,
 } from "@/core/features/admin/landing-page/redux/rtk";
 import LandingCarouselSkeleton from "@/core/features/customer/landing/components/skeletons/LandingCarouselSkeleton";
+import { sectionsTypes } from "@/core/features/customer/landing/interfaces/link-interface";
 import { useAppSelector } from "@/providers/StoreWrapper";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ArrowForward } from "@mui/icons-material";
 import Link from "next/link";
 import { useRouter } from "nextjs-toploader/app";
-import { toast } from "sonner";
-import { useGetSubCategoriesByStoreIdQuery } from "../../../sub-categories/redux/rtk";
-import AdminProductCard from "../manually-selected-items/AdminProductItem";
-import { sectionsTypes } from "@/core/features/customer/landing/interfaces/link-interface";
-import { useAdminGetCategoryRelatedItemsQuery } from "./redux/rtk";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import EditDealsOfTheDayBanner from "../deals-of-the-day/EditDealsOfTheDaytBanner";
 import { useDispatch } from "react-redux";
-import {
-  setCategoryRelatedItemsCreateNewAd,
-  setDealsOfTheDayCreateNewAd,
-} from "../../redux/redux";
+import { toast } from "sonner";
+import { setCategoryRelatedItemsCreateNewAd } from "../../redux/redux";
+import AdminProductCard from "../manually-selected-items/AdminProductItem";
+import EditCategoryRelatedBanner from "./EditCategoryRelatedBanner";
+import { useAdminGetCategoryRelatedItemsQuery } from "./redux/rtk";
+import CreateCategoriesRelatedAdDialog from "./CreateCategoryRelatedAdDialog";
+import DeleteCategoriesRelatedAdDialog from "./DeleteCategoryRelatedAdDialog";
+import EditCategoryRelatedAdSectionDialog from "./EditCategoryRelatedAdSectionDialog";
 
 type Props = {};
 
@@ -46,6 +45,11 @@ function AdminCategorySection({}: Props) {
   if (!data) return <LandingCarouselSkeleton />;
   return (
     <>
+      <CreateCategoriesRelatedAdDialog />
+      <DeleteCategoriesRelatedAdDialog />
+      <EditCategoryRelatedAdSectionDialog
+        fullBanner={data.section.advertisementSection.length === 2}
+      />
       <div className="text-2xl text-primary font-semibold mb-8">
         This is the category section
         <p className="text-sm text-sub-title-text">
@@ -141,10 +145,10 @@ function AdminCategorySection({}: Props) {
         {data.section.advertisementSection?.map((ad, index) => {
           return (
             <div className="w-full" key={index}>
-              <EditDealsOfTheDayBanner
+              <EditCategoryRelatedBanner
                 fullBanner={data.section.advertisementSection.length > 1}
                 data={ad}
-                sectionId={data.id}
+                sectionId={data.section.id}
               />
             </div>
           );
