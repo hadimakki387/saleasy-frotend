@@ -1,4 +1,4 @@
 [[redirects]]
   from = "https://:subdomain.saleasy.store/*"
-  to = "/"
+  to = "/:splat"
   status = 200
