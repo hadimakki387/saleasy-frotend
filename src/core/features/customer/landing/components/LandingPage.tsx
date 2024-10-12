@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { Fragment, useEffect } from "react";
 import Hero from "./hero/Hero";
 
 import Banner from "@/components/global/SeHeroSection";
@@ -23,8 +23,6 @@ import CategorySection from "./category-section";
 import CategoryItem from "./category-section/CategorySection";
 import DealsOfTheDay from "./DealsOfTheDay";
 import ManuallySelectedItems from "./ManuallySelectedItems";
-import { setIsLandingPageLoading } from "@/components/global-slice";
-import LandingCarouselSkeleton from "./skeletons/LandingCarouselSkeleton";
 
 export interface Product {
   id: number;
@@ -80,7 +78,7 @@ const LandingPage: React.FC = () => {
           switch (item.type) {
             case sectionsTypes.deals_of_the_day:
               return (
-                <>
+                <Fragment key={index}>
                   {" "}
                   <DealsOfTheDay
                     visibleCards={5} // Show 5 cards
@@ -98,14 +96,14 @@ const LandingPage: React.FC = () => {
                       );
                     })}
                   </div>
-                </>
+                </Fragment>
               );
             case sectionsTypes.manually_selected: {
-              return <ManuallySelectedItems />;
+              return <ManuallySelectedItems key={index} />;
             }
             case sectionsTypes.category_related:
               return (
-                <>
+                <Fragment key={index}>
                   <CategorySection />
                   <div className="flex items-center gap-4 w-full sm:max-h-[15rem] max-sm:flex-col max-sm:hidden">
                     {item.advertisementSection?.map((ad, index) => {
@@ -119,7 +117,7 @@ const LandingPage: React.FC = () => {
                       );
                     })}
                   </div>
-                </>
+                </Fragment>
               );
           }
         })}

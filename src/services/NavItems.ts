@@ -3,6 +3,8 @@ import AI from "@/components/SVGs/AI";
 import Categories from "@/components/SVGs/Categories";
 import Customers from "@/components/SVGs/Customers";
 import Home from "@/components/SVGs/Home";
+import OrdersIcon from "@/components/SVGs/OrdersIcon";
+import ProductsIcon from "@/components/SVGs/products-icon";
 
 interface items {
   title: string;
@@ -38,12 +40,17 @@ export const NavItems = (): items[] => {
         {
           label: "Items",
           path: "/items",
-          icon: AI,
+          icon: ProductsIcon,
         },
         {
           label: "Categories",
           path: "/categories",
           icon: Categories,
+        },
+        {
+          label: "Orders",
+          path: "/orders",
+          icon: OrdersIcon,
         },
       ],
     },

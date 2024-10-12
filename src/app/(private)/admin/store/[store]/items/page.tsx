@@ -4,7 +4,11 @@ import React from "react";
 type Props = {};
 
 function page({}: Props) {
-  return <AdminItemsPage />;
+  return (
+    <div className="grid grid-cols-1">
+      <AdminItemsPage />
+    </div>
+  );
 }
 
 export default page;

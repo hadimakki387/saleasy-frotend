@@ -18,6 +18,8 @@ import { useFormik } from "formik";
 import { useLoginMutation, useRegisterMutation } from "../redux/rtk";
 import { toast } from "sonner";
 import PhoneInput from "react-phone-number-input";
+import { useSearchParams } from "next/navigation";
+import { useRouter } from "nextjs-toploader/app";
 
 type Props = {
   logo: string;
@@ -42,6 +44,9 @@ function AuthenticationDialog({ logo, storeName }: Props) {
       setErrorPhone("");
     }
   }, [focusPhone, value]);
+  const param = useSearchParams();
+  const adminRedirect = param.get("adminRedirect");
+  const router = useRouter();
   const [
     login,
     { data: loginData, error: loginError, isLoading: loginLoading },
@@ -65,7 +70,11 @@ function AuthenticationDialog({ logo, storeName }: Props) {
         .unwrap()
         .then((res) => {
           dispatch(setUser(res));
-          dispatch(setIsAuthecationDialogOpen(!isAuthecationDialogOpen));
+          if (adminRedirect) {
+            // window.location.reload();
+            router.push(`${adminRedirect}?login=true`);
+          }
+          dispatch(setIsAuthecationDialogOpen(false));
           setTimeout(() => {
             dispatch(setIsLoginDialogOpen(false));
             dispatch(setIsRegisterDialogOpen(false));

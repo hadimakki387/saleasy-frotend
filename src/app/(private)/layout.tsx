@@ -1,23 +1,39 @@
 "use client";
-import { setUser } from "@/components/global-slice";
+import {
+  setIsAuthecationDialogOpen,
+  setIsLoginDialogOpen,
+  setUser,
+} from "@/components/global-slice";
 import MainLoader from "@/components/global/navLoader/MainLoader";
 import AdminHeader from "@/components/layout/AdminHeader";
 import Footer from "@/components/layout/footer";
 import Header from "@/components/layout/Header";
 import { SideBar } from "@/components/layout/reactsideBar/SideBar.tsx";
 import SearchDialog from "@/components/layout/SearchDialog";
-import { setStore } from "@/core/features/admin/global-admin-redux";
+import {
+  setAdminUser,
+  setStore,
+} from "@/core/features/admin/global-admin-redux";
 import { useGetAdminStoreDataQuery } from "@/core/features/admin/landing-page/redux/rtk";
 import { setCartItems } from "@/core/features/customer/item-page/redux/redux";
 import AuthenticationDialog from "@/core/features/customer/landing/components/AuthenticationDialog";
 import {
+  LandingExtendedApi,
   useGetMeQuery,
   useGetStoreDataQuery,
 } from "@/core/features/customer/landing/redux/rtk";
 import CartDrawer from "@/core/features/customer/search-page/components/CartDrawer";
-import { notFound, useParams, usePathname } from "next/navigation";
+import { mainApi } from "@/core/rtk-query";
+import { useAppDispatch } from "@/providers/StoreWrapper";
+import {
+  notFound,
+  useParams,
+  usePathname,
+  useRouter,
+  useSearchParams,
+} from "next/navigation";
 import NextTopLoader from "nextjs-toploader";
-import React, { Suspense, useLayoutEffect } from "react";
+import React, { Suspense, useEffect, useLayoutEffect } from "react";
 import "react-phone-number-input/style.css";
 import { useDispatch } from "react-redux";
 export default function RootLayout({
@@ -32,8 +48,9 @@ export default function RootLayout({
     error: storeError,
   } = useGetAdminStoreDataQuery(store as string);
   // const { CartItems } = useAppSelector((state) => state.ItemSlice);
-  const dispatch = useDispatch();
-  const { data, isError, isLoading } = useGetMeQuery();
+  const dispatch = useAppDispatch();
+  const { data, isError, isLoading, error, refetch } = useGetMeQuery();
+
   useLayoutEffect(() => {
     if (data) {
       dispatch(setUser(data));
@@ -42,9 +59,32 @@ export default function RootLayout({
       dispatch(setStore(storeData));
     }
   }, [data, storeData]);
+  const router = useRouter();
+  const params = useSearchParams();
 
   if (!storeData && storeError) throw notFound();
-  if ((data?.role !== "admin" && !isLoading) || isError) throw notFound();
+  useLayoutEffect(() => {
+    if (
+      (data?.role !== "admin" && !isLoading) ||
+      (isError && error && params.get("login") !== "true")
+    ) {
+      dispatch(setIsAuthecationDialogOpen(true));
+      dispatch(setIsLoginDialogOpen(true));
+      router.push(`/store/${store}?adminRedirect=${window.location.pathname}`);
+      //reset the query data
+      dispatch(
+        LandingExtendedApi.util.updateQueryData("getMe", undefined, (draft) => {
+          draft = undefined;
+        })
+      );
+    }
+
+    if (data && !isLoading) {
+      dispatch(setAdminUser(data));
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data, storeData, isLoading, isError]);
   return (
     <>
       {storeLoading ? (
@@ -68,10 +108,13 @@ export default function RootLayout({
               zIndex={1600}
               showAtBottom={false}
             />
-            <SideBar />
-            <div className="md:ml-[250px] 2xl:ml-[15vw]">
-              <AdminHeader />
-              {children}
+
+            <div className="flex ">
+              <SideBar />
+              <div className="w-full">
+                <AdminHeader />
+                {children}
+              </div>
             </div>
           </>
         )

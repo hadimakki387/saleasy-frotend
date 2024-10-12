@@ -63,7 +63,7 @@ function ManuallySelectedItems() {
           </SeCarousel>
         </div>
       </div>
-      <div className="flex items-center gap-4 w-full sm:max-h-[15rem] max-sm:flex-col max-hidden">
+      <div className="flex items-center gap-4 w-full sm:max-h-[15rem] max-sm:flex-col max-sm:hidden">
         {data.sections?.map((ad, index) => {
           return (
             <div className="w-full" key={index}>

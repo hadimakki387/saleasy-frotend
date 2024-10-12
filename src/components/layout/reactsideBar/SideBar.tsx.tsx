@@ -1,9 +1,15 @@
 "use client";
-import { setToggle } from "@/components/global-slice";
+import {
+  setCollapsed,
+  setToggle,
+} from "@/core/features/admin/global-admin-redux";
 import { useAppSelector } from "@/providers/StoreWrapper";
 import { NavItems } from "@/services/NavItems";
-import { CircularProgress, rgbToHex } from "@mui/material";
+import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { CircularProgress, Fade } from "@mui/material";
 import { useParams, usePathname } from "next/navigation";
+import { useRouter } from "nextjs-toploader/app";
 import React from "react";
 import {
   Menu,
@@ -16,9 +22,6 @@ import {
 import { useDispatch } from "react-redux";
 import { SidebarHeader } from "./components/SidebarHeader";
 import { Typography } from "./components/Typography";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faDotCircle } from "@fortawesome/free-solid-svg-icons";
-import { useRouter } from "nextjs-toploader/app";
 
 type Theme = "light" | "dark";
 
@@ -60,9 +63,8 @@ export const SideBar: React.FC = () => {
     splitPath[splitPath.length - 1]
   }`;
 
-  const { user, toggle } = useAppSelector((state) => state.GlobalSlice);
+  const { user } = useAppSelector((state) => state.GlobalSlice);
 
-  const [collapsed, setCollapsed] = React.useState(false);
   const [broken, setBroken] = React.useState(false);
   const [rtl, setRtl] = React.useState(false);
   const [hasImage, setHasImage] = React.useState(false);
@@ -73,6 +75,10 @@ export const SideBar: React.FC = () => {
   const handleRTLChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setRtl(e.target.checked);
   };
+
+  const { collapsed, toggle } = useAppSelector(
+    (state) => state.GlobalAdminRedux
+  );
 
   // handle on theme change event
   const handleThemeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -120,6 +126,7 @@ export const SideBar: React.FC = () => {
   };
   const dispatch = useDispatch();
   const { store } = useParams();
+  const [showIcon, setShowIcon] = React.useState(false);
 
   return (
     <div
@@ -127,173 +134,203 @@ export const SideBar: React.FC = () => {
         display: "flex",
         height: "100vh",
         direction: rtl ? "rtl" : "ltr",
-        position: "fixed",
+        position: "sticky",
+        top: 0,
       }}
-      className=" z-20"
+      className=" z-[100000000000]"
+      onMouseEnter={() => setShowIcon(true)}
+      onMouseLeave={() => setShowIcon(false)}
     >
-      {Items ? (
-        <Sidebar
-          collapsed={collapsed}
-          toggled={toggle}
-          onBackdropClick={() => dispatch(setToggle(false))}
-          onBreakPoint={setBroken}
-          rtl={rtl}
-          breakPoint="md"
-          backgroundColor={hexToRgba(
-            themes["light"].sidebar.backgroundColor,
-            hasImage ? 0.9 : 1
-          )}
-          rootStyles={{
-            color: themes["light"].sidebar.color,
-            width: "15vw",
-            borderRight: "2px solid #e0e0e0",
+      <div className="relative min-h-full">
+        <Fade
+          in={showIcon}
+          style={{
+            zIndex: "100000000000000000000",
           }}
         >
           <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              height: "100%",
-              backgroundColor: themes["light"].sidebar.backgroundColor,
+            className={`max-md:hidden absolute -right-[9px] top-12 w-6 h-6 min-w-6 min-h-6 rounded-full   flex items-center justify-center  cursor-pointer bg-white text-primary hover:bg-admin-primary hover:text-primary transition-all duration-200 border ${
+              !showIcon ? "border-neutral-100" : "hover:border-transparent"
+            }`}
+            onClick={() => {
+              console.log("collapsed", collapsed);
+              dispatch(setCollapsed(!collapsed));
             }}
           >
-            <SidebarHeader
-              rtl={rtl}
-              style={{ marginBottom: "24px", marginTop: "16px" }}
-            />
+            <FontAwesomeIcon icon={collapsed ? faAngleRight : faAngleLeft} />
+          </div>
+        </Fade>
+        {Items ? (
+          <Sidebar
+            collapsed={collapsed}
+            toggled={toggle}
+            onBackdropClick={() => dispatch(setToggle(false))}
+            onBreakPoint={setBroken}
+            rtl={rtl}
+            breakPoint="md"
+            backgroundColor={hexToRgba(
+              themes["light"].sidebar.backgroundColor,
+              hasImage ? 0.9 : 1
+            )}
+            rootStyles={{
+              color: themes["light"].sidebar.color,
+              borderRight: "3px solid ",
+              // borderColor: showIcon ? "var(--admin-primary)" : "#e0e0e0",
+              height: "100%",
+              // zIndex: "100000000000000000000",
+            }}
+          >
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                height: "100%",
+                backgroundColor: themes["light"].sidebar.backgroundColor,
+              }}
+            >
+              <SidebarHeader
+                rtl={rtl}
+                style={{ marginBottom: "24px", marginTop: "16px" }}
+              />
 
-            <div style={{ flex: 1, marginBottom: "32px" }}>
-              {Items?.map((item, index) => {
-                return (
-                  <div key={index}>
-                    {item.title && (
-                      <div
-                        style={{
-                          padding: "0 24px",
-                          marginBottom: "8px",
-                          marginTop: "32px",
-                        }}
-                      >
-                        <Typography
-                          variant="body2"
-                          fontWeight={600}
+              <div style={{ flex: 1, marginBottom: "32px" }}>
+                {Items?.map((item, index) => {
+                  return (
+                    <div key={index}>
+                      {item.title && (
+                        <div
                           style={{
-                            opacity: collapsed ? 0 : 0.7,
-                            letterSpacing: "0.5px",
+                            padding: "0 24px",
+                            marginBottom: "8px",
+                            marginTop: "32px",
                           }}
                         >
-                          {item.title}
-                        </Typography>
-                      </div>
-                    )}
-                    {item?.links?.map((link, index) => {
-                      if (!link.hasSubItems) {
-                        return (
-                          <Menu menuItemStyles={menuItemStyles} key={index}>
-                            <MenuItem
-                              icon={link.icon({
-                                size: 24,
-                                fill:
-                                  noSubItemPath === `${link.path}`
-                                    ? "#3e8bfd"
-                                    : "#dae1e7",
-                              })}
-                              onClick={() =>
-                                router.push(
-                                  `/admin/store/${store}/${link.path}`
-                                )
-                              }
-                              style={{
-                                fontWeight: 500,
-                                // color:
-                                //   noSubItemPath === `${link.path}`
-                                //     ? "var(--primary)"
-                                //     : "",
-                                backgroundColor:
-                                  noSubItemPath === `${link.path}`
-                                    ? "#323b4c"
-                                    : "",
-                              }}
-                            >
-                              {link.label}
-                            </MenuItem>
-                          </Menu>
-                        );
-                      }
-                      if (link.hasSubItems && link.subItems) {
-                        return (
-                          <Menu menuItemStyles={menuItemStyles} key={index}>
-                            <SubMenu
-                              label={link.label}
-                              icon={link.icon({ size: 24, fill: "#dae1e7" })}
+                          <Typography
+                            variant="body2"
+                            fontWeight={600}
+                            style={{
+                              opacity: collapsed ? 0 : 0.7,
+                              letterSpacing: "0.5px",
+                            }}
+                          >
+                            {item.title}
+                          </Typography>
+                        </div>
+                      )}
+                      {item?.links?.map((link, index) => {
+                        if (!link.hasSubItems) {
+                          return (
+                            <Menu menuItemStyles={menuItemStyles} key={index}>
+                              <MenuItem
+                                icon={link.icon({
+                                  size: 24,
+                                  fill:
+                                    noSubItemPath === `${link.path}`
+                                      ? "#3e8bfd"
+                                      : "#dae1e7",
+                                })}
+                                onClick={() =>
+                                  router.push(
+                                    `/admin/store/${store}/${link.path}`
+                                  )
+                                }
+                                style={{
+                                  paddingLeft: collapsed ? "5px" : "20px",
+                                  fontWeight: 500,
+                                  // color:
+                                  //   noSubItemPath === `${link.path}`
+                                  //     ? "var(--primary)"
+                                  //     : "",
+                                  backgroundColor:
+                                    noSubItemPath === `${link.path}`
+                                      ? "#323b4c"
+                                      : "",
+                                }}
+                              >
+                                {!collapsed ? link.label : ""}
+                              </MenuItem>
+                            </Menu>
+                          );
+                        }
+                        if (link.hasSubItems && link.subItems) {
+                          return (
+                            <Menu menuItemStyles={menuItemStyles} key={index}>
+                              <SubMenu
+                                label={link.label}
+                                icon={link.icon({ size: 24, fill: "#dae1e7" })}
 
-                              //this is for some notifications
-                              // suffix={
-                              //   <Badge variant="danger" shape="circle">
-                              //     6
-                              //   </Badge>
-                              // }
-                            >
-                              {link.subItems.length > 0 ? (
-                                link.subItems?.map((subItem, index: number) => {
-                                  return (
-                                    <MenuItem
-                                      key={index}
-                                      onClick={() =>
-                                        router.push(
-                                          `/admin/store/${store}/${link.path}/${subItem?.path}`
-                                        )
-                                      }
-                                      style={{
-                                        fontWeight: 500,
-                                        color: "#dae1e7",
-                                        backgroundColor:
-                                          noSubItemPath === `${subItem?.path}`
-                                            ? "#323b4c"
-                                            : "",
-                                      }}
-                                    >
-                                      <div className="flex items-center gap-2">
-                                        <div
-                                          className={`w-[4px] h-[4px] rounded-full ${
-                                            noSubItemPath === `${subItem?.path}`
-                                              ? "bg-[#4e97fd] "
-                                              : "bg-[#dae1e7]"
-                                          }`}
-                                        ></div>
-                                        {subItem?.label}
-                                      </div>
-                                    </MenuItem>
-                                  );
-                                })
-                              ) : (
-                                <MenuItem>no Items</MenuItem>
-                              )}
-                            </SubMenu>
-                          </Menu>
-                        );
-                      }
-                    })}
-                  </div>
-                );
-              })}
+                                //this is for some notifications
+                                // suffix={
+                                //   <Badge variant="danger" shape="circle">
+                                //     6
+                                //   </Badge>
+                                // }
+                              >
+                                {link.subItems.length > 0 ? (
+                                  link.subItems?.map(
+                                    (subItem, index: number) => {
+                                      return (
+                                        <MenuItem
+                                          key={index}
+                                          onClick={() =>
+                                            router.push(
+                                              `/admin/store/${store}/${link.path}/${subItem?.path}`
+                                            )
+                                          }
+                                          style={{
+                                            fontWeight: 500,
+                                            color: "#dae1e7",
+                                            backgroundColor:
+                                              noSubItemPath ===
+                                              `${subItem?.path}`
+                                                ? "#323b4c"
+                                                : "",
+                                          }}
+                                        >
+                                          <div className="flex items-center gap-2">
+                                            <div
+                                              className={`w-[4px] h-[4px] rounded-full ${
+                                                noSubItemPath ===
+                                                `${subItem?.path}`
+                                                  ? "bg-[#4e97fd] "
+                                                  : "bg-[#dae1e7]"
+                                              }`}
+                                            ></div>
+                                            {subItem?.label}
+                                          </div>
+                                        </MenuItem>
+                                      );
+                                    }
+                                  )
+                                ) : (
+                                  <MenuItem>no Items</MenuItem>
+                                )}
+                              </SubMenu>
+                            </Menu>
+                          );
+                        }
+                      })}
+                    </div>
+                  );
+                })}
+              </div>
             </div>
+          </Sidebar>
+        ) : (
+          <div
+            style={{
+              height: "90vh",
+              direction: rtl ? "rtl" : "ltr",
+              backgroundColor: "[#dae1e7]",
+              width: "15vw",
+              borderRight: "2px solid #e0e0e0",
+            }}
+            className=" bg-[#dae1e7] fixed flex justify-center items-center max-md:hidden"
+          >
+            <CircularProgress />
           </div>
-        </Sidebar>
-      ) : (
-        <div
-          style={{
-            height: "90vh",
-            direction: rtl ? "rtl" : "ltr",
-            backgroundColor: "[#dae1e7]",
-            width: "15vw",
-            borderRight: "2px solid #e0e0e0",
-          }}
-          className=" bg-[#dae1e7] fixed flex justify-center items-center max-md:hidden"
-        >
-          <CircularProgress />
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 };

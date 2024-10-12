@@ -32,6 +32,7 @@ import { ILinkEntity } from "@/core/features/customer/landing/interfaces/link-in
 import CustomImage from "../global/CustomImage";
 import Link from "next/link";
 import { useSearchItemsQuery } from "@/core/features/customer/search-page/redux/rtk";
+import DashboardIcon from "../SVGs/DashboardIcon";
 
 type Props = {
   link: ILinkEntity;
@@ -56,6 +57,7 @@ const Search = styled("div")(({ theme }) => ({
 function Header({ link }: Props) {
   const [anchorEl, setAnchorEl] = useState(null);
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const { user } = useAppSelector((state) => state.GlobalSlice);
   const open = Boolean(anchorEl);
   const handleClickListItem = (event: any) => {
     setAnchorEl(event.currentTarget);
@@ -100,6 +102,8 @@ function Header({ link }: Props) {
       limit: 5,
       storeId: store as string,
     });
+
+  console.log("this is the user 2", user);
 
   return (
     <>
@@ -290,15 +294,17 @@ function Header({ link }: Props) {
               className="text-primary"
             />
           </div>
-          <div
-            className="cursor-pointer"
-            onClick={() => {
-              dispatch(setIsAuthecationDialogOpen(true));
-              dispatch(setIsLoginDialogOpen(true));
-            }}
-          >
-            <Profile fill="var(--primary)" />
-          </div>
+          {!user ? (
+            <div
+              className="cursor-pointer"
+              onClick={() => {
+                dispatch(setIsAuthecationDialogOpen(true));
+                dispatch(setIsLoginDialogOpen(true));
+              }}
+            >
+              <Profile fill="var(--primary)" />
+            </div>
+          ) : null}
           <div
             className="cursor-pointer"
             onClick={() => {
@@ -313,6 +319,16 @@ function Header({ link }: Props) {
               <ShoppingBagIcon fill="var(--primary)" />
             </Badge>
           </div>
+          {user && user?.role === "admin" ? (
+            <div
+              onClick={() => {
+                router.push(`/admin/store/${store}/landing`);
+              }}
+              className="cursor-pointer"
+            >
+              <DashboardIcon size={32} fill="black" />
+            </div>
+          ) : null}
         </div>
       </div>
     </>

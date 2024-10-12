@@ -44,25 +44,34 @@ function LinkPageEdit({}: Props) {
               <div className="shadow-md shadow-neutral-200 p-4 md:px-12">
                 <HeroEdit data={storeData} />
               </div>
-              <div className="shadow-md shadow-neutral-200 p-4 md:px-12">
-                <div className="text-xl text-primary font-semibold mb-4">
-                  Categories Section
-                  <p className="text-error text-xs">Un-editable Section</p>
+              <div className="grid grid-cols-1">
+                <div className="shadow-md shadow-neutral-200 p-4 md:px-12">
+                  <div className="text-xl text-primary font-semibold mb-4">
+                    Categories Section
+                    <p className="text-error text-xs">Un-editable Section</p>
+                  </div>
+                  <SeCarousel options={{}}>
+                    {storeData.categories?.map((product, index: any) => (
+                      <AdminCategory key={index} product={product} />
+                    ))}
+                  </SeCarousel>
                 </div>
-                <SeCarousel options={{}}>
-                  {storeData.categories?.map((product, index: any) => (
-                    <AdminCategory key={index} product={product} />
-                  ))}
-                </SeCarousel>
               </div>
-              <div className="shadow-md shadow-neutral-200 p-4 md:px-12">
-                <AdminDealsOfTheDay />
+              <div className="grid grid-cols-1">
+                <div className="shadow-md shadow-neutral-200 p-4 md:px-12">
+                  <AdminDealsOfTheDay />
+                </div>
               </div>
-              <div className="shadow-md shadow-neutral-200 p-4 md:px-12">
-                <AdminManuallySelectedItems />
+              <div className="grid grid-cols-1">
+                <div className="shadow-md shadow-neutral-200 p-4 md:px-12">
+                  <AdminManuallySelectedItems />
+                </div>
               </div>
-              <div className="shadow-md shadow-neutral-200 p-4 md:px-12">
-                <AdminCategorySection />
+              <div className="grid grid-cols-1">
+                {" "}
+                <div className="shadow-md shadow-neutral-200 p-4 md:px-12">
+                  <AdminCategorySection />
+                </div>
               </div>
             </div>
           )

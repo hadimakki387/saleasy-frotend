@@ -16,7 +16,7 @@ import {
 export interface getProductsParams {
   id: string;
 }
-export const extendedApi = mainApi.injectEndpoints({
+export const LandingExtendedApi = mainApi.injectEndpoints({
   endpoints: (build) => ({
     getProducts: build.query<Product[], getProductsParams>({
       query: ({ id }) => "/test/products",
@@ -87,8 +87,9 @@ export const extendedApi = mainApi.injectEndpoints({
         method: "POST",
       }),
     }),
-    getMe: build.query<AuthenticationResponse, void>({
+    getMe: build.query<AuthenticationResponse | undefined, void>({
       query: () => "/auth/me",
+      keepUnusedDataFor: 0,
     }),
   }),
 });
@@ -105,4 +106,4 @@ export const {
   useRegisterMutation,
   useTestAuthMutation,
   useGetMeQuery,
-} = extendedApi;
+} = LandingExtendedApi;

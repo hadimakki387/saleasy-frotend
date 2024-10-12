@@ -95,6 +95,10 @@ function CustomImage({
             " flex items-center justify-center h-full w-full",
             className
           )}
+          style={{
+            height: size,
+            width: size,
+          }}
         >
           <Skeleton variant="rectangular" width={"100%"} height={"100%"} />
         </div>

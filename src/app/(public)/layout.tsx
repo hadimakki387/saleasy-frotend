@@ -11,7 +11,13 @@ import {
   useGetStoreDataQuery,
 } from "@/core/features/customer/landing/redux/rtk";
 import CartDrawer from "@/core/features/customer/search-page/components/CartDrawer";
-import { notFound, useParams, usePathname } from "next/navigation";
+import {
+  notFound,
+  useParams,
+  usePathname,
+  useRouter,
+  useSearchParams,
+} from "next/navigation";
 import NextTopLoader from "nextjs-toploader";
 import React, { Suspense, useLayoutEffect } from "react";
 import "react-phone-number-input/style.css";
@@ -33,6 +39,10 @@ export default function RootLayout({
   // const { CartItems } = useAppSelector((state) => state.ItemSlice);
   const dispatch = useDispatch();
   const cart = localStorage.getItem("cart_items");
+  const token = localStorage.getItem("beerer");
+  const params = useSearchParams();
+  const adminRedirect = params.get("adminRedirect");
+  const router = useRouter();
   useLayoutEffect(() => {
     if (cart) {
       const cartItems = JSON.parse(cart);
@@ -41,12 +51,23 @@ export default function RootLayout({
       }
     }
   }, [cart]);
-  const { data } = useGetMeQuery();
+  const { data, isError } = useGetMeQuery(undefined, {
+    refetchOnMountOrArgChange: true,
+  });
   useLayoutEffect(() => {
-    if (data) {
+    if (data && !isError) {
       dispatch(setUser(data));
     }
-  }, [data]);
+    if (isError) {
+      dispatch(setUser(null));
+    }
+  }, [data, isError]);
+
+  useLayoutEffect(() => {
+    if (token && adminRedirect) {
+      router.push(adminRedirect);
+    }
+  }, [token, adminRedirect]);
 
   if (!storeData && storeError) throw notFound();
   return (

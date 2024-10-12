@@ -13,7 +13,6 @@ const Banner: React.FC<BannerProps> = ({
   imageUrl = "https://bazaar.ui-lib.com/_next/image?url=%2Fassets%2Fimages%2Fbanners%2Fbanner-18.jpg&w=750&q=75",
   fullBanner = false,
 }) => {
-  console.log(data.redText);
   return (
     <div className="item-nkw  w-full">
       <div className="md:hidden">

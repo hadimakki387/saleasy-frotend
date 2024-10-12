@@ -23,7 +23,6 @@ function SeEditInput({
   handleSubmition,
 }: Props) {
   const [edit, setEdit] = useState(false);
-  console.log("defaultValue", defaultValue);
 
   return (
     <div>
