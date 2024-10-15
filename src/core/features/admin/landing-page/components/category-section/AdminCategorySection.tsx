@@ -48,7 +48,7 @@ function AdminCategorySection({}: Props) {
       <CreateCategoriesRelatedAdDialog />
       <DeleteCategoriesRelatedAdDialog />
       <EditCategoryRelatedAdSectionDialog
-        fullBanner={data.section.advertisementSection.length === 2}
+        fullBanner={data.section.advertisementSection?.length === 2}
       />
       <div className="text-2xl text-primary font-semibold mb-8">
         This is the category section
@@ -146,14 +146,15 @@ function AdminCategorySection({}: Props) {
           return (
             <div className="w-full" key={index}>
               <EditCategoryRelatedBanner
-                fullBanner={data.section.advertisementSection.length > 1}
+                fullBanner={data.section.advertisementSection?.length > 1}
                 data={ad}
                 sectionId={data.section.id}
               />
             </div>
           );
         })}
-        {data.section.advertisementSection.length < 2 && (
+        {(data.section.advertisementSection?.length < 2 ||
+          !data.section.advertisementSection) && (
           <div
             className="h-10 w-10 flex items-center justify-center bg-slate-300 rounded-md cursor-pointer"
             onClick={() => {

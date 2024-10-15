@@ -243,6 +243,41 @@ const extendedApi = mainApi.injectEndpoints({
         }
       },
     }),
+    updateCategoryImage: build.mutation<
+      { id: string },
+      { categoryId: string; storeId: string; data: FormData }
+    >({
+      query: ({ data, categoryId }) => ({
+        url: `item-category/update-category-image/${categoryId}`,
+        method: "PATCH",
+        body: data,
+      }),
+      onQueryStarted: async (
+        { storeId, categoryId },
+        { dispatch, queryFulfilled }
+      ) => {
+        try {
+          const { data } = await queryFulfilled;
+
+          dispatch(
+            extendedApi.util.updateQueryData(
+              "getACategoriesWithSubCategories",
+              storeId,
+              (draft) => {
+                const findCategory = draft.findIndex(
+                  (cat) => cat.id === categoryId
+                );
+                if (findCategory !== -1) {
+                  draft[findCategory].image = data.id;
+                }
+              }
+            )
+          );
+        } catch (err) {
+          console.log(err);
+        }
+      },
+    }),
   }),
 });
 
@@ -254,4 +289,5 @@ export const {
   useDeleteCategoryMutation,
   useCreateCategoryMutation,
   useUpdateCategoryNameMutation,
+  useUpdateCategoryImageMutation,
 } = extendedApi;

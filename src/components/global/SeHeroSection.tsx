@@ -13,6 +13,7 @@ const Banner: React.FC<BannerProps> = ({
   imageUrl = "https://bazaar.ui-lib.com/_next/image?url=%2Fassets%2Fimages%2Fbanners%2Fbanner-18.jpg&w=750&q=75",
   fullBanner = false,
 }) => {
+  console.log("this is the data", data);
   return (
     <div className="item-nkw  w-full">
       <div className="md:hidden">
@@ -32,10 +33,10 @@ const Banner: React.FC<BannerProps> = ({
               <span className="font-light text-red-500">{data.redText}</span>
             </h4>
             <a
-              href={data.link.target}
+              href={data.link?.target}
               className="text-gray-800 font-semibold inline-flex items-center relative pb-1 hover:text-gray-800"
             >
-              {data.link.title}
+              {data.link?.title}
               <svg
                 className="w-4 h-4 inline-block fill-current ml-2 transition-transform"
                 viewBox="0 0 24 24"
@@ -64,10 +65,10 @@ const Banner: React.FC<BannerProps> = ({
                 <span className="font-light text-red-500">{data.redText}</span>
               </h4>
               <a
-                href={data.link.target}
+                href={data.link?.target}
                 className="text-gray-800 font-semibold inline-flex items-center relative pb-1 hover:text-gray-800"
               >
-                {data.link.title}
+                {data.link?.title}
                 <svg
                   className="w-4 h-4 inline-block fill-current ml-2 transition-transform"
                   viewBox="0 0 24 24"
@@ -96,7 +97,7 @@ const Banner: React.FC<BannerProps> = ({
               </div>
               <div className="absolute right-4 top-4 bottom-4  flex items-center">
                 <SeButton
-                  label={data.link.title}
+                  label={data.link?.title}
                   variant="outlined"
                   color="primary"
                   sx={{

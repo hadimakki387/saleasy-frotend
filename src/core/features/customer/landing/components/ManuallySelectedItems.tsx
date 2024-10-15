@@ -67,7 +67,7 @@ function ManuallySelectedItems() {
         {data.sections?.map((ad, index) => {
           return (
             <div className="w-full" key={index}>
-              <Banner fullBanner={data.sections.length > 1} data={ad} />
+              <Banner fullBanner={data.sections?.length > 1} data={ad} />
             </div>
           );
         })}

@@ -17,6 +17,7 @@ import { Tooltip } from "@mui/material";
 import {
   useAddSubCategoryMutation,
   useDeleteSubCategoryMutation,
+  useUpdateCategoryImageMutation,
   useUpdateCategoryNameMutation,
   useUpdateSubCategoryMutation,
 } from "../redux/rtk";
@@ -67,17 +68,93 @@ function CategoryAccordion({ category }: Props) {
 
   const [updateSelectedSubCat, setUpdateSelectedSubCat] = useState<string>("");
   const [updateSubCatName, setUpdateSubCatName] = useState<string>("");
-
+  const [catNewImage, setCatNewImage] = useState<File | null>(null);
+  const [deleteSubCategory, { isLoading: deleteSubCategoryLoading }] =
+    useUpdateCategoryImageMutation();
   return (
     <div className="shadow-md shadow-neutral-200 p-4">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <CustomImage
-            src={category.image}
-            size={24}
-            className="w-12 h-12 rounded-md"
-            alt={category.name}
-          />
+          <div className="flex items-center gap-4">
+            <CustomImage
+              src={
+                catNewImage ? URL.createObjectURL(catNewImage) : category.image
+              }
+              size={24}
+              className="min-w-12 min-h-12 max-w-12 max-h-12 rounded-md"
+              alt={category.name}
+            />
+            {isEditCategory ? (
+              !deleteSubCategoryLoading ? (
+                <div className="mr-4 flex items-center gap-2">
+                  {!catNewImage ? (
+                    <div className="flex items-center justify-center w-full">
+                      <label
+                        htmlFor="dropzone-file"
+                        className="  rounded-md flex flex-col items-center  w-full   cursor-pointer bg-gray-50 dark:hover:bg-gray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
+                      >
+                        <div>
+                          <FontAwesomeIcon
+                            icon={faPen}
+                            className="mt-2 text-sm "
+                          />
+                        </div>
+                        <input
+                          onChange={(e) => {
+                            if (!e.target.files?.length) return;
+                            setCatNewImage(e.target.files[0]);
+                          }}
+                          id="dropzone-file"
+                          type="file"
+                          accept="image/*"
+                          className="hidden"
+                        />
+                      </label>
+                    </div>
+                  ) : (
+                    <div>
+                      <FontAwesomeIcon
+                        icon={faX}
+                        className="cursor-pointer"
+                        onClick={() => {
+                          setCatNewImage(null);
+                        }}
+                      />
+                    </div>
+                  )}
+                  <div>
+                    <FontAwesomeIcon
+                      icon={faCheck}
+                      className="cursor-pointer"
+                      onClick={() => {
+                        const image = new FormData();
+                        image.append("image", catNewImage as Blob);
+                        deleteSubCategory({
+                          categoryId: category.id,
+                          storeId: store as string,
+                          data: image,
+                        })
+                          .unwrap()
+                          .then(() => {
+                            toast.success("Category Image Updated");
+                            setCatNewImage(null);
+                            setExpanded(false);
+                            setIsEditCategory(false);
+                            setEditCategoryName(category.name);
+                          })
+                          .catch((e) => {
+                            toast.error(e.data.message);
+                          });
+                      }}
+                    />
+                  </div>
+                </div>
+              ) : (
+                <SeLoader size={12} />
+              )
+            ) : null}
+          </div>
+
           {!isEditCategory ? (
             <p className="select-none">{category.name}</p>
           ) : (

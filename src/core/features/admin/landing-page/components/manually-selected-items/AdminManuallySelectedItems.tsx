@@ -80,7 +80,7 @@ function AdminManuallySelectedItems() {
       </div>
       <div className={`relative `}>
         <EditAdvertismentSectionDialog
-          fullBanner={data.sections.length ? true : false}
+          fullBanner={data.sections?.length ? true : false}
         />
         <DeleteAdDialog />
         <CreateAdDialog />
@@ -153,14 +153,14 @@ function AdminManuallySelectedItems() {
           return (
             <div className="w-full" key={index}>
               <EditBanner
-                fullBanner={data.sections.length > 1}
+                fullBanner={data.sections?.length > 1}
                 data={ad}
                 sectionId={data.id}
               />
             </div>
           );
         })}
-        {data.sections.length < 2 && (
+        {(data.sections?.length < 2 || !data.sections) && (
           <div
             className="h-10 w-10 flex items-center justify-center bg-slate-300 rounded-md cursor-pointer"
             onClick={() => {

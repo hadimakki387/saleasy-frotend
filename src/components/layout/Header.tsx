@@ -103,7 +103,7 @@ function Header({ link }: Props) {
       storeId: store as string,
     });
 
-  console.log("this is the user 2", user);
+  console.log("this is the link", link);
 
   return (
     <>

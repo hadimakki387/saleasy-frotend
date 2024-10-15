@@ -108,7 +108,8 @@ const AdminDealsOfTheDay = ({
             </div>
           );
         })}
-        {dealsOfTheDay.sections.advertisementSection.length < 2 && (
+        {(dealsOfTheDay.sections.advertisementSection.length < 2 ||
+          !dealsOfTheDay.sections.advertisementSection) && (
           <div
             className="h-10 w-10 flex items-center justify-center bg-slate-300 rounded-md cursor-pointer"
             onClick={() => {

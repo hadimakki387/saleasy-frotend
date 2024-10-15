@@ -14,9 +14,7 @@ import { toast } from "sonner";
 type Props = {};
 
 function CreateAdDialog({}: Props) {
-  const { createNewAd } = useAppSelector(
-    (state) => state.AdminLandingPageEdit
-  );
+  const { createNewAd } = useAppSelector((state) => state.AdminLandingPageEdit);
   const [text1, setText1] = useState("NEW ARRIVALS");
   const [text2, setText2] = useState("SKI CLOTHES SALE");
   const [redText, setRedText] = useState("Up to 35% Off");
