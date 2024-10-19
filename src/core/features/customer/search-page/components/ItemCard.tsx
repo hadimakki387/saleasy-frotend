@@ -21,7 +21,7 @@ function ItemCard({ product }: Props) {
     <div
       className="col-span-1  bg-white cursor-pointer "
       onClick={() => {
-        router.push(`/{store}/item/${product.id}`);
+        router.push(`/${store}/item/${product.id}`);
       }}
     >
       <div className="flex justify-center bg-item-card-bg">
@@ -44,7 +44,7 @@ function ItemCard({ product }: Props) {
               variant="contained"
               color="error"
               onClick={() => {
-                router.push(`/{store}/item/${product.id}`);
+                router.push(`/${store}/item/${product.id}`);
               }}
             />
           </div>
