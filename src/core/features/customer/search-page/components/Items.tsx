@@ -107,7 +107,9 @@ function Items({}: Props) {
         })}
       </div>
       {/* Observer element */}
-      <div ref={observerRef} className="h-10 w-full"></div>
+      {searchData?.data && (
+        <div ref={observerRef} className="h-10 w-full"></div>
+      )}
     </div>
   );
 }

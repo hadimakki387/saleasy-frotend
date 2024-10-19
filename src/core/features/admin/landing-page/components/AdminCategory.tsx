@@ -39,7 +39,7 @@ function AdminCategory({ product }: Props) {
         color="primary"
         label={product.name}
         onClick={() =>
-          router.push(`/store/${store}/search?category=${product.id}`)
+          router.push(`/${store}/search?category=${product.id}`)
         }
       />
     </SeCard>

@@ -73,7 +73,7 @@ function HeaderEdit({ link }: Props) {
     if (!getItem) return;
     const param = new URLSearchParams();
     param.set("category", getItem?.id);
-    router.push(`/store/${store}/search?${param.toString()}`);
+    router.push(`/${store}/search?${param.toString()}`);
     setSelectedIndex(index);
     setAnchorEl(null);
   };
@@ -282,7 +282,7 @@ function HeaderEdit({ link }: Props) {
               justifyContent: "space-between",
               border: "1px solid transparent",
               "&:hover": { border: "1px solid transparent" },
-              "&:focus": { border: "1px solid var(--button-color)" },
+              "&:focus": { border: "1px solid var(--error)" },
             }}
             className="bg-neutral-100 "
           >

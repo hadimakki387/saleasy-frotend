@@ -36,7 +36,7 @@ function ManuallySelectedItems() {
             {data.sectionName}
           </h3>
           <Link
-            href={`/store/${store}/search`}
+            href={`/${store}/search`}
             className="relative inline-flex items-center gap-2 pb-1 text-[var(--primary)] font-semibold hover:text-[#1F2937] transition-colors"
           >
             <span className="relative group">

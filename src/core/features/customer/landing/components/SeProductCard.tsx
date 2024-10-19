@@ -83,7 +83,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
           variant="outlined"
           color="primary"
           onClick={() => {
-            router.push(`/store/${store}/item/${id}`);
+            router.push(`/${store}/item/${id}`);
           }}
         />
       </SeCard>

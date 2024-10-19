@@ -142,7 +142,10 @@ function FilterSidebar({}: Props) {
             marginLeft: "0 !important",
             // width: "calc(100% - 1rem)",
           }}
-          color="error"
+          style={{
+            color: "var(--error) !important",
+          }}
+          // color="error"
           size="small"
           onChange={handleChange}
           valueLabelDisplay="auto"
@@ -177,7 +180,9 @@ function FilterSidebar({}: Props) {
             marginLeft: "0 !important",
             // width: "calc(100% - 1rem)",
           }}
-          color="error"
+          style={{
+            color: "var(--error) !important",
+          }}
           size="small"
           onChange={handleDiscountChange}
           valueLabelDisplay="auto"

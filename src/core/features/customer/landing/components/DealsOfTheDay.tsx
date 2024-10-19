@@ -47,7 +47,7 @@ const DealsOfTheDay = ({
       <div className=" flex items-center justify-between mb-6  max-sm:flex max-sm:flex-col max-sm:gap-2 max-sm:items-start">
         <h3 className="text-2xl font-bold text-primary ">{title}</h3>
         <Link
-          href={`/store/${store}/search`}
+          href={`/${store}/search`}
           className="relative inline-flex items-center gap-2  text-[var(--primary)] font-semibold hover:text-[#1F2937] transition-colors"
         >
           <span className="relative group">

@@ -53,7 +53,7 @@ function SearchDialog({}: Props) {
         value={search}
         onKeyDown={(e) => {
           if (e.key === "Enter") {
-            router.push(`/store/${params.store}/search?q=${search}`);
+            router.push(`/${params.store}/search?q=${search}`);
             dispatch(setIsSearchDialogOpen(false));
           }
         }}
@@ -66,7 +66,7 @@ function SearchDialog({}: Props) {
                 key={index}
                 className="flex items-center gap-2"
                 onClick={() => {
-                  router.push(`/store/${params.store}/search?q=${item.name}`);
+                  router.push(`/${params.store}/search?q=${item.name}`);
                   dispatch(setIsSearchDialogOpen(false));
                 }}
               >

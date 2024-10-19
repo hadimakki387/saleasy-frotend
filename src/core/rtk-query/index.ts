@@ -15,12 +15,11 @@ export const mainApi = createApi({
     baseUrl: process.env.NEXT_PUBLIC_API_URL,
     prepareHeaders: (headers) => {
       let token = null;
-      if (typeof window !== "undefined") {
-        token = localStorage.getItem("beerer");
-      }
-      if (token) {
-        headers.set("Authorization", `Bearer ${token}`);
-      }
+
+      token = localStorage.getItem("beerer");
+
+      headers.set("Authorization", `Bearer ${token}`);
+
       return headers;
     },
   }),

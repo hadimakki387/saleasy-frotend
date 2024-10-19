@@ -68,7 +68,7 @@ function Header({ link }: Props) {
     if (!getItem) return;
     const param = new URLSearchParams();
     param.set("category", getItem?.id);
-    router.push(`/store/${store}/search?${param.toString()}`);
+    router.push(`/${store}/search?${param.toString()}`);
     setSelectedIndex(index);
     setAnchorEl(null);
   };
@@ -161,7 +161,7 @@ function Header({ link }: Props) {
             size={link.link.header?.logoSize || 100}
             className="cursor-pointer"
             onClick={() => {
-              router.push(`/store/${store}`);
+              router.push(`/${store}`);
             }}
           />
         </div>
@@ -174,7 +174,7 @@ function Header({ link }: Props) {
               justifyContent: "space-between",
               border: "1px solid transparent",
               "&:hover": { border: "1px solid transparent" },
-              "&:focus": { border: "1px solid var(--button-color)" },
+              "&:focus": { border: "1px solid var(--error)" },
             }}
             className="bg-neutral-100 "
           >
@@ -206,21 +206,21 @@ function Header({ link }: Props) {
               }
               handleSubmit={() => {
                 newUrl.set("q", search);
-                router.push(`/store/${store}/search?${newUrl.toString()}`);
+                router.push(`/${store}/search?${newUrl.toString()}`);
               }}
               setSelectedItem={(e) => {
                 newUrl.set(
                   "q",
                   searchItems?.data.find((i) => i.id === e)?.name as string
                 );
-                router.push(`/store/${store}/search?${newUrl.toString()}`);
+                router.push(`/${store}/search?${newUrl.toString()}`);
               }}
             />{" "}
             <div
               className="flex items-center justify-center text-sub-title-text cursor-pointer"
               onClick={() => {
                 newUrl.set("q", debouncedSearch);
-                router.push(`/store/${store}/search?${newUrl.toString()}`);
+                router.push(`/${store}/search?${newUrl.toString()}`);
               }}
             >
               <FontAwesomeIcon icon={faSearch} />
@@ -322,7 +322,7 @@ function Header({ link }: Props) {
           {user && user?.role === "admin" ? (
             <div
               onClick={() => {
-                router.push(`/admin/store/${store}/landing`);
+                router.push(`/admin/${store}/landing`);
               }}
               className="cursor-pointer"
             >

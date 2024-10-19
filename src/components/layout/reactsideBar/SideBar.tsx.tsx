@@ -28,7 +28,7 @@ type Theme = "light" | "dark";
 const themes = {
   light: {
     sidebar: {
-      backgroundColor: "var(--primary)",
+      backgroundColor: "var(--sidebar-background-color)",
       color: "#dae1e7",
     },
     menu: {
@@ -230,9 +230,7 @@ export const SideBar: React.FC = () => {
                                       : "#dae1e7",
                                 })}
                                 onClick={() =>
-                                  router.push(
-                                    `/admin/store/${store}/${link.path}`
-                                  )
+                                  router.push(`/admin/${store}/${link.path}`)
                                 }
                                 style={{
                                   paddingLeft: collapsed ? "5px" : "20px",
@@ -274,7 +272,7 @@ export const SideBar: React.FC = () => {
                                           key={index}
                                           onClick={() =>
                                             router.push(
-                                              `/admin/store/${store}/${link.path}/${subItem?.path}`
+                                              `/admin/${store}/${link.path}/${subItem?.path}`
                                             )
                                           }
                                           style={{

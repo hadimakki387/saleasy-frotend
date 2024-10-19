@@ -141,7 +141,7 @@ function EditItemDialog({ debouncedSearch }: Props) {
                         }}
                         className={`cursor-pointer rounded-md border-2 h-20 w-20 transition-all duration-200 ${
                           image === img
-                            ? " border-button-color bg-white"
+                            ? " border-error bg-white"
                             : " border-neutral-200"
                         } ${image === img ? "opacity-100" : "opacity-50"}`}
                       />
@@ -227,7 +227,7 @@ function EditItemDialog({ debouncedSearch }: Props) {
                   }}
                 />
                 <SeEditInput
-                  className="text-button-color text-3xl font-bold"
+                  className="text-error text-3xl font-bold"
                   defaultValue={selectedItem.price}
                   type="number"
                   onChange={(e) => {

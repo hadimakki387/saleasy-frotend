@@ -12,6 +12,7 @@ import AdminManuallySelectedItems from "./manually-selected-items/AdminManuallyS
 
 import AdminCategorySection from "./category-section/AdminCategorySection";
 import AdminDealsOfTheDay from "./deals-of-the-day/AdminDealsOfTheDay";
+import ThemeColorPicker from "./ThemeColorPicker";
 
 type Props = {};
 
@@ -38,6 +39,9 @@ function LinkPageEdit({}: Props) {
         ) : (
           storeData && (
             <div className="space-y-4">
+              <div className="shadow-md shadow-neutral-200 p-4 md:px-12 ">
+                <ThemeColorPicker link={storeData} />
+              </div>
               <div className="shadow-md shadow-neutral-200 p-4 md:px-12 ">
                 <HeaderEdit link={storeData} />
               </div>

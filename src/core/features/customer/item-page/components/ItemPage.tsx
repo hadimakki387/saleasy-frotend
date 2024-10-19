@@ -92,7 +92,7 @@ function ItemPage({}: Props) {
                 }}
                 className={`cursor-pointer rounded-md border-2 h-20 w-20 transition-all duration-200 ${
                   image === img
-                    ? " border-button-color bg-white"
+                    ? " border-error bg-white"
                     : " border-neutral-200"
                 } ${image === img ? "opacity-100" : "opacity-50"}`}
               />
@@ -110,7 +110,7 @@ function ItemPage({}: Props) {
               size="small"
             />
           </p>
-          <p className="text-button-color text-3xl font-bold">
+          <p className="text-error text-3xl font-bold">
             {getItem.price}$
           </p>
 

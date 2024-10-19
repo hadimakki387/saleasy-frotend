@@ -70,16 +70,14 @@ function AuthenticationDialog({ logo, storeName }: Props) {
         .unwrap()
         .then((res) => {
           dispatch(setUser(res));
-          if (adminRedirect) {
-            // window.location.reload();
-            router.push(`${adminRedirect}?login=true`);
-          }
+
           dispatch(setIsAuthecationDialogOpen(false));
           setTimeout(() => {
             dispatch(setIsLoginDialogOpen(false));
             dispatch(setIsRegisterDialogOpen(false));
           }, 100);
           toast.success("Login successful", { id: toastId });
+          window.location.reload();
         })
         .catch((err) => {
           toast.error("Login failed", { id: toastId });
@@ -109,6 +107,7 @@ function AuthenticationDialog({ logo, storeName }: Props) {
             dispatch(setIsRegisterDialogOpen(false));
           }, 100);
           toast.success("Register successful", { id: toastId });
+          window.location.reload();
         })
         .catch((err) => {
           toast.error("Register failed", { id: toastId });

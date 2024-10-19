@@ -126,7 +126,7 @@ const ProfileDropdown = () => {
         <MenuItem
           onClick={() => {
             localStorage.removeItem("beerer");
-            router.push(`/store/${store?.id}`);
+            router.push(`/${store?.id}`);
             dispatch(setUser(null));
           }}
           sx={{

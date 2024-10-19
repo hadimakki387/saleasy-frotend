@@ -69,6 +69,31 @@ export default function RootLayout({
     }
   }, [token, adminRedirect]);
 
+  useLayoutEffect(() => {
+    if (storeData && storeData?.link?.theme?.colors) {
+      window.document.documentElement.style.setProperty(
+        "--primary",
+        storeData?.link?.theme?.colors?.primary
+      );
+      window.document.documentElement.style.setProperty(
+        "--secondary",
+        storeData?.link?.theme?.colors?.secondary
+      );
+      window.document.documentElement.style.setProperty(
+        "--error",
+        storeData?.link?.theme?.colors?.error
+      );
+      window.document.documentElement.style.setProperty(
+        "--warning",
+        storeData?.link?.theme?.colors?.warning
+      );
+      window.document.documentElement.style.setProperty(
+        "--success",
+        storeData?.link?.theme?.colors?.success
+      );
+    }
+  }, [storeData]);
+
   if (!storeData && storeError) throw notFound();
   return (
     <>

@@ -19,7 +19,7 @@ function ItemCardSkeleton({}: Props) {
           <Skeleton variant="rectangular" width="100%" animation="wave" />
         </h1>
         <div className="flex items-center justify-between max-sm:gap-2 max-sm:flex-col max-sm:items-start">
-          <p className="text-button-color  font-bold w-36">
+          <p className="text-error  font-bold w-36">
             <Skeleton variant="rectangular" width="100%" animation="wave" />
           </p>
           <div className="max-sm:hidden w-36">

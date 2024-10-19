@@ -27,7 +27,7 @@ function ItemPageSkeleton({}: Props) {
           <h1 className="text-4xl font-bold text-primary">
             <Skeleton variant="rectangular" width={200} height={40} />
           </h1>
-          <p className="text-button-color text-3xl font-bold">
+          <p className="text-error text-3xl font-bold">
             <Skeleton variant="rectangular" width={100} height={30} />
           </p>
 

@@ -21,7 +21,7 @@ function ItemCard({ product }: Props) {
     <div
       className="col-span-1  bg-white cursor-pointer "
       onClick={() => {
-        router.push(`/store/${store}/item/${product.id}`);
+        router.push(`/{store}/item/${product.id}`);
       }}
     >
       <div className="flex justify-center bg-item-card-bg">
@@ -37,14 +37,14 @@ function ItemCard({ product }: Props) {
           {product.name}
         </h1>
         <div className="flex items-center justify-between max-sm:gap-2 max-sm:flex-col max-sm:items-start">
-          <p className="text-button-color  font-bold">{product.price}$</p>
+          <p className="text-error  font-bold">{product.price}$</p>
           <div className="max-sm:hidden">
             <SeButton
               label={"Add To Cart"}
               variant="contained"
               color="error"
               onClick={() => {
-                router.push(`/store/${store}/item/${product.id}`);
+                router.push(`/{store}/item/${product.id}`);
               }}
             />
           </div>

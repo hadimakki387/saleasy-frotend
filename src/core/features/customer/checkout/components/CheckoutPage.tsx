@@ -76,7 +76,7 @@ function CheckoutPage({}: Props) {
           toast.success("Thanks! Your order has been placed successfully");
           dispatch(setCartItems([]));
           localStorage.setItem("cart_items", JSON.stringify([]));
-          router.push(`/store/${store}/search`);
+          router.push(`/${store}/search`);
           dispatch(setIsAuthecationDialogOpen(false));
         })
         .catch((err) => {

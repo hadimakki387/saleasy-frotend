@@ -1,21 +1,17 @@
+import { ICategories } from "@/core/features/customer/landing/interfaces/category-interface";
+import { ICategoryRelatedItemsSection } from "@/core/features/customer/landing/interfaces/category-related-items-section";
+import { ItemInterface } from "@/core/features/customer/landing/interfaces/items-interface";
 import {
   advertisementSection,
   ICarousel,
   IHeaderLink,
-  IHeroSection,
   ILinkEntity,
-  SectionInterface,
   sideBoxInterface,
 } from "@/core/features/customer/landing/interfaces/link-interface";
 import { getProductsParams } from "@/core/features/customer/landing/redux/rtk";
 import { mainApi } from "@/core/rtk-query";
-import { AddCarouselItemDto } from "../interfaces/add-carousel-item.dto";
-import { UpdateCarouselInterface } from "../interfaces/update-carousel-interface";
-import { ItemInterface } from "@/core/features/customer/landing/interfaces/items-interface";
-import { ICategoryRelatedItemsSection } from "@/core/features/customer/landing/interfaces/category-related-items-section";
-import { ICategories } from "@/core/features/customer/landing/interfaces/category-interface";
 
-const extendedApi = mainApi.injectEndpoints({
+export const AdminExtendedApi = mainApi.injectEndpoints({
   endpoints: (builder) => ({
     getAdminStoreData: builder.query<ILinkEntity, string>({
       query: (id) => `/store/${id}`,
@@ -57,7 +53,7 @@ const extendedApi = mainApi.injectEndpoints({
           const { data } = await queryFulfilled;
 
           dispatch(
-            extendedApi.util.updateQueryData(
+            AdminExtendedApi.util.updateQueryData(
               "getAdminStoreData",
               storeId,
               (draft) => {
@@ -84,7 +80,7 @@ const extendedApi = mainApi.injectEndpoints({
           const { data } = await queryFulfilled;
 
           dispatch(
-            extendedApi.util.updateQueryData(
+            AdminExtendedApi.util.updateQueryData(
               "getAdminStoreData",
               storeId,
               (draft) => {
@@ -111,7 +107,7 @@ const extendedApi = mainApi.injectEndpoints({
           const { data } = await queryFulfilled;
 
           dispatch(
-            extendedApi.util.updateQueryData(
+            AdminExtendedApi.util.updateQueryData(
               "getAdminStoreData",
               storeId,
               (draft) => {
@@ -145,7 +141,7 @@ const extendedApi = mainApi.injectEndpoints({
           const { data } = await queryFulfilled;
 
           dispatch(
-            extendedApi.util.updateQueryData(
+            AdminExtendedApi.util.updateQueryData(
               "getAdminStoreData",
               storeId,
               (draft) => {
@@ -186,7 +182,7 @@ const extendedApi = mainApi.injectEndpoints({
           const { data } = await queryFulfilled;
 
           dispatch(
-            extendedApi.util.updateQueryData(
+            AdminExtendedApi.util.updateQueryData(
               "getAdminStoreData",
               storeId,
               (draft) => {
@@ -228,7 +224,7 @@ const extendedApi = mainApi.injectEndpoints({
           const { data } = await queryFulfilled;
 
           dispatch(
-            extendedApi.util.updateQueryData(
+            AdminExtendedApi.util.updateQueryData(
               "adminGetManuallySelectedItemsSection",
               { id: storeId },
               (draft) => {
@@ -271,7 +267,7 @@ const extendedApi = mainApi.injectEndpoints({
           const { data } = await queryFulfilled;
 
           dispatch(
-            extendedApi.util.updateQueryData(
+            AdminExtendedApi.util.updateQueryData(
               "adminGetManuallySelectedItemsSection",
               { id: storeId },
               (draft) => {
@@ -311,7 +307,7 @@ const extendedApi = mainApi.injectEndpoints({
           const { data } = await queryFulfilled;
 
           dispatch(
-            extendedApi.util.updateQueryData(
+            AdminExtendedApi.util.updateQueryData(
               "adminGetManuallySelectedItemsSection",
               { id: storeId },
               (draft) => {
@@ -346,7 +342,7 @@ const extendedApi = mainApi.injectEndpoints({
           const { data } = await queryFulfilled;
 
           dispatch(
-            extendedApi.util.updateQueryData(
+            AdminExtendedApi.util.updateQueryData(
               "adminGetManuallySelectedItemsSection",
               { id: storeId },
               (draft) => {
@@ -384,7 +380,7 @@ const extendedApi = mainApi.injectEndpoints({
           const { data } = await queryFulfilled;
 
           dispatch(
-            extendedApi.util.updateQueryData(
+            AdminExtendedApi.util.updateQueryData(
               "adminGetManuallySelectedItemsSection",
               { id: storeId },
               (draft) => {
@@ -394,7 +390,7 @@ const extendedApi = mainApi.injectEndpoints({
           );
 
           dispatch(
-            extendedApi.util.updateQueryData(
+            AdminExtendedApi.util.updateQueryData(
               "getAdminStoreData",
               storeId,
               (draft) => {
@@ -436,7 +432,7 @@ const extendedApi = mainApi.injectEndpoints({
           const { data } = await queryFulfilled;
 
           dispatch(
-            extendedApi.util.updateQueryData(
+            AdminExtendedApi.util.updateQueryData(
               "adminGetManuallySelectedItemsSection",
               { id: storeId },
               (draft) => {
@@ -450,7 +446,7 @@ const extendedApi = mainApi.injectEndpoints({
             )
           );
           dispatch(
-            extendedApi.util.updateQueryData(
+            AdminExtendedApi.util.updateQueryData(
               "getAdminStoreData",
               storeId,
               (draft) => {
@@ -497,7 +493,7 @@ const extendedApi = mainApi.injectEndpoints({
           const { data } = await queryFulfilled;
 
           dispatch(
-            extendedApi.util.updateQueryData(
+            AdminExtendedApi.util.updateQueryData(
               "adminGetCategoryRelatedItems",
               { id: storeId },
               (draft) => {
@@ -510,6 +506,45 @@ const extendedApi = mainApi.injectEndpoints({
                 draft.subCategories = data.subCategories;
                 draft.items = data.items;
                 draft.image = data.image;
+              }
+            )
+          );
+        } catch (err) {
+          console.log(err);
+        }
+      },
+    }),
+    updateLinkColors: builder.mutation<
+      {
+        primary: string;
+        secondary: string;
+        success: string;
+        warning: string;
+        error: string;
+      },
+      {
+        colors: {
+          primary: string;
+          error: string;
+        };
+        storeId: string;
+      }
+    >({
+      query: (body) => ({
+        url: `/link/update-link-colors/${body.storeId}`,
+        method: "PATCH",
+        body: body.colors,
+      }),
+      onQueryStarted: async ({ storeId }, { dispatch, queryFulfilled }) => {
+        try {
+          const { data } = await queryFulfilled;
+
+          dispatch(
+            AdminExtendedApi.util.updateQueryData(
+              "getAdminStoreData",
+              storeId,
+              (draft) => {
+                draft.link.theme.colors = data;
               }
             )
           );
@@ -538,4 +573,5 @@ export const {
   useAdminGetCategoryRelatedItemsQuery,
   useUpdateCategoryRelatedItemsSectionMutation,
   useGetAdminCategoriesQuery,
-} = extendedApi;
+  useUpdateLinkColorsMutation,
+} = AdminExtendedApi;

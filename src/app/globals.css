@@ -8,11 +8,11 @@
 :root {
   --admin-primary: #3e8bfd;
   --item-card-bg: #fafafa;
-  --primary: rgb(43, 52, 69);
+  --primary: #2b3445;
+  --sidebar-background-color: #2b3445;
   --secondary: #ffffff;
   --primary-bg: #f6f6f6;
   --secondary-bg: #ffffff;
-  --button-color: #d23f57;
   --top-bottom-bg: #2b3445;
   --input-border-radius: 4px;
   --shadow: 1px 1px 8px rgba(0, 0, 0, 0.15);

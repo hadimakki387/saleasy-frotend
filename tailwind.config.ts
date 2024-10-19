@@ -20,7 +20,6 @@ const config: Config = {
         secondary: "var(--secondary)",
         "primary-bg": "var(--primary-bg)",
         "secondary-bg": "var(--secondary-bg)",
-        "button-color": "var(--button-color)",
         "top-bottom-bg": "var(--top-bottom-bg)",
         error: "var(--error)",
         success: "var(--success)",

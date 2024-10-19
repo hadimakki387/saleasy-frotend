@@ -89,5 +89,14 @@ export interface ILinkEntity extends MainInterface {
     footer: {
       descriptionText: string;
     };
+    theme: {
+      colors: {
+        primary: string;
+        secondary: string;
+        success: string;
+        warning: string;
+        error: string;
+      };
+    };
   };
 }

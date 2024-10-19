@@ -168,7 +168,7 @@ function CartDrawer({}: Props) {
               }}
               fullWidth
               onClick={() => {
-                router.push(`/store/${store}/checkout`);
+                router.push(`/${store}/checkout`);
                 dispatch(setIsCartDrawerOpen(false));
               }}
             />
