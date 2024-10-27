@@ -95,6 +95,7 @@ function EditItemDialog({ debouncedSearch }: Props) {
               page,
               limit,
             })
+              .unwrap()
               .then(() => {
                 toast.dismiss(toastId);
                 toast.success("Changes saved successfully");

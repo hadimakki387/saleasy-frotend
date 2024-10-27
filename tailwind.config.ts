@@ -6,7 +6,9 @@ const config: Config = {
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/core/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/components/global/**/*.{js,ts,jsx,tsx,mdx}",
   ],
+
   theme: {
     extend: {
       fontFamily: {
@@ -23,7 +25,7 @@ const config: Config = {
         "top-bottom-bg": "var(--top-bottom-bg)",
         error: "var(--error)",
         success: "var(--success)",
-        yellow: "var(--yellow)",
+        warning: "var(--yellow)",
         "primary-text-light": "var(--primary-text-light)",
         "light-gray": "var(--light-gray)",
         "light-gray-text": "var(--light-gray-text)",

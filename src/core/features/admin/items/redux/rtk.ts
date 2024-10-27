@@ -52,6 +52,7 @@ const extendedApi = mainApi.injectEndpoints({
         limit: number;
       }
     >({
+      invalidatesTags: ["item_updated"],
       query: ({ data, itemId }) => {
         console.log(itemId);
         return {

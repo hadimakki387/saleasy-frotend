@@ -4,6 +4,7 @@ import SeTextField from "./SeTextField";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faPen } from "@fortawesome/free-solid-svg-icons";
 import { twMerge } from "tailwind-merge";
+import { SxProps } from "@mui/material";
 
 type Props = {
   defaultValue: string | number;
@@ -12,6 +13,10 @@ type Props = {
   type?: "text" | "number";
   extraCharachters?: string;
   handleSubmition?: () => void;
+  iconsClassName?: string;
+  sx?: SxProps;
+  multiline?: boolean;
+  fullWidth?: boolean;
 };
 
 function SeEditInput({
@@ -21,6 +26,10 @@ function SeEditInput({
   type = "text",
   extraCharachters,
   handleSubmition,
+  iconsClassName,
+  sx,
+  multiline,
+  fullWidth,
 }: Props) {
   const [edit, setEdit] = useState(false);
 
@@ -29,6 +38,7 @@ function SeEditInput({
       {edit ? (
         <div className={`flex items-center gap-1`}>
           <SeTextField
+            multiline={multiline}
             type={type}
             defaultValue={defaultValue}
             onChange={(e) => {
@@ -39,12 +49,18 @@ function SeEditInput({
                 setEdit(false);
               }
             }}
-            className="lg:max-w-[50%]"
+            className={!fullWidth ? "lg:max-w-[50%] " : ""}
+            sx={{
+              width: "100%",
+              ...(sx ? sx : {}),
+            }}
           />
           {extraCharachters}
           <FontAwesomeIcon
             icon={faCheck}
-            className="text-primary text-sm cursor-pointer"
+            className={`${iconsClassName ? "" : "text-primary"} ${twMerge(
+              iconsClassName
+            )} text-sm cursor-pointer`}
             onClick={() => {
               console.log("handleSubmition");
               handleSubmition && handleSubmition();
@@ -65,7 +81,9 @@ function SeEditInput({
           <p onClick={() => setEdit(true)} className="flex items-center">
             <FontAwesomeIcon
               icon={faPen}
-              className="text-primary text-sm cursor-pointer"
+              className={`${iconsClassName ? "" : "text-primary"} ${twMerge(
+                iconsClassName
+              )}  text-sm cursor-pointer`}
             />
           </p>
         </div>

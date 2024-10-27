@@ -48,7 +48,7 @@ const EditDealsOfTheDayBanner: React.FC<BannerProps> = ({
               setDealsOfTheDayAdvertismentSection({ ...data, sectionId })
             );
           }}
-          className="h-10 w-10 bg-primary rounded-md flex items-center justify-center z-[5000]"
+          className="h-10 w-10 bg-admin-primary rounded-md flex items-center justify-center z-[5000]"
         >
           <FontAwesomeIcon icon={faPen} className="text-white" />
         </div>
@@ -138,7 +138,7 @@ const EditDealsOfTheDayBanner: React.FC<BannerProps> = ({
                 backgroundPosition: "center",
               }}
             >
-              <div className="flex items-center justify-center gap-1 text-4xl font-[800] text-primary h-full">
+              <div className="flex items-center justify-center gap-1 text-4xl font-[800] text-admin-primary h-full">
                 <p className=" tracking-wider">{data.text1?.toUpperCase()}</p>
                 <h4 className="  my-4 leading-none text-error">
                   {data.redText?.toUpperCase()}
@@ -149,7 +149,7 @@ const EditDealsOfTheDayBanner: React.FC<BannerProps> = ({
                 <SeButton
                   label={data.link.title}
                   variant="outlined"
-                  color="primary"
+                  color_custom="admin-primary"
                   sx={{
                     padding: "0.75rem 3rem",
                     fontSize: "1rem",

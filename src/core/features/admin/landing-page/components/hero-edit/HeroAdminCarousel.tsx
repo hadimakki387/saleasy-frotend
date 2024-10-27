@@ -55,7 +55,7 @@ function HeroAdminCarousel({ data, currentIndex }: Props) {
         <div className="absolute top-4 right-4 flex items-center gap-4">
           {" "}
           <div
-            className=" bg-primary h-10 w-10 rounded-md flex items-center justify-center cursor-pointer z-50"
+            className=" bg-admin-primary h-10 w-10 rounded-md flex items-center justify-center cursor-pointer z-50"
             onClick={() => {
               dispatch(
                 setSelectedHeroCarousel({

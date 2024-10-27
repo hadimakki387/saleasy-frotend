@@ -10,6 +10,7 @@ export const mainApi = createApi({
     "created_category",
     "logo_changed",
     "deals_of_the_day_changed",
+    "item_updated",
   ],
   baseQuery: fetchBaseQuery({
     baseUrl: process.env.NEXT_PUBLIC_API_URL,

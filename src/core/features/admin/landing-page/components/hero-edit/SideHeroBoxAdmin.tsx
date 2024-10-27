@@ -37,7 +37,7 @@ function SideHeroBoxAdmin({
       }}
     >
       <div
-        className="absolute top-4 right-4 bg-primary h-8 w-8 rounded-md flex items-center justify-center cursor-pointer"
+        className="absolute top-4 right-4 bg-admin-primary h-8 w-8 rounded-md flex items-center justify-center cursor-pointer"
         onClick={() => {
           dispatch(
             setEditSideBox({

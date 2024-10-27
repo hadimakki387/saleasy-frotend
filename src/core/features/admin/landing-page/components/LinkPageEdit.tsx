@@ -13,6 +13,7 @@ import AdminManuallySelectedItems from "./manually-selected-items/AdminManuallyS
 import AdminCategorySection from "./category-section/AdminCategorySection";
 import AdminDealsOfTheDay from "./deals-of-the-day/AdminDealsOfTheDay";
 import ThemeColorPicker from "./ThemeColorPicker";
+import AdminFooter from "./AdminFooter";
 
 type Props = {};
 
@@ -42,6 +43,7 @@ function LinkPageEdit({}: Props) {
               <div className="shadow-md shadow-neutral-200 p-4 md:px-12 ">
                 <ThemeColorPicker link={storeData} />
               </div>
+
               <div className="shadow-md shadow-neutral-200 p-4 md:px-12 ">
                 <HeaderEdit link={storeData} />
               </div>
@@ -76,6 +78,9 @@ function LinkPageEdit({}: Props) {
                 <div className="shadow-md shadow-neutral-200 p-4 md:px-12">
                   <AdminCategorySection />
                 </div>
+              </div>
+              <div className="shadow-md shadow-neutral-200 p-4 md:px-12 ">
+                <AdminFooter data={storeData} />
               </div>
             </div>
           )
