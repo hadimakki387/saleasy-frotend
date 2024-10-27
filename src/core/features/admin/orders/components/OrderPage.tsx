@@ -1,97 +1,66 @@
 "use client";
-import { useAppSelector } from "@/providers/StoreWrapper";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { Accordion, AccordionDetails, AccordionSummary } from "@mui/material";
+import SeTable from "@/components/global/Table/SE-Table";
+import { useAppDispatch, useAppSelector } from "@/providers/StoreWrapper";
+import { OrdersColumns } from "../columns/list-orders-column";
 import { useGetStoreOrderQuery } from "../redux/rtk";
-import SeChip from "@/components/global/Chip/SE-Chip";
+import { useRouter } from "nextjs-toploader/app";
+import SeTextField from "@/components/global/SeTextField";
+import { setOrderStatus } from "../redux/redux";
 import { OrderStatus } from "../interfaces/order-entity";
-import { ChipType } from "@/services/constants";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTruck } from "@fortawesome/free-solid-svg-icons";
 
 type Props = {};
 
 function OrderPage({}: Props) {
   const { store } = useAppSelector((state) => state.GlobalAdminRedux);
-  const { data } = useGetStoreOrderQuery(store?.id as string, {
-    skip: !store?.id,
-  });
-  console.log(data);
+  const { status } = useAppSelector((state) => state.AdminOrdersSlice);
+  const { data } = useGetStoreOrderQuery(
+    {
+      storeId: store?.id as string,
+      status: status === "all" ? "" : status,
+    },
+    {
+      skip: !store?.id,
+    }
+  );
+  const router = useRouter();
+  const dispatch = useAppDispatch();
   return (
-    <div className="mx-4">
-      {data &&
-        data.length &&
-        data.map((order, index) => {
-          return (
-            <Accordion
-              className="accordion-shadow"
-              key={index}
-              sx={{
-                "& .MuiAccordion-root": {
-                  boxShadow: "none !important",
-                },
-              }}
-              style={{
-                /* @ts-ignore */
-                "--Paper-shadow": "none",
-                "--tw-shadow":
-                  "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
-                "--tw-shadow-colored":
-                  "0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color)",
-                "box-shadow":
-                  "var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)",
-                "--tw-shadow-color": "#e5e5e5",
-              }}
-            >
-              <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                <div className="flex items-center gap-4">
-                  <p>{`#${order.id.slice(0, 8)}`}</p>
-                  <SeChip
-                    label={
-                      order.status === OrderStatus.SHIPPING ? (
-                        <FontAwesomeIcon icon={faTruck} className="" />
-                      ) : (
-                        order.status
-                      )
-                    }
-                    type={
-                      order.status === OrderStatus.ACCEPTED
-                        ? ChipType.success
-                        : order.status === OrderStatus.REJECTED
-                        ? ChipType.error
-                        : order.status === OrderStatus.PENDING
-                        ? ChipType.warning
-                        : ChipType.info
-                    }
-                  />
-                </div>
-              </AccordionSummary>
-              <AccordionDetails>
-                <div className="grid grid-cols-5">
-                  <div className="flex items-start gap-4">
-                    <div className="col-span-1">order price:</div>
-                    <div className="col-span-4">${order.total}</div>
-                  </div>
-                </div>
-                <div className="grid grid-cols-5">
-                  <div className="flex items-center gap-4 col-span-5">
-                    <div className="col-span-1">order items:</div>
-                    <div className="col-span-4  flex items-center gap-4">
-                      {order.orderOptions?.map((order, index) => {
-                        return (
-                          <p key={index}>
-                            {order.quantity} {order.item.name}
-                            {","}
-                          </p>
-                        );
-                      })}
-                    </div>
-                  </div>
-                </div>
-              </AccordionDetails>
-            </Accordion>
-          );
-        })}
+    <div className="mx-4 grid grid-cols-1 my-8">
+      <div className="flex items-center justify-between">
+        <p className="text-3xl text-primary">View Orders</p>
+        <SeTextField
+          select
+          value={status}
+          options={[
+            { label: "All", value: "all" },
+            { label: "Pending", value: OrderStatus.PENDING },
+            { label: "Accepted", value: OrderStatus.ACCEPTED },
+            { label: "Rejected", value: OrderStatus.REJECTED },
+            { label: "Shipping", value: OrderStatus.SHIPPING },
+          ]}
+          className="w-52"
+          label="Filter by status"
+          onChange={(e) => {
+            dispatch(setOrderStatus(e.target.value));
+          }}
+        />
+      </div>
+      <SeTable
+        columnGetter={OrdersColumns}
+        onActionClick={(action, row) => {
+          switch (row) {
+            case "view":
+              router.push(`/admin/${store?.id}/orders/${action}`);
+              break;
+            case "delete":
+              console.log("delete", row);
+              break;
+            default:
+              break;
+          }
+        }}
+        rows={data || []}
+      />
     </div>
   );
 }

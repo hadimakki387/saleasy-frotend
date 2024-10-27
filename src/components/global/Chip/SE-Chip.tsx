@@ -23,7 +23,7 @@ function SeChip({
       case ChipType.success:
         return "bg-green-100 text-green-600 border border-green-200";
       case ChipType.warning:
-        return "bg-yellow-50 text-yellow-800 border border-yellow-200";
+        return "bg-yellow-50 text-yellow-600 border border-yellow-200";
       case ChipType.error:
         return "bg-red-100 text-error border border-error";
       case ChipType.critical:
@@ -38,7 +38,6 @@ function SeChip({
         return "bg-gray-200 text-gray-800";
     }
   };
-  console.log(color());
   return (
     <span
       className={`inline-block px-3 py-1 rounded-full text-xs font-normal tracking-wide  ${color()} ${className} ${

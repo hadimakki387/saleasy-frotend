@@ -17,6 +17,7 @@ export interface OrderOptionsEntity extends MainInterface {
     name: string;
     description: string;
     price: number;
+    images?: string[];
   };
 }
 export interface IOrder extends MainInterface {

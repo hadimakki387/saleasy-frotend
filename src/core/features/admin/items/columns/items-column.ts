@@ -19,7 +19,7 @@ export const ItemsColumn: ColumnGetter = ({ onActionClick }) => {
     },
     {
       field: "name",
-      headerName: "CAMPAIGN NAME",
+      headerName: "ITEM NAME",
       flex: 1,
       textTransform: "uppercase",
     },

@@ -8,9 +8,14 @@ import SePopover from "@/components/global/Popover/SE-Popover";
 import { More } from "@mui/icons-material";
 import SeCheckbox from "@/components/global/SeCheckbox";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEllipsis } from "@fortawesome/free-solid-svg-icons";
+import {
+  faEllipsis,
+  faEye,
+  faTrashCan,
+} from "@fortawesome/free-solid-svg-icons";
 import CustomImage from "@/components/global/CustomImage";
 import Image from "next/image";
+import { OrderStatus } from "@/core/features/admin/orders/interfaces/order-entity";
 
 export type getChipProps = {
   values?: {
@@ -22,6 +27,52 @@ export type getChipProps = {
   className?: string;
 };
 
+export const getOrderChips = ({
+  values = [
+    {
+      key: "Pending",
+      value: OrderStatus.PENDING,
+      chipType: ChipType.warning,
+    },
+    {
+      key: "Shipping",
+      value: OrderStatus.SHIPPING,
+      chipType: ChipType.info,
+    },
+    {
+      key: "Accepted",
+      value: OrderStatus.ACCEPTED,
+      chipType: ChipType.success,
+    },
+    {
+      key: "Rejected",
+      value: OrderStatus.REJECTED,
+      chipType: ChipType.error,
+    },
+  ],
+  params,
+  className,
+}: getChipProps) => {
+  const value = params?.value;
+  const chip = values.find((v) => v.value === value);
+  if (chip) {
+    return (
+      <SeChip
+        type={chip.chipType}
+        label={chip.value}
+        className={`${className} w-20 text-center`}
+      />
+    );
+  } else {
+    return (
+      <SeChip
+        type={ChipType.default}
+        label={value}
+        className={`${className} w-20 text-center`}
+      />
+    );
+  }
+};
 export const getChips = ({
   values = [
     {
@@ -44,9 +95,8 @@ export const getChips = ({
   className,
 }: getChipProps) => {
   const value = params?.value;
-  console.log("thissi the value");
-  console.log(params);
   const chip = values.find((v) => v.key === value);
+  console.log("this is the chip", chip);
   if (chip) {
     return (
       <SeChip type={chip.chipType} label={chip.value} className={className} />
@@ -156,6 +206,38 @@ export const getActionMore = ({
         <FontAwesomeIcon icon={faEllipsis} className="text-sm" />
       </IconButton>
     </SePopover>
+  );
+};
+
+export const renderMoreActionsIcons = ({
+  onActionClick,
+  params,
+  buttons,
+}: {
+  params: any;
+  onActionClick?: (rowID: any, colID: any) => void;
+  buttons: {
+    icon: ReactNode;
+    value: string;
+    title?: string;
+  }[];
+}) => {
+  return (
+    <div className="flex gap-3 items-center justify-center">
+      {buttons.map((button, index) => {
+        return (
+          <div
+            className="cursor-pointer"
+            key={index}
+            onClick={() => {
+              onActionClick && onActionClick(params.row.id, button.value);
+            }}
+          >
+            {button.icon}
+          </div>
+        );
+      })}
+    </div>
   );
 };
 

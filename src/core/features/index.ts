@@ -10,6 +10,7 @@ import AdminItemsSlice from "./admin/items/redux/redux";
 import AdminCategoriesSlice from "./admin/categories/redux/redux";
 import AdminCustomersSlice from "./admin/customers/redux/redux";
 import AdminLandingPageEdit from "./admin/landing-page/redux/redux";
+import AdminOrdersSlice from "./admin/orders/redux/redux";
 
 const reducers = combineReducers({
   landingPage: LandingPage,
@@ -22,6 +23,7 @@ const reducers = combineReducers({
   AdminCategoriesSlice: AdminCategoriesSlice,
   AdminCustomersSlice: AdminCustomersSlice,
   AdminLandingPageEdit: AdminLandingPageEdit,
+  AdminOrdersSlice: AdminOrdersSlice,
   [mainApi.reducerPath]: mainApi.reducer,
 });
 
