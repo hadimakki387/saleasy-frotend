@@ -252,7 +252,7 @@ function Header({ link }: Props) {
                       textAlign: "center",
                       "&:hover": { cursor: "pointer" },
                     }}
-                    secondary={link.categories[selectedIndex].name}
+                    secondary={link.categories[selectedIndex]?.name}
                   />
                   <ExpandMore sx={{ fontSize: "16px" }} />
                 </ListItem>
